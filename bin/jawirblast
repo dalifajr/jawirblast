@@ -151,87 +151,87 @@ cmd_restart() {
     echo -e "${THM_OK}[✓] Seluruh service berhasil di-restart.${THM_NC}"
 }
 
-# Fitur Khusus: Pasang Cloudflare Origin Certificate Langsung
-cmd_cloudflare_ssl() {
+cmd_setup_cloudflare_ssl() {
     check_root
-    echo -e "${THM_TITLE}:: PASANG CLOUDFLARE ORIGIN CERTIFICATE (DNS PROXIED) ::${THM_NC}"
-    echo -e "${THM_MUTED}Metode ini khusus untuk domain yang menggunakan proxy Cloudflare (Awan Oranye).${THM_NC}"
-    echo -e "${THM_MUTED}Masa aktif sertifikat: 15 Tahun. Bebas blokir challenge ACME/WAF.${THM_NC}\n"
+    echo -e "${THM_BORDER}+====================================================================+${THM_NC}"
+    echo -e "${THM_BORDER}|${THM_NC}      ${THM_TITLE}PASANG CLOUDFLARE ORIGIN CERTIFICATE (PROXIED / 15 TAHUN)${THM_NC}      ${THM_BORDER}|${THM_NC}"
+    echo -e "${THM_BORDER}+====================================================================+${THM_NC}"
+    echo -e "${THM_VAL}Khusus untuk domain yang menggunakan proxy Cloudflare (Awan Oranye).${THM_NC}"
+    echo -e "${THM_MUTED}Masa aktif sertifikat 15 tahun dan mendukung mode Full (Strict).${THM_NC}\n"
 
-    local current_dom
-    current_dom="$(read_env_val 'APP_URL' 'jawirblast.belajaridn.id' | sed -E 's|^https?://||' | cut -d'/' -f1)"
+    local current_domain
+    current_domain="$(read_env_val 'APP_URL' 'http://localhost' | sed -E 's|https?://||; s|:[0-9]+||; s|/.*||')"
+    read -rp "Masukkan nama domain (default: ${current_domain}): " input_domain
+    local domain="${input_domain:-${current_domain}}"
+    domain="$(echo "${domain}" | tr -d ' ')"
 
-    read -rp "Masukkan nama domain (default: ${current_dom}): " domain_input
-    local target_domain="${domain_input:-${current_dom}}"
-    target_domain="$(echo "${target_domain}" | tr -d ' ')"
-
-    if [[ -z "${target_domain}" ]]; then
-        echo -e "${THM_BAD}[!] Nama domain tidak boleh kosong.${THM_NC}"
+    if [[ -z "${domain}" || "${domain}" == "localhost" ]]; then
+        echo -e "${THM_BAD}[!] Nama domain tidak valid.${THM_NC}"
         return
     fi
 
     local ssl_dir="/etc/ssl/jawirblast"
     mkdir -p "${ssl_dir}"
 
-    echo -e "\n${THM_KEY}Pilih Cara Memasukkan Sertifikat & Kunci:${THM_NC}"
-    echo -e " ${THM_BADGE}[1]${THM_NC} Tempel (Paste) langsung di jendela terminal ini"
-    echo -e " ${THM_BADGE}[2]${THM_NC} Buka teks editor (nano) untuk paste"
-    read -rp "Pilihan Anda [1/2]: " input_method
-
-    if [[ "${input_method}" == "2" ]]; then
-        echo -e "\n${THM_ACCENT}[*] Membuka nano untuk Origin Certificate (/etc/ssl/jawirblast/cert.pem)...${THM_NC}"
-        read -rp "Tekan [Enter] untuk membuka nano..." _
-        nano "${ssl_dir}/cert.pem"
-
-        echo -e "\n${THM_ACCENT}[*] Membuka nano untuk Private Key (/etc/ssl/jawirblast/key.pem)...${THM_NC}"
-        read -rp "Tekan [Enter] untuk membuka nano..." _
-        nano "${ssl_dir}/key.pem"
-    else
-        echo -e "\n${THM_ACCENT}[*] Langkah 1/2: Masukkan ORIGIN CERTIFICATE dari Cloudflare${THM_NC}"
-        echo -e "${THM_MUTED}(Salin seluruh teks termasuk -----BEGIN CERTIFICATE----- s.d. -----END CERTIFICATE-----)"
-        echo -e "Setelah selesai menempelkan teks, ketik kata 'END' pada baris baru lalu tekan Enter:${THM_NC}"
-        
-        local cert_content=""
-        while IFS= read -r line; do
-            if [[ "${line}" =~ ^[[:space:]]*END[[:space:]]*$ || "${line}" =~ ^[[:space:]]*end[[:space:]]*$ ]]; then
-                break
-            fi
-            cert_content+="${line}\n"
-        done
-        printf "%b" "${cert_content}" > "${ssl_dir}/cert.pem"
-
-        echo -e "\n${THM_ACCENT}[*] Langkah 2/2: Masukkan PRIVATE KEY dari Cloudflare${THM_NC}"
-        echo -e "${THM_MUTED}(Salin seluruh teks termasuk -----BEGIN PRIVATE KEY----- s.d. -----END PRIVATE KEY-----)"
-        echo -e "Setelah selesai menempelkan teks, ketik kata 'END' pada baris baru lalu tekan Enter:${THM_NC}"
-
-        local key_content=""
-        while IFS= read -r line; do
-            if [[ "${line}" =~ ^[[:space:]]*END[[:space:]]*$ || "${line}" =~ ^[[:space:]]*end[[:space:]]*$ ]]; then
-                break
-            fi
-            key_content+="${line}\n"
-        done
-        printf "%b" "${key_content}" > "${ssl_dir}/key.pem"
+    # Pastikan port 80 dan 443 terbuka pada UFW jika aktif untuk mencegah Cloudflare Error 522
+    if command -v ufw >/dev/null 2>&1; then
+        if ufw status 2>/dev/null | grep -qw "active"; then
+            echo -e "${THM_MUTED}[*] Memastikan port 80 dan 443 diizinkan pada UFW Firewall...${THM_NC}"
+            ufw allow 80/tcp >/dev/null 2>&1 || true
+            ufw allow 443/tcp >/dev/null 2>&1 || true
+        fi
     fi
 
-    # Validasi isi file
-    if [[ ! -s "${ssl_dir}/cert.pem" ]] || [[ ! -s "${ssl_dir}/key.pem" ]]; then
-        echo -e "${THM_BAD}[!] File sertifikat atau kunci masih kosong. Pemasangan dibatalkan.${THM_NC}"
+    echo -e "\n${THM_KEY}Langkah 1: Masukkan Cloudflare Origin Certificate${THM_NC}"
+    echo -e "${THM_MUTED}(Salin dari dashboard Cloudflare. Tekan Enter setelah baris -----END CERTIFICATE----- atau ketik EOF)${THM_NC}"
+    echo -e "${THM_ACCENT}Paste Origin Certificate di sini:${THM_NC}"
+
+    local cert_data=""
+    while IFS= read -r line; do
+        [[ "${line}" == "EOF" ]] && break
+        cert_data+="${line}"$'\n'
+        [[ "${line}" =~ "-----END CERTIFICATE-----" ]] && break
+    done
+
+    if [[ ! "${cert_data}" =~ "-----BEGIN CERTIFICATE-----" ]]; then
+        echo -e "${THM_BAD}[!] Format sertifikat tidak valid. Harus memuat '-----BEGIN CERTIFICATE-----'.${THM_NC}"
         return
     fi
 
-    chmod 644 "${ssl_dir}/cert.pem"
+    echo -e "\n${THM_KEY}Langkah 2: Masukkan Cloudflare Private Key${THM_NC}"
+    echo -e "${THM_MUTED}(Salin dari dashboard Cloudflare. Tekan Enter setelah baris -----END PRIVATE KEY----- atau ketik EOF)${THM_NC}"
+    echo -e "${THM_ACCENT}Paste Private Key di sini:${THM_NC}"
+
+    local key_data=""
+    while IFS= read -r line; do
+        [[ "${line}" == "EOF" ]] && break
+        key_data+="${line}"$'\n'
+        [[ "${line}" =~ "-----END "(RSA |EC )?"PRIVATE KEY-----" ]] && break
+    done
+
+    if [[ ! "${key_data}" =~ "-----BEGIN "(RSA |EC )?"PRIVATE KEY-----" ]]; then
+        echo -e "${THM_BAD}[!] Format private key tidak valid. Harus memuat '-----BEGIN PRIVATE KEY-----'.${THM_NC}"
+        return
+    fi
+
+    # Simpan sertifikat dan kunci
+    printf '%s' "${cert_data}" > "${ssl_dir}/cert.pem"
+    printf '%s' "${key_data}" > "${ssl_dir}/key.pem"
     chmod 600 "${ssl_dir}/key.pem"
+    chmod 644 "${ssl_dir}/cert.pem"
 
+    echo -e "${THM_OK}[✓] File sertifikat dan private key berhasil disimpan di ${ssl_dir}.${THM_NC}"
+
+    # Deteksi socket PHP-FPM
     local php_sock
-    php_sock="$(find /run/php/ -name 'php*-fpm.sock' 2>/dev/null | head -n 1 || echo '/run/php/php8.3-fpm.sock')"
+    php_sock="$(find /run/php/ -name 'php*-fpm.sock' 2>/dev/null | head -n 1 || echo "/run/php/${PHP_FPM_SERVICE}.sock")"
 
-    echo -e "${THM_ACCENT}[*] Mengonfigurasi Nginx untuk domain ${target_domain} dengan SSL Cloudflare...${THM_NC}"
+    # Tulis konfigurasi Nginx modern dengan HTTP/2 dan SSL
     cat <<EOF > "${NGINX_CONF}"
 server {
     listen 80;
     listen [::]:80;
-    server_name ${target_domain};
+    server_name ${domain};
     return 301 https://\$host\$request_uri;
 }
 
@@ -239,7 +239,7 @@ server {
     listen 443 ssl;
     listen [::]:443 ssl;
     http2 on;
-    server_name ${target_domain};
+    server_name ${domain};
     root ${APP_DIR}/public;
 
     ssl_certificate ${ssl_dir}/cert.pem;
@@ -269,6 +269,7 @@ server {
         fastcgi_read_timeout 300;
     }
 
+    # Reverse proxy ke Baileys API internal
     location /wa-api/ {
         proxy_pass http://127.0.0.1:3000/;
         proxy_http_version 1.1;
@@ -287,22 +288,40 @@ server {
 EOF
 
     ln -sf "${NGINX_CONF}" /etc/nginx/sites-enabled/jawirblast
+    rm -f /etc/nginx/sites-enabled/default 2>/dev/null || true
 
     if nginx -t; then
         systemctl reload nginx
-        set_env_val "APP_URL" "https://${target_domain}"
+        set_env_val "APP_URL" "https://${domain}"
         cd "${APP_DIR}" && php artisan config:clear || true
-        echo -e "${THM_OK}[✓] Cloudflare Origin Certificate berhasil dipasang!${THM_NC}"
-        echo -e "${THM_VAL}Website aktif di : ${THM_ACCENT}https://${target_domain}${THM_NC}"
-        echo -e "${THM_MUTED}Penting: Pastikan mode SSL/TLS di dashboard Cloudflare Anda diatur ke 'Full (Strict)'!${THM_NC}"
+
+        echo -e "\n${THM_BORDER}+====================================================================+${THM_NC}"
+        echo -e "${THM_OK}[✓] SSL Cloudflare Origin Certificate BERHASIL DIPASANG!${THM_NC}"
+        echo -e "${THM_BORDER}+====================================================================+${THM_NC}"
+        echo -e "Domain Aktif  : ${THM_ACCENT}https://${domain}${THM_NC}"
+        echo -e "Panduan di Dashboard Cloudflare:"
+        echo -e "  1. Menu ${THM_KEY}SSL/TLS${THM_NC} ➔ Ubah mode enkripsi ke ${THM_OK}Full (Strict)${THM_NC}."
+        echo -e "  2. Menu ${THM_KEY}DNS${THM_NC} ➔ Pastikan record berstatus ${THM_WARN}Proxied (Awan Oranye)${THM_NC}."
+        echo -e "${THM_BORDER}+====================================================================+${THM_NC}"
     else
-        echo -e "${THM_BAD}[!] Konfigurasi Nginx gagal saat dites. Periksa kembali format file cert dan key.${THM_NC}"
+        echo -e "${THM_BAD}[!] Pengujian konfigurasi Nginx gagal. Periksa kembali cert & key.${THM_NC}"
     fi
 }
 
 cmd_change_domain() {
     check_root
-    echo -e "${THM_TITLE}:: GANTI DOMAIN & SETUP SSL ::${THM_NC}"
+    echo -e "${THM_TITLE}:: PENGATURAN DOMAIN & METODE SSL ::${THM_NC}"
+    echo -e "Pilih metode setup:"
+    echo -e " ${THM_BADGE}[1]${THM_NC} Cloudflare Origin Certificate (Direkomendasikan untuk DNS Proxied / Awan Oranye)"
+    echo -e " ${THM_BADGE}[2]${THM_NC} Otomatis Let's Encrypt via Certbot (Untuk DNS Direct / Awan Abu-abu)"
+    read -rp "Pilih opsi [1-2]: " ssl_method
+
+    if [[ "${ssl_method}" == "1" ]]; then
+        cmd_setup_cloudflare_ssl
+        return
+    fi
+
+    echo -e "\n${THM_TITLE}:: SETUP DOMAIN DENGAN LET'S ENCRYPT CERTBOT ::${THM_NC}"
     read -rp "Masukkan nama domain baru (contoh: blast.domainanda.com): " new_domain
     new_domain="$(echo "${new_domain}" | tr -d ' ')"
 
@@ -311,25 +330,13 @@ cmd_change_domain() {
         return
     fi
 
-    echo -e "\n${THM_KEY}Pilih Metode SSL untuk ${new_domain}:${THM_NC}"
-    echo -e " ${THM_BADGE}[1]${THM_NC} Let's Encrypt Otomatis via Certbot (DNS Non-Proxy / Awan Abu-abu)"
-    echo -e " ${THM_BADGE}[2]${THM_NC} Cloudflare Origin Certificate (DNS Proxied / Awan Oranye Cloudflare)"
-    echo -e " ${THM_BADGE}[3]${THM_NC} Hanya HTTP Port 80 (Tanpa SSL)"
-    read -rp "Pilihan Anda [1/2/3]: " ssl_method
-
-    if [[ "${ssl_method}" == "2" ]]; then
-        cmd_cloudflare_ssl
-        return
-    fi
-
-    local php_sock
-    php_sock="$(find /run/php/ -name 'php*-fpm.sock' 2>/dev/null | head -n 1 || echo '/run/php/php8.3-fpm.sock')"
-
     echo -e "${THM_ACCENT}[*] Memperbarui konfigurasi Nginx untuk domain: ${new_domain}...${THM_NC}"
+    local php_sock
+    php_sock="$(find /run/php/ -name 'php*-fpm.sock' 2>/dev/null | head -n 1 || echo "/run/php/${PHP_FPM_SERVICE}.sock")"
+
     cat <<EOF > "${NGINX_CONF}"
 server {
     listen 80;
-    listen [::]:80;
     server_name ${new_domain};
     root ${APP_DIR}/public;
 
@@ -359,7 +366,7 @@ server {
         proxy_pass http://127.0.0.1:3000/;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection "upgrade";
+        proxy_set_header Connection 'upgrade';
         proxy_set_header Host \$host;
         proxy_cache_bypass \$http_upgrade;
         proxy_read_timeout 86400s;
@@ -372,21 +379,24 @@ server {
 }
 EOF
     ln -sf "${NGINX_CONF}" /etc/nginx/sites-enabled/jawirblast
+
     nginx -t
     systemctl reload nginx
 
-    if [[ "${ssl_method}" == "1" ]]; then
+    # Memperbarui APP_URL di .env
+    set_env_val "APP_URL" "https://${new_domain}"
+    cd "${APP_DIR}" && php artisan config:clear || true
+
+    # Pasang SSL Certbot jika certbot tersedia
+    read -rp "Apakah Anda ingin langsung menerbitkan SSL Let's Encrypt via Certbot? (y/n): " install_ssl
+    if [[ "${install_ssl}" =~ ^[Yy]$ ]]; then
         echo -e "${THM_ACCENT}[*] Menjalankan Certbot untuk ${new_domain}...${THM_NC}"
         certbot --nginx -d "${new_domain}" --non-interactive --agree-tos --register-unsafely-without-email --redirect || {
-            echo -e "${THM_WARN}[!] Certbot mengalami kendala. Pastikan A record DNS domain sudah mengarah ke IP VPS ini.${THM_NC}"
+            echo -e "${THM_WARN}[!] Certbot mengalami kendala. Pastikan A record DNS berstatus DNS Only (Awan Abu-abu).${THM_NC}"
         }
-        set_env_val "APP_URL" "https://${new_domain}"
-    else
-        set_env_val "APP_URL" "http://${new_domain}"
     fi
 
-    cd "${APP_DIR}" && php artisan config:clear || true
-    echo -e "${THM_OK}[✓] Konfigurasi domain berhasil diperbarui ke: $(read_env_val 'APP_URL')${THM_NC}"
+    echo -e "${THM_OK}[✓] Konfigurasi domain berhasil diperbarui ke: https://${new_domain}${THM_NC}"
 }
 
 cmd_reset_admin() {
@@ -437,6 +447,7 @@ cmd_telegram() {
     read -rp "Masukkan Admin Chat ID Telegram baru: " tele_chat_id
 
     if [[ -n "${tele_token}" ]]; then
+        # Tes konektivitas bot
         echo -e "${THM_ACCENT}[*] Memverifikasi token bot Telegram...${THM_NC}"
         local bot_info
         bot_info="$(curl -s --connect-timeout 5 "https://api.telegram.org/bot${tele_token}/getMe" || true)"
@@ -554,8 +565,8 @@ interactive_menu() {
         echo -e " ${THM_BADGE}[02]${THM_NC} ${THM_VAL}Start Semua Service${THM_NC}"
         echo -e " ${THM_BADGE}[03]${THM_NC} ${THM_VAL}Stop Semua Service${THM_NC}"
         echo -e " ${THM_BADGE}[04]${THM_NC} ${THM_VAL}Restart Semua Service (Reload)${THM_NC}"
-        echo -e " ${THM_BADGE}[05]${THM_NC} ${THM_VAL}Ganti Domain Website & Setup SSL (Certbot / Cloudflare)${THM_NC}"
-        echo -e " ${THM_BADGE}[06]${THM_NC} ${THM_VAL}Pasang Cloudflare Origin Certificate (DNS Proxied)${THM_NC}"
+        echo -e " ${THM_BADGE}[05]${THM_NC} ${THM_VAL}Ganti Domain Website (Let's Encrypt / Cloudflare)${THM_NC}"
+        echo -e " ${THM_BADGE}[06]${THM_NC} ${THM_VAL}Pasang Cloudflare Origin Certificate (DNS Proxied / 15 Tahun)${THM_NC}"
         echo -e " ${THM_BADGE}[07]${THM_NC} ${THM_VAL}Reset Password Admin Website${THM_NC}"
         echo -e " ${THM_BADGE}[08]${THM_NC} ${THM_VAL}Ubah Cloudflare Turnstile Key${THM_NC}"
         echo -e " ${THM_BADGE}[09]${THM_NC} ${THM_VAL}Ubah Bot Token & Admin ID Telegram${THM_NC}"
@@ -572,7 +583,7 @@ interactive_menu() {
             3|03) cmd_stop ;;
             4|04) cmd_restart ;;
             5|05) cmd_change_domain ;;
-            6|06) cmd_cloudflare_ssl ;;
+            6|06) cmd_setup_cloudflare_ssl ;;
             7|07) cmd_reset_admin ;;
             8|08) cmd_turnstile ;;
             9|09) cmd_telegram ;;
@@ -601,7 +612,7 @@ if [[ $# -gt 0 ]]; then
         stop) cmd_stop ;;
         restart) cmd_restart ;;
         change-domain) cmd_change_domain ;;
-        cf-ssl|origin-ssl) cmd_cloudflare_ssl ;;
+        ssl-cloudflare|cf-ssl|origin-cert) cmd_setup_cloudflare_ssl ;;
         reset-admin)
             shift
             check_root
@@ -611,7 +622,7 @@ if [[ $# -gt 0 ]]; then
         logs) cmd_logs ;;
         backup) cmd_backup ;;
         *)
-            echo "Penggunaan: jawirblast [status|start|stop|restart|change-domain|cf-ssl|reset-admin|update|logs|backup]"
+            echo "Penggunaan: jawirblast [status|start|stop|restart|change-domain|ssl-cloudflare|reset-admin|update|logs|backup]"
             exit 1
             ;;
     esac
