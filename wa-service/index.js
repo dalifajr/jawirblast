@@ -20,15 +20,11 @@ const __dirname = path.dirname(__filename);
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 const INTERNAL_SERVICE_KEY = process.env.INTERNAL_SERVICE_KEY || 'blast_internal_secret_key_2026';
-const LARAVEL_WEBHOOK_URL = process.env.LARAVEL_WEBHOOK_URL || 'http://127.0.0.1:8000/api/wa/webhook';
+const LARAVEL_WEBHOOK_URL = process.env.LARAVEL_WEBHOOK_URL || 'http://127.0.0.1/api/wa/webhook';
 const AUTH_DIR = path.join(__dirname, 'auth_info_baileys');
 
 const logger = pino({
-  level: process.env.LOG_LEVEL || 'info',
-  transport: {
-    target: 'pino-pretty',
-    options: { colorize: true }
-  }
+  level: process.env.LOG_LEVEL || 'info'
 }).child({ service: 'baileys-service' });
 
 const app = express();

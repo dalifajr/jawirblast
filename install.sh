@@ -205,6 +205,9 @@ deploy_app() {
     # Instalasi dependensi Node.js Baileys WhatsApp
     if [[ -d "${INSTALL_DIR}/wa-service" ]]; then
         log_step "Menginstall dependensi Baileys WhatsApp Node.js..."
+        if [[ ! -f "${INSTALL_DIR}/wa-service/.env" ]] && [[ -f "${INSTALL_DIR}/wa-service/.env.example" ]]; then
+            cp "${INSTALL_DIR}/wa-service/.env.example" "${INSTALL_DIR}/wa-service/.env"
+        fi
         (cd "${INSTALL_DIR}/wa-service" && npm install --production)
     fi
 
@@ -221,7 +224,7 @@ deploy_app() {
 
     # Atur kepemilikan dan izin folder
     chown -R www-data:www-data "${INSTALL_DIR}"
-    chmod -R 775 "${INSTALL_DIR}/storage" "${INSTALL_DIR}/bootstrap/cache"
+    chmod -R 775 "${INSTALL_DIR}/storage" "${INSTALL_DIR}/bootstrap/cache" "${INSTALL_DIR}/wa-service"
 
     echo -e "${GREEN}[✓] Deploy aplikasi Laravel dan service Baileys selesai.${NC}"
 }
