@@ -89,7 +89,8 @@ install_packages() {
         if [[ "${codename}" != "resolute" ]]; then
             curl -fsSL https://deb.nodesource.com/setup_22.x | bash - || true
         fi
-        apt-get install -y -qq nodejs npm || apt-get install -y -qq nodejs
+        # Catatan: Paket nodejs dari nodesource sudah memuat npm. Jangan install 'npm' terpisah agar tidak bentrok package manager.
+        apt-get install -y nodejs
     fi
 
     # Deteksi prefix paket PHP yang tersedia
@@ -100,13 +101,24 @@ install_packages() {
         php_pkg_prefix="php8.3"
     fi
 
-    log_step "Menginstall Nginx, ${php_pkg_prefix}, MySQL Server, Node.js, dan Certbot..."
-    apt-get install -y -qq \
+    dpkg --configure -a || true
+    apt-get --fix-broken install -y || true
+
+    log_step "Menginstall Nginx, ${php_pkg_prefix}, MySQL Server, dan Certbot..."
+    if ! apt-get install -y \
         nginx certbot python3-certbot-nginx \
         "${php_pkg_prefix}-fpm" "${php_pkg_prefix}-cli" "${php_pkg_prefix}-curl" "${php_pkg_prefix}-mbstring" \
         "${php_pkg_prefix}-xml" "${php_pkg_prefix}-zip" "${php_pkg_prefix}-mysql" "${php_pkg_prefix}-gd" \
         "${php_pkg_prefix}-bcmath" "${php_pkg_prefix}-intl" "${php_pkg_prefix}-sqlite3" \
-        mysql-server nodejs npm
+        mysql-server; then
+
+        echo -e "${YELLOW}[!] Gagal menginstall paket dengan prefix ${php_pkg_prefix}, mencoba fallback ke php default...${NC}"
+        apt-get --fix-broken install -y || true
+        apt-get install -y \
+            nginx certbot python3-certbot-nginx \
+            php-fpm php-cli php-curl php-mbstring php-xml php-zip php-mysql php-gd php-bcmath php-intl php-sqlite3 \
+            mysql-server
+    fi
 
     # Pastikan service PHP-FPM aktif
     systemctl enable "${php_pkg_prefix}-fpm" 2>/dev/null || systemctl enable php-fpm 2>/dev/null || true
