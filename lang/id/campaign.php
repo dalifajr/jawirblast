@@ -12,6 +12,8 @@ return [
     'target_recipients' => 'Target Penerima',
     'all_contacts' => 'Seluruh Kontak Database (:count kontak)',
     'filter_by_group' => 'Pilih Berdasarkan Grup Kontak',
+    'by_group' => 'Berdasarkan Grup Kontak',
+    'by_contacts' => 'Pilih Kontak Tertentu',
     'total_selected' => ':count kontak terpilih',
 
     // Template Pesan & Spintax
@@ -19,8 +21,17 @@ return [
     'message_placeholder' => 'Tulis pesan Anda di sini...',
     'variables_hint' => 'Variabel dinamis: {name} untuk nama penerima, {phone} untuk nomor telepon.',
     'spintax_hint' => 'Gunakan Spintax untuk variasi pesan: {Halo|Hai|Selamat Siang} {Kak|Bro|Gan}.',
+    'spintax_hint_long' => 'Gunakan kurung kurawal berpipa seperti {Halo|Hai|Salam} untuk memvariasikan isi pesan secara acak guna menghindari pemblokiran WhatsApp.',
     'spintax_test' => 'Uji Acak Spintax',
     'media_attachment' => 'Lampiran Media (Opsional: Gambar JPG/PNG)',
+    'spintax_calculator' => 'Kalkulator Spintax',
+    'estimated_variations' => 'Estimasi Variasi Unik',
+    'message_ready' => 'Pesan Siap',
+    'preview_random_sample' => 'Pratinjau Variasi Acak',
+
+    // Sesi WhatsApp & Peringatan
+    'wa_not_connected' => 'Sesi WhatsApp Belum Terhubung',
+    'connect_wa_btn' => 'Hubungkan WhatsApp',
 
     // Anti-Freeze Pacing Settings
     'pacing_title' => 'Pengaturan Kecepatan & Delay (Anti-Freeze)',
@@ -34,6 +45,18 @@ return [
     'pause_broadcast' => 'Jeda Sementara',
     'resume_broadcast' => 'Lanjutkan Pengiriman',
     'cancel_broadcast' => 'Batalkan Kampanye',
+    'save_draft' => 'Simpan Sebagai Draf',
+    'send_now' => 'Kirim Siaran Sekarang',
+    'all_status' => 'Semua Status',
+    'filter' => 'Filter',
+    'search_placeholder' => 'Cari nama kampanye...',
+
+    // Statistik Ringkasan Kampanye
+    'total_campaigns' => 'Total Kampanye',
+    'messages_sent' => 'Pesan Terkirim',
+    'messages_delivered' => 'Pesan Diterima',
+    'messages_read' => 'Pesan Dibaca',
+    'messages_failed' => 'Gagal Kirim',
 
     // Status
     'status_draft' => 'Draf',

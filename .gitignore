@@ -28,6 +28,7 @@
 
 # Documentation (local development & progress tracking)
 /docs/
+/scratch/
 
 # IDE, OS & Tooling
 .idea/

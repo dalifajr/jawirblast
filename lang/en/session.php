@@ -11,6 +11,7 @@ return [
     'connected_jid' => 'Sender JID: :jid',
     'connected_phone' => 'Linked WhatsApp Phone: :phone',
     'last_active' => 'Last Active: :time',
+    'ready_notice' => 'WhatsApp Baileys Microservice is ready for high-speed broadcast dispatches.',
 
     // Linking Methods
     'link_device_title' => 'Link WhatsApp Device',
@@ -22,15 +23,15 @@ return [
     'qr_step_2' => 'Tap Menu (three dots) or Settings > Linked Devices.',
     'qr_step_3' => 'Tap Link a Device and point your phone camera at the QR code below.',
     'qr_refresh_button' => 'Refresh QR Code',
-    'qr_expired' => 'QR code has expired. Please refresh.',
+    'qr_expired' => 'QR Code has expired. Please refresh.',
 
     // Pairing Code
-    'pairing_phone_label' => 'Your WhatsApp Number',
+    'pairing_phone_label' => 'Your WhatsApp Phone Number',
     'pairing_phone_placeholder' => '6281234567890',
-    'pairing_phone_help' => 'Enter international number with country code without + sign.',
+    'pairing_phone_help' => 'Enter complete number with country code without + sign.',
     'pairing_request_btn' => 'Request Pairing Code',
-    'pairing_code_display' => 'Your Pairing Code:',
-    'pairing_step_info' => 'Open WhatsApp notification on your phone and enter the 8-digit code above.',
+    'pairing_code_display' => 'Your Linking Code:',
+    'pairing_step_info' => 'Open the pairing notification on your phone and enter the 8-digit code above.',
 
     // Disconnect
     'disconnect_btn' => 'Disconnect WhatsApp Session',

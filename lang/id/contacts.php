@@ -17,10 +17,18 @@ return [
     'group' => 'Grup',
     'select_group' => 'Pilih Grup Kontak',
     'all_groups' => 'Semua Grup',
+    'all_status' => 'Semua Status',
     'status' => 'Status Kontak',
     'status_active' => 'Aktif',
     'status_invalid' => 'Tidak Valid',
     'status_unsubscribed' => 'Berhenti Langganan',
+    'search_placeholder' => 'Cari nama atau nomor WhatsApp...',
+
+    // Statistik Ringkasan Kontak
+    'stat_total' => 'Total Kontak',
+    'stat_valid' => 'Kontak Valid E.164 (Aktif)',
+    'stat_invalid' => 'Nomor Tidak Valid',
+    'stat_unsubscribed' => 'Berhenti Langganan',
 
     // Normalisasi E.164
     'normalization_notice' => 'Nomor otomatis dinormalisasi ke format internasional E.164 (contoh: 0812... menjadi 62812...).',
@@ -29,9 +37,17 @@ return [
     // Grup Kontak
     'groups_title' => 'Grup Kontak',
     'create_group' => 'Buat Grup Baru',
+    'back_to_contacts' => 'Kembali ke Kontak',
+    'save_group' => 'Simpan Grup',
     'group_name' => 'Nama Grup',
+    'group_name_placeholder' => 'Contoh: Pelanggan VIP, Leads Webinar',
     'group_slug' => 'Slug Grup',
     'total_members' => 'Jumlah Anggota',
+    'members_count' => ':count Anggota',
+    'no_group_assigned' => 'Tidak Dikaitkan ke Grup',
+    'assign_to_group' => 'Masukkan ke Grup (Opsional)',
+    'confirm_delete_group' => 'Apakah Anda yakin ingin menghapus grup ini? Kontak di dalamnya tidak akan terhapus.',
+    'no_groups' => 'Belum ada grup kontak yang dibuat. Silakan buat grup baru di atas.',
 
     // Impor & Ekspor
     'import_modal_title' => 'Impor Database Kontak',
@@ -42,11 +58,14 @@ return [
     'import_success' => 'Berhasil mengimpor :count kontak baru.',
     'import_duplicates' => ':count kontak duplikat dilewati.',
     'export_all' => 'Ekspor Semua Kontak',
+    'start_import' => 'Mulai Impor',
+    'update_btn' => 'Perbarui',
 
     // Notifikasi
     'created_success' => 'Kontak baru berhasil disimpan.',
     'updated_success' => 'Data kontak berhasil diperbarui.',
     'deleted_success' => 'Kontak berhasil dihapus.',
     'confirm_delete' => 'Apakah Anda yakin ingin menghapus kontak ini?',
+    'confirm_batch_delete' => 'Apakah Anda yakin ingin menghapus kontak yang dipilih?',
     'no_contacts' => 'Belum ada kontak terdaftar dalam database.',
 ];

@@ -1,63 +1,71 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="responsive padding" style="max-width: 1200px; margin: 0 auto; width: 100%;">
+<div class="container-fluid px-3 px-lg-4 py-4" style="max-width: 1200px; margin: 0 auto;">
     <!-- Header & Action CTA -->
-    <header class="row middle-align margin-bottom">
-        <div class="max">
-            <h4 class="bold primary-text no-margin">Kampanye Broadcast</h4>
-            <p class="text-secondary no-margin small">Kelola dan pantau pengiriman pesan massal WhatsApp berkecepatan tinggi.</p>
+    <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-4">
+        <div>
+            <h4 class="fw-bold mb-1" style="color: var(--on-surface);">{{ __('campaign.title') }}</h4>
+            <p class="mb-0" style="color: var(--on-surface-variant); font-size: 0.875rem;">{{ __('campaign.subtitle') }}</p>
         </div>
         <div>
-            <a href="{{ route('campaigns.create') }}" class="button primary round">
-                <i>add</i>
-                <span>Buat Kampanye Baru</span>
+            <a href="{{ route('campaigns.create') }}" class="btn rounded-pill px-4 py-2.5 fw-semibold d-inline-flex align-items-center gap-2 shadow-sm" style="background: var(--primary, #65558f); color: #fff;">
+                <i class="fas fa-plus"></i>
+                <span>{{ __('campaign.create_campaign') }}</span>
             </a>
         </div>
-    </header>
+    </div>
 
-    <!-- 4 Tonal Metric Cards -->
-    <div class="grid margin-bottom">
-        <div class="s12 m6 l3">
-            <div class="card round surface border padding">
-                <div class="row middle-align">
-                    <i class="primary-text" style="font-size: 2rem;">campaign</i>
-                    <div class="max">
-                        <div class="text-secondary small">Total Kampanye</div>
-                        <h5 class="bold no-margin">{{ number_format($stats['total_campaigns']) }}</h5>
+    <!-- 4 Tonal Metric Cards (Concentric M3 Cards) -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 24px;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: var(--primary-container, #eaddff); color: var(--primary, #65558f); flex-shrink: 0;">
+                        <i class="fas fa-bullhorn fs-5"></i>
+                    </div>
+                    <div>
+                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('campaign.total_campaigns') }}</div>
+                        <h4 class="fw-bold mb-0" style="color: var(--on-surface);">{{ number_format($stats['total_campaigns']) }}</h4>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="s12 m6 l3">
-            <div class="card round surface border padding">
-                <div class="row middle-align">
-                    <i class="secondary-text" style="font-size: 2rem;">send</i>
-                    <div class="max">
-                        <div class="text-secondary small">Pesan Terkirim</div>
-                        <h5 class="bold no-margin">{{ number_format($stats['sent_messages']) }}</h5>
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 24px;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: var(--secondary-container, #e8def8); color: var(--secondary, #625b71); flex-shrink: 0;">
+                        <i class="fas fa-paper-plane fs-5"></i>
+                    </div>
+                    <div>
+                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('campaign.messages_sent') }}</div>
+                        <h4 class="fw-bold mb-0" style="color: var(--on-surface);">{{ number_format($stats['sent_messages']) }}</h4>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="s12 m6 l3">
-            <div class="card round surface border padding">
-                <div class="row middle-align">
-                    <i class="primary-text" style="font-size: 2rem;">done_all</i>
-                    <div class="max">
-                        <div class="text-secondary small">Pesan Dibaca</div>
-                        <h5 class="bold no-margin">{{ number_format($stats['read_messages']) }}</h5>
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 24px;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: #e8f5e9; color: #1b5e20; flex-shrink: 0;">
+                        <i class="fas fa-check-double fs-5"></i>
+                    </div>
+                    <div>
+                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('campaign.messages_read') }}</div>
+                        <h4 class="fw-bold mb-0" style="color: var(--on-surface);">{{ number_format($stats['read_messages']) }}</h4>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="s12 m6 l3">
-            <div class="card round surface border padding">
-                <div class="row middle-align">
-                    <i class="error-text" style="font-size: 2rem;">error</i>
-                    <div class="max">
-                        <div class="text-secondary small">Gagal Kirim</div>
-                        <h5 class="bold no-margin">{{ number_format($stats['failed_messages']) }}</h5>
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 24px;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: #fde8e8; color: #b91c1c; flex-shrink: 0;">
+                        <i class="fas fa-triangle-exclamation fs-5"></i>
+                    </div>
+                    <div>
+                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('campaign.messages_failed') }}</div>
+                        <h4 class="fw-bold mb-0" style="color: var(--on-surface);">{{ number_format($stats['failed_messages']) }}</h4>
                     </div>
                 </div>
             </div>
@@ -65,130 +73,138 @@
     </div>
 
     <!-- Search & Filter Controls -->
-    <div class="card round surface border padding margin-bottom">
-        <form method="GET" action="{{ route('campaigns.index') }}" class="row middle-align gap">
-            <div class="field border round max no-margin">
-                <input type="text" name="search" placeholder="Cari nama kampanye..." value="{{ request('search') }}">
-                <i>search</i>
+    <div class="card border-0 shadow-sm p-3 mb-4" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 24px;">
+        <form method="GET" action="{{ route('campaigns.index') }}" class="row g-2 align-items-center">
+            <div class="col-12 col-md">
+                <div class="input-group">
+                    <span class="input-group-text rounded-start-pill ps-3 pe-2 bg-transparent" style="border-color: var(--outline-variant, #cac4d0); color: var(--on-surface-variant);"><i class="fas fa-search"></i></span>
+                    <input type="text" name="search" class="form-control rounded-end-pill py-2" placeholder="{{ __('campaign.search_placeholder') }}" value="{{ request('search') }}" style="border-color: var(--outline-variant, #cac4d0);">
+                </div>
             </div>
-            <div class="field border round no-margin" style="min-width: 180px;">
-                <select name="status" onchange="this.form.submit()">
-                    <option value="all" {{ request('status', 'all') === 'all' ? 'selected' : '' }}>Semua Status</option>
-                    <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }}>Draf</option>
-                    <option value="processing" {{ request('status') === 'processing' ? 'selected' : '' }}>Sedang Berjalan</option>
-                    <option value="paused" {{ request('status') === 'paused' ? 'selected' : '' }}>Dijeda</option>
-                    <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Selesai</option>
-                    <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
+            <div class="col-12 col-md-auto" style="min-width: 180px;">
+                <select name="status" class="form-select rounded-pill py-2" onchange="this.form.submit()" style="border-color: var(--outline-variant, #cac4d0);">
+                    <option value="all" {{ request('status', 'all') === 'all' ? 'selected' : '' }}>{{ __('campaign.all_status') }}</option>
+                    <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }}>{{ __('campaign.status_draft') }}</option>
+                    <option value="processing" {{ request('status') === 'processing' ? 'selected' : '' }}>{{ __('campaign.status_processing') }}</option>
+                    <option value="paused" {{ request('status') === 'paused' ? 'selected' : '' }}>{{ __('campaign.status_paused') }}</option>
+                    <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>{{ __('campaign.status_completed') }}</option>
+                    <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>{{ __('campaign.status_cancelled') }}</option>
                 </select>
-                <i>filter_list</i>
             </div>
-            <button type="submit" class="button border round">
-                <span>Filter</span>
-            </button>
-            @if(request()->hasAny(['search', 'status']))
-                <a href="{{ route('campaigns.index') }}" class="button transparent round">
-                    <i>clear</i>
-                    <span>Reset</span>
-                </a>
-            @endif
+            <div class="col-12 col-md-auto d-flex gap-2">
+                <button type="submit" class="btn rounded-pill px-3.5 py-2 fw-semibold" style="background: var(--surface-container-high, #e6e0e9); color: var(--on-surface, #1d1b20); border: 1px solid var(--outline-variant, #cac4d0);">
+                    <i class="fas fa-filter me-1.5"></i>{{ __('campaign.filter') }}
+                </button>
+                @if(request()->hasAny(['search', 'status']))
+                    <a href="{{ route('campaigns.index') }}" class="btn rounded-pill px-3 py-2 fw-semibold" style="background: transparent; color: var(--on-surface-variant); border: 1px solid var(--outline-variant, #cac4d0);">
+                        <i class="fas fa-times me-1"></i>{{ __('common.reset') }}
+                    </a>
+                @endif
+            </div>
         </form>
     </div>
 
-    <!-- Campaigns Table -->
-    <div class="card round surface border padding">
+    <!-- Campaigns Table Card -->
+    <div class="card border-0 shadow-sm p-4" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 28px;">
         @if($campaigns->isEmpty())
-            <div class="center-align padding margin-vertical">
-                <i class="text-secondary" style="font-size: 4rem;">campaign</i>
-                <h6 class="bold margin-top text-secondary">Belum ada kampanye ditemukan</h6>
-                <p class="text-secondary small">Mulai buat kampanye broadcast pertama Anda untuk menyapa pelanggan secara massal.</p>
-                <a href="{{ route('campaigns.create') }}" class="button primary round margin-top">
-                    <i>add</i>
-                    <span>Buat Kampanye Sekarang</span>
+            <div class="text-center py-5">
+                <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px; background: var(--surface-container, #ece6f0); color: var(--on-surface-variant);">
+                    <i class="fas fa-bullhorn fs-3"></i>
+                </div>
+                <h5 class="fw-bold mb-1" style="color: var(--on-surface);">{{ __('common.no_data') }}</h5>
+                <p class="small mb-3" style="color: var(--on-surface-variant);">{{ __('campaign.subtitle') }}</p>
+                <a href="{{ route('campaigns.create') }}" class="btn rounded-pill px-4 py-2 fw-semibold shadow-sm" style="background: var(--primary, #65558f); color: #fff;">
+                    <i class="fas fa-plus me-1.5"></i>{{ __('campaign.create_campaign') }}
                 </a>
             </div>
         @else
-            <div class="responsive">
-                <table class="border">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
                     <thead>
-                        <tr>
-                            <th>Judul & Tanggal</th>
-                            <th>Target</th>
-                            <th style="min-width: 180px;">Progres Siaran</th>
-                            <th>Status</th>
-                            <th class="right-align">Aksi</th>
+                        <tr style="border-bottom: 2px solid var(--outline-variant, #cac4d0); color: var(--on-surface-variant); font-size: 0.8125rem;">
+                            <th class="pb-3">{{ __('campaign.campaign_title') }}</th>
+                            <th class="pb-3">{{ __('campaign.target_recipients') }}</th>
+                            <th class="pb-3" style="min-width: 200px;">{{ __('campaign.progress_title') }}</th>
+                            <th class="pb-3">{{ __('common.actions') }}</th>
+                            <th class="pb-3 text-end">{{ __('common.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($campaigns as $camp)
-                            <tr>
-                                <td>
-                                    <div class="bold">{{ $camp->title }}</div>
-                                    <div class="small text-secondary">Dibuat: {{ $camp->created_at->format('d M Y, H:i') }}</div>
-                                </td>
-                                <td>
-                                    <span class="badge border round">{{ number_format($camp->total_contacts) }} Kontak</span>
-                                </td>
-                                <td>
-                                    <div class="row middle-align no-wrap">
-                                        <progress class="max" value="{{ $camp->sent_count + $camp->failed_count }}" max="{{ max(1, $camp->total_contacts) }}"></progress>
-                                        <span class="small bold margin-left">{{ $camp->progress_percent }}%</span>
-                                    </div>
-                                    <div class="small text-secondary">
-                                        {{ $camp->sent_count }} terkirim @if($camp->failed_count > 0) · <span class="error-text">{{ $camp->failed_count }} gagal</span> @endif
+                            <tr style="border-bottom: 1px solid var(--outline-variant, #cac4d0);">
+                                <td class="py-3">
+                                    <div class="fw-bold" style="color: var(--on-surface);">{{ $camp->title }}</div>
+                                    <div class="small" style="color: var(--on-surface-variant); font-size: 0.75rem;">
+                                        <i class="far fa-calendar-alt me-1"></i>{{ $camp->created_at->format('d M Y, H:i') }}
                                     </div>
                                 </td>
-                                <td>
+                                <td class="py-3">
+                                    <span class="badge rounded-pill px-2.5 py-1.5" style="background: var(--surface-container-high, #e6e0e9); color: var(--on-surface, #1d1b20); font-weight: 500;">
+                                        <i class="fas fa-users me-1"></i>{{ number_format($camp->total_contacts) }}
+                                    </span>
+                                </td>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <div class="progress flex-grow-1" style="height: 8px; border-radius: 9999px; background: var(--surface-container, #ece6f0);">
+                                            <div class="progress-bar rounded-pill" role="progressbar" style="width: {{ $camp->progress_percent }}%; background: var(--primary, #65558f);" aria-valuenow="{{ $camp->progress_percent }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <span class="small fw-bold" style="color: var(--primary); font-size: 0.75rem;">{{ $camp->progress_percent }}%</span>
+                                    </div>
+                                    <div class="small" style="color: var(--on-surface-variant); font-size: 0.75rem;">
+                                        <span>{{ $camp->sent_count }} {{ __('campaign.messages_sent') }}</span>
+                                        @if($camp->failed_count > 0)
+                                            · <span class="text-danger fw-semibold">{{ $camp->failed_count }} {{ __('campaign.messages_failed') }}</span>
+                                        @endif
+                                    </div>
+                                </td>
+                                <td class="py-3">
                                     @if($camp->status === 'draft')
-                                        <span class="chip border small">Draf</span>
+                                        <span class="badge rounded-pill px-2.5 py-1 fw-semibold" style="background: var(--surface-container, #ece6f0); color: var(--on-surface-variant);">{{ __('campaign.status_draft') }}</span>
                                     @elseif($camp->status === 'processing')
-                                        <span class="chip primary white-text small">
-                                            <i>sync</i>
-                                            <span>Berjalan</span>
+                                        <span class="badge rounded-pill px-2.5 py-1 fw-semibold" style="background: var(--primary-container, #eaddff); color: var(--primary, #65558f);">
+                                            <i class="fas fa-rotate fa-spin me-1"></i>{{ __('campaign.status_processing') }}
                                         </span>
                                     @elseif($camp->status === 'paused')
-                                        <span class="chip amber white-text small">
-                                            <i>pause</i>
-                                            <span>Dijeda</span>
+                                        <span class="badge rounded-pill px-2.5 py-1 fw-semibold" style="background: #fff8e1; color: #f57f17; border: 1px solid #ffecb3;">
+                                            <i class="fas fa-pause me-1"></i>{{ __('campaign.status_paused') }}
                                         </span>
                                     @elseif($camp->status === 'completed')
-                                        <span class="chip green white-text small">
-                                            <i>check_circle</i>
-                                            <span>Selesai</span>
+                                        <span class="badge rounded-pill px-2.5 py-1 fw-semibold" style="background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9;">
+                                            <i class="fas fa-check me-1"></i>{{ __('campaign.status_completed') }}
                                         </span>
                                     @elseif(in_array($camp->status, ['cancelled', 'canceled']))
-                                        <span class="chip red white-text small">
-                                            <i>cancel</i>
-                                            <span>Dibatalkan</span>
+                                        <span class="badge rounded-pill px-2.5 py-1 fw-semibold" style="background: #fde8e8; color: #b91c1c; border: 1px solid #fca5a5;">
+                                            <i class="fas fa-times me-1"></i>{{ __('campaign.status_cancelled') }}
                                         </span>
                                     @else
-                                        <span class="chip error white-text small">{{ ucfirst($camp->status) }}</span>
+                                        <span class="badge rounded-pill px-2.5 py-1 fw-semibold" style="background: var(--surface-container-high); color: var(--on-surface);">{{ ucfirst($camp->status) }}</span>
                                     @endif
                                 </td>
-                                <td class="right-align">
-                                    <div class="row no-wrap right-align gap">
-                                        <a href="{{ route('campaigns.show', $camp->id) }}" class="button transparent circle small" title="Lihat Detail">
-                                            <i>visibility</i>
+                                <td class="py-3 text-end">
+                                    <div class="d-inline-flex align-items-center gap-1.5">
+                                        <a href="{{ route('campaigns.show', $camp->id) }}" class="btn btn-sm btn-icon rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: var(--surface-container, #ece6f0); color: var(--on-surface);" title="{{ __('campaign.campaign_detail') }}">
+                                            <i class="fas fa-eye" style="font-size: 0.75rem;"></i>
                                         </a>
 
                                         @if($camp->isDraft())
-                                            <form method="POST" action="{{ route('campaigns.start', $camp->id) }}" class="no-margin">
+                                            <form method="POST" action="{{ route('campaigns.start', $camp->id) }}" class="d-inline m-0">
                                                 @csrf
-                                                <button type="submit" class="button primary circle small" title="Mulai Siaran">
-                                                    <i>play_arrow</i>
+                                                <button type="submit" class="btn btn-sm btn-icon rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: var(--primary, #65558f); color: #fff;" title="{{ __('campaign.start_broadcast') }}">
+                                                    <i class="fas fa-play" style="font-size: 0.75rem;"></i>
                                                 </button>
                                             </form>
                                         @elseif($camp->isProcessing())
-                                            <form method="POST" action="{{ route('campaigns.pause', $camp->id) }}" class="no-margin">
+                                            <form method="POST" action="{{ route('campaigns.pause', $camp->id) }}" class="d-inline m-0">
                                                 @csrf
-                                                <button type="submit" class="button amber white-text circle small" title="Jeda Siaran">
-                                                    <i>pause</i>
+                                                <button type="submit" class="btn btn-sm btn-icon rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: #fff8e1; color: #f57f17; border: 1px solid #ffecb3;" title="{{ __('campaign.pause_broadcast') }}">
+                                                    <i class="fas fa-pause" style="font-size: 0.75rem;"></i>
                                                 </button>
                                             </form>
                                         @elseif($camp->isPaused())
-                                            <form method="POST" action="{{ route('campaigns.resume', $camp->id) }}" class="no-margin">
+                                            <form method="POST" action="{{ route('campaigns.resume', $camp->id) }}" class="d-inline m-0">
                                                 @csrf
-                                                <button type="submit" class="button primary circle small" title="Lanjutkan Siaran">
-                                                    <i>play_arrow</i>
+                                                <button type="submit" class="btn btn-sm btn-icon rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: var(--primary, #65558f); color: #fff;" title="{{ __('campaign.resume_broadcast') }}">
+                                                    <i class="fas fa-play" style="font-size: 0.75rem;"></i>
                                                 </button>
                                             </form>
                                         @endif
@@ -200,7 +216,7 @@
                 </table>
             </div>
 
-            <div class="margin-top">
+            <div class="mt-4">
                 {{ $campaigns->links() }}
             </div>
         @endif

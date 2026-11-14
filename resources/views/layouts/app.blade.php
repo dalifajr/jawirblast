@@ -40,6 +40,122 @@
         :root {
             --primary: #65558f;
             --primary-container: #eaddff;
+            --sidebar-width: 264px;
+            --top-navbar-height: 64px;
+        }
+
+        /* Critical M3 Sidebar & Master Canvas Framework */
+        @media (min-width: 992px) {
+            #sidebar.sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                width: 264px !important;
+                height: 100vh !important;
+                z-index: 1040 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                background: var(--surface-container-low, #f3edf7) !important;
+                border-right: 1px solid var(--outline-variant, #cac4d0) !important;
+                overflow-y: auto !important;
+                box-sizing: border-box !important;
+                transform: none !important;
+            }
+            .m3-top-navbar {
+                margin-left: 264px !important;
+                width: calc(100% - 264px) !important;
+                position: sticky !important;
+                top: 0 !important;
+                z-index: 1020 !important;
+                background: var(--surface-container-lowest, #ffffff) !important;
+                border-bottom: 1px solid var(--outline-variant, #cac4d0) !important;
+                min-height: 64px !important;
+            }
+            .main-content {
+                margin-left: 264px !important;
+                width: calc(100% - 264px) !important;
+                min-height: calc(100vh - 64px) !important;
+                box-sizing: border-box !important;
+                background: var(--surface, #fef7ff) !important;
+            }
+            #mobileMenuBtn, #sidebarCloseBtn, .sidebar-backdrop, .mobile-bottom-nav {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            #sidebar.sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                width: 280px !important;
+                max-width: 85vw !important;
+                height: 100vh !important;
+                z-index: 1050 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                background: var(--surface-container-low, #f3edf7) !important;
+                border-right: 1px solid var(--outline-variant, #cac4d0) !important;
+                transform: translateX(-105%) !important;
+                transition: transform 0.25s ease !important;
+            }
+            #sidebar.sidebar.show {
+                transform: translateX(0) !important;
+                box-shadow: 4px 0 28px rgba(0, 0, 0, 0.25) !important;
+            }
+            .m3-top-navbar {
+                margin-left: 0 !important;
+                width: 100% !important;
+            }
+            .main-content {
+                margin-left: 0 !important;
+                width: 100% !important;
+                padding-bottom: 76px !important;
+            }
+        }
+
+        .menu-items-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 2px !important;
+        }
+
+        .menu-item {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            height: 42px !important;
+            margin: 2px 4px !important;
+            padding: 0 16px !important;
+            border-radius: 9999px !important;
+            color: var(--on-surface-variant, #49454f) !important;
+            text-decoration: none !important;
+            font-size: 0.875rem !important;
+            font-weight: 500 !important;
+            transition: background-color 0.15s ease, color 0.15s ease !important;
+        }
+
+        .menu-item:hover {
+            background-color: var(--surface-container-high, #e6e0e9) !important;
+            color: var(--on-surface, #1d1b20) !important;
+        }
+
+        .menu-item.active {
+            background-color: var(--secondary-container, #e8def8) !important;
+            color: var(--on-secondary-container, #1d192b) !important;
+            font-weight: 700 !important;
+        }
+
+        .menu-icon-box {
+            width: 24px !important;
+            height: 24px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 0.95rem !important;
+            flex-shrink: 0 !important;
         }
 
         /* Mobile Table to Card Transformation (Pattern from D:\bot_tele_jualan) */

@@ -11,6 +11,7 @@ return [
     'connected_jid' => 'JID Pengirim: :jid',
     'connected_phone' => 'Nomor WhatsApp Tertaut: :phone',
     'last_active' => 'Terakhir Aktif: :time',
+    'ready_notice' => 'WhatsApp Baileys Microservice siap mengirim pesan broadcast.',
 
     // Metode Penautan
     'link_device_title' => 'Tautkan Perangkat WhatsApp',

@@ -1,64 +1,70 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="responsive padding" style="max-width: 1200px; margin: 0 auto; width: 100%;">
+<div class="container-fluid px-3 px-lg-4 py-4" style="max-width: 1200px; margin: 0 auto;">
     <!-- Header & Action Buttons -->
-    <header class="row middle-align margin-bottom">
-        <div class="max">
-            <h4 class="bold primary-text no-margin">{{ __('contacts.title') }}</h4>
-            <p class="text-secondary no-margin small">{{ __('contacts.subtitle') }}</p>
+    <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-4">
+        <div>
+            <h4 class="fw-bold mb-1" style="color: var(--on-surface);">{{ __('contacts.title') }}</h4>
+            <p class="mb-0" style="color: var(--on-surface-variant); font-size: 0.875rem;">{{ __('contacts.subtitle') }}</p>
         </div>
-        <div class="row no-wrap gap">
-            <button class="button primary round" onclick="openModal('modal-add-contact')">
-                <i>person_add</i>
+        <div class="d-flex flex-wrap gap-2">
+            <button class="btn rounded-pill px-3.5 py-2 fw-semibold d-inline-flex align-items-center gap-2 shadow-sm" style="background: var(--primary, #65558f); color: #fff;" onclick="openModal('modal-add-contact')">
+                <i class="fas fa-user-plus"></i>
                 <span>{{ __('contacts.add_contact') }}</span>
             </button>
-            <button class="button surface-container-high round" onclick="openModal('modal-import-contact')">
-                <i>upload_file</i>
+            <button class="btn rounded-pill px-3.5 py-2 fw-semibold d-inline-flex align-items-center gap-2" style="background: var(--surface-container-high, #e6e0e9); color: var(--on-surface, #1d1b20); border: 1px solid var(--outline-variant, #cac4d0);" onclick="openModal('modal-import-contact')">
+                <i class="fas fa-file-import"></i>
                 <span>{{ __('contacts.import_contacts') }}</span>
             </button>
-            <a href="{{ route('contacts.export', request()->only(['group_id', 'status'])) }}" class="button border round">
-                <i>download</i>
+            <a href="{{ route('contacts.export', request()->only(['group_id', 'status'])) }}" class="btn rounded-pill px-3.5 py-2 fw-semibold d-inline-flex align-items-center gap-2" style="background: transparent; color: var(--primary, #65558f); border: 1px solid var(--outline-variant, #cac4d0);">
+                <i class="fas fa-file-export"></i>
                 <span>{{ __('contacts.export_contacts') }}</span>
             </a>
-            <a href="{{ route('contacts.groups.index') }}" class="button transparent round">
-                <i>folder_shared</i>
+            <a href="{{ route('contacts.groups.index') }}" class="btn rounded-pill px-3.5 py-2 fw-semibold d-inline-flex align-items-center gap-2" style="background: var(--secondary-container, #e8def8); color: var(--on-secondary-container, #1d192b); border: 1px solid var(--outline-variant, #cac4d0);">
+                <i class="fas fa-folder"></i>
                 <span>{{ __('contacts.groups_title') }}</span>
             </a>
         </div>
-    </header>
+    </div>
 
-    <!-- Stat Summary Cards -->
-    <div class="row margin-bottom">
-        <div class="col s12 m4">
-            <div class="card round surface border padding">
-                <div class="row middle-align">
-                    <i class="primary-text" style="font-size: 2rem;">contacts</i>
-                    <div class="max">
-                        <div class="text-secondary small">Total Kontak</div>
-                        <h5 class="bold no-margin">{{ number_format($stats['total']) }}</h5>
+    <!-- Stat Summary Cards (M3 Concentric Cards) -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 24px;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: var(--primary-container, #eaddff); color: var(--primary, #65558f); flex-shrink: 0;">
+                        <i class="fas fa-users fs-5"></i>
+                    </div>
+                    <div>
+                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('contacts.stat_total') }}</div>
+                        <h4 class="fw-bold mb-0" style="color: var(--on-surface);">{{ number_format($stats['total']) }}</h4>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col s12 m4">
-            <div class="card round surface border padding">
-                <div class="row middle-align">
-                    <i class="green-text" style="font-size: 2rem;">verified</i>
-                    <div class="max">
-                        <div class="text-secondary small">Kontak Valid E.164 (Aktif)</div>
-                        <h5 class="bold no-margin green-text">{{ number_format($stats['active']) }}</h5>
+        <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 24px;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: #e8f5e9; color: #1b5e20; flex-shrink: 0;">
+                        <i class="fas fa-circle-check fs-5"></i>
+                    </div>
+                    <div>
+                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('contacts.stat_valid') }}</div>
+                        <h4 class="fw-bold mb-0" style="color: #1b5e20;">{{ number_format($stats['active']) }}</h4>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col s12 m4">
-            <div class="card round surface border padding">
-                <div class="row middle-align">
-                    <i class="red-text" style="font-size: 2rem;">error</i>
-                    <div class="max">
-                        <div class="text-secondary small">Nomor Tidak Valid</div>
-                        <h5 class="bold no-margin red-text">{{ number_format($stats['invalid']) }}</h5>
+        <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 24px;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: #fde8e8; color: #b91c1c; flex-shrink: 0;">
+                        <i class="fas fa-triangle-exclamation fs-5"></i>
+                    </div>
+                    <div>
+                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('contacts.stat_invalid') }}</div>
+                        <h4 class="fw-bold mb-0" style="color: #b91c1c;">{{ number_format($stats['invalid']) }}</h4>
                     </div>
                 </div>
             </div>
@@ -66,17 +72,19 @@
     </div>
 
     <!-- Search & Filter Controls -->
-    <div class="card round surface border padding margin-bottom">
-        <form method="GET" action="{{ route('contacts.index') }}" class="row middle-align no-margin gap">
+    <div class="card border-0 shadow-sm p-3 mb-4" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 24px;">
+        <form method="GET" action="{{ route('contacts.index') }}" class="row g-2 align-items-center">
             <!-- Search Bar -->
-            <div class="field prefix round max no-margin">
-                <i>search</i>
-                <input type="text" name="search" value="{{ is_string(request('search')) ? request('search') : '' }}" placeholder="Cari nama atau nomor WhatsApp...">
+            <div class="col-12 col-md">
+                <div class="input-group">
+                    <span class="input-group-text rounded-start-pill ps-3 pe-2 bg-transparent" style="border-color: var(--outline-variant, #cac4d0); color: var(--on-surface-variant);"><i class="fas fa-search"></i></span>
+                    <input type="text" name="search" class="form-control rounded-end-pill py-2" value="{{ is_string(request('search')) ? request('search') : '' }}" placeholder="{{ __('contacts.search_placeholder') }}" style="border-color: var(--outline-variant, #cac4d0);">
+                </div>
             </div>
 
             <!-- Filter Grup -->
-            <div class="field round no-margin" style="min-width: 180px;">
-                <select name="group_id" onchange="this.form.submit()">
+            <div class="col-12 col-md-auto" style="min-width: 180px;">
+                <select name="group_id" class="form-select rounded-pill py-2" onchange="this.form.submit()" style="border-color: var(--outline-variant, #cac4d0);">
                     <option value="">{{ __('contacts.all_groups') }}</option>
                     @foreach ($groups as $group)
                         <option value="{{ $group->id }}" {{ request('group_id') == $group->id ? 'selected' : '' }}>
@@ -87,98 +95,95 @@
             </div>
 
             <!-- Filter Status -->
-            <div class="field round no-margin" style="min-width: 150px;">
-                <select name="status" onchange="this.form.submit()">
-                    <option value="">Semua Status</option>
+            <div class="col-12 col-md-auto" style="min-width: 150px;">
+                <select name="status" class="form-select rounded-pill py-2" onchange="this.form.submit()" style="border-color: var(--outline-variant, #cac4d0);">
+                    <option value="">{{ __('contacts.all_status') }}</option>
                     <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>{{ __('contacts.status_active') }}</option>
                     <option value="invalid" {{ request('status') === 'invalid' ? 'selected' : '' }}>{{ __('contacts.status_invalid') }}</option>
                     <option value="unsubscribed" {{ request('status') === 'unsubscribed' ? 'selected' : '' }}>{{ __('contacts.status_unsubscribed') }}</option>
                 </select>
             </div>
 
-            <button type="submit" class="button round primary">
-                <i>filter_list</i>
-                <span>Filter</span>
-            </button>
-
-            @if (request()->hasAny(['search', 'group_id', 'status']))
-                <a href="{{ route('contacts.index') }}" class="button round border error">
-                    <i>clear</i>
-                    <span>Reset</span>
-                </a>
-            @endif
+            <div class="col-12 col-md-auto d-flex gap-2">
+                <button type="submit" class="btn rounded-pill px-3.5 py-2 fw-semibold" style="background: var(--surface-container-high, #e6e0e9); color: var(--on-surface, #1d1b20); border: 1px solid var(--outline-variant, #cac4d0);">
+                    <i class="fas fa-filter me-1.5"></i>{{ __('common.filter') }}
+                </button>
+                @if (request()->hasAny(['search', 'group_id', 'status']))
+                    <a href="{{ route('contacts.index') }}" class="btn rounded-pill px-3 py-2 fw-semibold" style="background: transparent; color: var(--on-surface-variant); border: 1px solid var(--outline-variant, #cac4d0);">
+                        <i class="fas fa-times me-1"></i>{{ __('common.reset') }}
+                    </a>
+                @endif
+            </div>
         </form>
     </div>
 
-    <!-- Contacts Table -->
-    <div class="card round surface border padding no-padding-horizontal">
+    <!-- Contacts Table Card -->
+    <div class="card border-0 shadow-sm p-4" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 28px;">
         <form id="batch-delete-form" method="POST" action="{{ route('contacts.batch_delete') }}">
             @csrf
-            <div class="padding-horizontal margin-bottom row middle-align">
-                <button type="submit" id="btn-batch-delete" class="button border error round small" style="display: none;" onclick="return confirm('Apakah Anda yakin ingin menghapus kontak yang dipilih?')">
-                    <i>delete_sweep</i>
+            <div class="mb-3 d-flex align-items-center">
+                <button type="submit" id="btn-batch-delete" class="btn btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1.5" style="display: none; background: #fde8e8; color: #b91c1c; border: 1px solid #fca5a5;" onclick="return confirm('{{ __('contacts.confirm_batch_delete') }}')">
+                    <i class="fas fa-trash-can"></i>
                     <span>{{ __('contacts.batch_delete') }} (<span id="selected-count">0</span>)</span>
                 </button>
             </div>
 
-            <div class="responsive">
-                <table class="border no-border-left no-border-right">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
                     <thead>
-                        <tr>
-                            <th style="width: 40px;">
-                                <label class="checkbox">
-                                    <input type="checkbox" id="select-all" onclick="toggleSelectAll(this)">
-                                    <span></span>
-                                </label>
+                        <tr style="border-bottom: 2px solid var(--outline-variant, #cac4d0); color: var(--on-surface-variant); font-size: 0.8125rem;">
+                            <th style="width: 40px;" class="pb-3">
+                                <div class="form-check m-0">
+                                    <input class="form-check-input" type="checkbox" id="select-all" onclick="toggleSelectAll(this)">
+                                </div>
                             </th>
-                            <th>{{ __('contacts.name') }}</th>
-                            <th>{{ __('contacts.phone_number') }}</th>
-                            <th>{{ __('contacts.raw_phone') }}</th>
-                            <th>{{ __('contacts.group') }}</th>
-                            <th>{{ __('contacts.status') }}</th>
-                            <th class="right-align">Aksi</th>
+                            <th class="pb-3">{{ __('contacts.name') }}</th>
+                            <th class="pb-3">{{ __('contacts.phone_number') }}</th>
+                            <th class="pb-3">{{ __('contacts.raw_phone') }}</th>
+                            <th class="pb-3">{{ __('contacts.group') }}</th>
+                            <th class="pb-3">{{ __('contacts.status') }}</th>
+                            <th class="pb-3 text-end">{{ __('common.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($contacts as $contact)
-                            <tr>
-                                <td>
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="ids[]" value="{{ $contact->id }}" class="contact-checkbox" onchange="updateBatchDeleteBtn()">
-                                        <span></span>
-                                    </label>
+                            <tr style="border-bottom: 1px solid var(--outline-variant, #cac4d0);">
+                                <td class="py-3">
+                                    <div class="form-check m-0">
+                                        <input class="form-check-input contact-checkbox" type="checkbox" name="ids[]" value="{{ $contact->id }}" onchange="updateBatchDeleteBtn()">
+                                    </div>
                                 </td>
-                                <td class="bold">{{ $contact->name }}</td>
-                                <td>
-                                    <code>{{ $contact->phone_number }}</code>
+                                <td class="py-3 fw-bold" style="color: var(--on-surface);">{{ $contact->name }}</td>
+                                <td class="py-3">
+                                    <code class="px-2 py-1 rounded" style="background: var(--surface-container, #ece6f0); color: var(--primary, #65558f);">{{ $contact->phone_number }}</code>
                                 </td>
-                                <td class="text-secondary small">{{ $contact->raw_phone ?? '-' }}</td>
-                                <td>
+                                <td class="py-3 small" style="color: var(--on-surface-variant); font-size: 0.8125rem;">{{ $contact->raw_phone ?? '-' }}</td>
+                                <td class="py-3">
                                     @forelse ($contact->groups as $grp)
-                                        <span class="chip small primary-container">{{ $grp->name }}</span>
+                                        <span class="badge rounded-pill px-2.5 py-1 fw-semibold me-1" style="background: var(--secondary-container, #e8def8); color: var(--on-secondary-container, #1d192b);">{{ $grp->name }}</span>
                                     @empty
-                                        <span class="text-secondary small">-</span>
+                                        <span class="small" style="color: var(--on-surface-variant);">-</span>
                                     @endforelse
                                 </td>
-                                <td>
+                                <td class="py-3">
                                     @if ($contact->status === 'active')
-                                        <span class="badge green white-text round small">{{ __('contacts.status_active') }}</span>
+                                        <span class="badge rounded-pill px-2.5 py-1 fw-semibold" style="background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9;">{{ __('contacts.status_active') }}</span>
                                     @elseif ($contact->status === 'invalid')
-                                        <span class="badge red white-text round small">{{ __('contacts.status_invalid') }}</span>
+                                        <span class="badge rounded-pill px-2.5 py-1 fw-semibold" style="background: #fde8e8; color: #b91c1c; border: 1px solid #fca5a5;">{{ __('contacts.status_invalid') }}</span>
                                     @else
-                                        <span class="badge grey white-text round small">{{ __('contacts.status_unsubscribed') }}</span>
+                                        <span class="badge rounded-pill px-2.5 py-1 fw-semibold" style="background: var(--surface-container-high); color: var(--on-surface-variant);">{{ __('contacts.status_unsubscribed') }}</span>
                                     @endif
                                 </td>
-                                <td class="right-align">
-                                    <div class="row no-wrap right-align gap">
-                                        <button type="button" class="button circle small transparent" onclick="openEditModal({{ json_encode($contact) }})" title="{{ __('contacts.edit_contact') }}">
-                                            <i>edit</i>
+                                <td class="py-3 text-end">
+                                    <div class="d-inline-flex align-items-center gap-1.5">
+                                        <button type="button" class="btn btn-sm btn-icon rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: var(--surface-container, #ece6f0); color: var(--on-surface);" onclick="openEditModal({{ json_encode($contact) }})" title="{{ __('contacts.edit_contact') }}">
+                                            <i class="fas fa-pen" style="font-size: 0.75rem;"></i>
                                         </button>
-                                        <form method="POST" action="{{ route('contacts.destroy', $contact->id) }}" class="no-margin" onsubmit="return confirm('{{ __('contacts.confirm_delete') }}')">
+                                        <form method="POST" action="{{ route('contacts.destroy', $contact->id) }}" class="d-inline m-0" onsubmit="return confirm('{{ __('contacts.confirm_delete') }}')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="button circle small transparent error-text" title="{{ __('contacts.delete_contact') }}">
-                                                <i>delete</i>
+                                            <button type="submit" class="btn btn-sm btn-icon rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: #fde8e8; color: #b91c1c;" title="{{ __('contacts.delete_contact') }}">
+                                                <i class="fas fa-trash-can" style="font-size: 0.75rem;"></i>
                                             </button>
                                         </form>
                                     </div>
@@ -186,9 +191,11 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="center-align padding text-secondary">
-                                    <i style="font-size: 3rem;" class="margin-bottom">contact_page</i>
-                                    <p>{{ __('contacts.no_contacts') }}</p>
+                                <td colspan="7" class="text-center py-5" style="color: var(--on-surface-variant);">
+                                    <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px; background: var(--surface-container, #ece6f0); color: var(--on-surface-variant);">
+                                        <i class="fas fa-address-book fs-3"></i>
+                                    </div>
+                                    <p class="mb-0">{{ __('contacts.no_contacts') }}</p>
                                 </td>
                             </tr>
                         @endforelse
@@ -197,130 +204,127 @@
             </div>
         </form>
 
-        <div class="padding-horizontal margin-top">
+        <div class="mt-4">
             {{ $contacts->links() }}
         </div>
     </div>
 </div>
 
 <!-- Modal Tambah Kontak -->
-<dialog id="modal-add-contact" class="round">
-    <h5 class="bold margin-bottom">{{ __('contacts.add_contact') }}</h5>
+<dialog id="modal-add-contact" class="border-0 shadow-lg p-4 rounded-4" style="max-width: 500px; width: 100%; background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important;">
+    <h5 class="fw-bold mb-3" style="color: var(--on-surface);">{{ __('contacts.add_contact') }}</h5>
     <form method="POST" action="{{ route('contacts.store') }}">
         @csrf
-        <div class="field label border round margin-bottom">
-            <input type="text" name="name" required placeholder=" ">
-            <label>{{ __('contacts.name') }}</label>
+        <div class="mb-3">
+            <label class="form-label fw-semibold small" style="color: var(--on-surface);">{{ __('contacts.name') }} *</label>
+            <input type="text" name="name" required class="form-control rounded-pill py-2 px-3" style="border-color: var(--outline-variant, #cac4d0);">
         </div>
 
-        <div class="field label border round margin-bottom">
-            <input type="text" name="phone_number" required placeholder=" ">
-            <label>{{ __('contacts.phone_number') }} (contoh: 081234567890)</label>
-            <span class="helper">{{ __('contacts.normalization_notice') }}</span>
+        <div class="mb-3">
+            <label class="form-label fw-semibold small" style="color: var(--on-surface);">{{ __('contacts.phone_number') }} *</label>
+            <input type="text" name="phone_number" required class="form-control rounded-pill py-2 px-3" placeholder="081234567890" style="border-color: var(--outline-variant, #cac4d0);">
+            <div class="form-text small mt-1" style="color: var(--on-surface-variant); font-size: 0.75rem;">{{ __('contacts.normalization_notice') }}</div>
         </div>
 
-        <div class="field label border round margin-bottom">
-            <select name="group_id">
+        <div class="mb-4">
+            <label class="form-label fw-semibold small" style="color: var(--on-surface);">{{ __('contacts.group') }}</label>
+            <select name="group_id" class="form-select rounded-pill py-2 px-3" style="border-color: var(--outline-variant, #cac4d0);">
                 <option value="">-- {{ __('contacts.select_group') }} --</option>
                 @foreach ($groups as $group)
                     <option value="{{ $group->id }}">{{ $group->name }}</option>
                 @endforeach
             </select>
-            <label>{{ __('contacts.group') }}</label>
         </div>
 
-        <nav class="right-align margin-top">
-            <button type="button" class="button border round" onclick="closeModal('modal-add-contact')">Batal</button>
-            <button type="submit" class="button primary round">
-                <i>save</i>
-                <span>Simpan</span>
+        <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn rounded-pill px-3.5 py-2 fw-semibold" style="background: transparent; color: var(--on-surface-variant); border: 1px solid var(--outline-variant, #cac4d0);" onclick="closeModal('modal-add-contact')">{{ __('common.cancel') }}</button>
+            <button type="submit" class="btn rounded-pill px-4 py-2 fw-semibold shadow-sm" style="background: var(--primary, #65558f); color: #fff;">
+                <i class="fas fa-floppy-disk me-1.5"></i>{{ __('common.save') }}
             </button>
-        </nav>
+        </div>
     </form>
 </dialog>
 
 <!-- Modal Edit Kontak -->
-<dialog id="modal-edit-contact" class="round">
-    <h5 class="bold margin-bottom">{{ __('contacts.edit_contact') }}</h5>
+<dialog id="modal-edit-contact" class="border-0 shadow-lg p-4 rounded-4" style="max-width: 500px; width: 100%; background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important;">
+    <h5 class="fw-bold mb-3" style="color: var(--on-surface);">{{ __('contacts.edit_contact') }}</h5>
     <form id="edit-contact-form" method="POST" action="">
         @csrf
         @method('PUT')
-        <div class="field label border round margin-bottom">
-            <input type="text" name="name" id="edit-name" required placeholder=" ">
-            <label>{{ __('contacts.name') }}</label>
+        <div class="mb-3">
+            <label class="form-label fw-semibold small" style="color: var(--on-surface);">{{ __('contacts.name') }} *</label>
+            <input type="text" name="name" id="edit-name" required class="form-control rounded-pill py-2 px-3" style="border-color: var(--outline-variant, #cac4d0);">
         </div>
 
-        <div class="field label border round margin-bottom">
-            <input type="text" name="phone_number" id="edit-phone" placeholder=" ">
-            <label>{{ __('contacts.phone_number') }}</label>
-            <span class="helper">{{ __('contacts.normalization_notice') }}</span>
+        <div class="mb-3">
+            <label class="form-label fw-semibold small" style="color: var(--on-surface);">{{ __('contacts.phone_number') }}</label>
+            <input type="text" name="phone_number" id="edit-phone" class="form-control rounded-pill py-2 px-3" style="border-color: var(--outline-variant, #cac4d0);">
+            <div class="form-text small mt-1" style="color: var(--on-surface-variant); font-size: 0.75rem;">{{ __('contacts.normalization_notice') }}</div>
         </div>
 
-        <div class="field label border round margin-bottom">
-            <select name="status" id="edit-status">
+        <div class="mb-3">
+            <label class="form-label fw-semibold small" style="color: var(--on-surface);">{{ __('contacts.status') }}</label>
+            <select name="status" id="edit-status" class="form-select rounded-pill py-2 px-3" style="border-color: var(--outline-variant, #cac4d0);">
                 <option value="active">{{ __('contacts.status_active') }}</option>
                 <option value="invalid">{{ __('contacts.status_invalid') }}</option>
                 <option value="unsubscribed">{{ __('contacts.status_unsubscribed') }}</option>
             </select>
-            <label>{{ __('contacts.status') }}</label>
         </div>
 
-        <div class="field label border round margin-bottom">
-            <select name="group_id" id="edit-group">
+        <div class="mb-4">
+            <label class="form-label fw-semibold small" style="color: var(--on-surface);">{{ __('contacts.group') }}</label>
+            <select name="group_id" id="edit-group" class="form-select rounded-pill py-2 px-3" style="border-color: var(--outline-variant, #cac4d0);">
                 <option value="">-- {{ __('contacts.select_group') }} --</option>
                 @foreach ($groups as $group)
                     <option value="{{ $group->id }}">{{ $group->name }}</option>
                 @endforeach
             </select>
-            <label>{{ __('contacts.group') }}</label>
         </div>
 
-        <nav class="right-align margin-top">
-            <button type="button" class="button border round" onclick="closeModal('modal-edit-contact')">Batal</button>
-            <button type="submit" class="button primary round">
-                <i>check</i>
-                <span>Perbarui</span>
+        <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn rounded-pill px-3.5 py-2 fw-semibold" style="background: transparent; color: var(--on-surface-variant); border: 1px solid var(--outline-variant, #cac4d0);" onclick="closeModal('modal-edit-contact')">{{ __('common.cancel') }}</button>
+            <button type="submit" class="btn rounded-pill px-4 py-2 fw-semibold shadow-sm" style="background: var(--primary, #65558f); color: #fff;">
+                <i class="fas fa-check me-1.5"></i>{{ __('contacts.update_btn') }}
             </button>
-        </nav>
+        </div>
     </form>
 </dialog>
 
 <!-- Modal Impor Kontak -->
-<dialog id="modal-import-contact" class="round" style="max-width: 520px; width: 100%;">
-    <h5 class="bold margin-bottom">{{ __('contacts.import_modal_title') }}</h5>
+<dialog id="modal-import-contact" class="border-0 shadow-lg p-4 rounded-4" style="max-width: 520px; width: 100%; background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important;">
+    <h5 class="fw-bold mb-3" style="color: var(--on-surface);">{{ __('contacts.import_modal_title') }}</h5>
     <form method="POST" action="{{ route('contacts.import') }}" enctype="multipart/form-data">
         @csrf
-        <p class="text-secondary small margin-bottom">{{ __('contacts.import_instructions') }}</p>
+        <p class="small mb-3" style="color: var(--on-surface-variant);">{{ __('contacts.import_instructions') }}</p>
 
-        <div class="field border round margin-bottom padding">
-            <label class="bold block margin-bottom small">{{ __('contacts.import_file_label') }}</label>
-            <input type="file" name="file" accept=".csv,.xlsx,.xls,.txt" required class="responsive">
+        <div class="mb-3 p-3 rounded-4" style="background: var(--surface-container-low, #f3edf7); border: 1px solid var(--outline-variant, #cac4d0);">
+            <label class="form-label fw-semibold small mb-2" style="color: var(--on-surface);">{{ __('contacts.import_file_label') }}</label>
+            <input type="file" name="file" accept=".csv,.xlsx,.xls,.txt" required class="form-control rounded-pill">
         </div>
 
-        <div class="field label border round margin-bottom">
-            <select name="group_id">
-                <option value="">-- Tidak Dikaitkan ke Grup --</option>
+        <div class="mb-3">
+            <label class="form-label fw-semibold small" style="color: var(--on-surface);">{{ __('contacts.assign_to_group') }}</label>
+            <select name="group_id" class="form-select rounded-pill py-2 px-3" style="border-color: var(--outline-variant, #cac4d0);">
+                <option value="">-- {{ __('contacts.no_group_assigned') }} --</option>
                 @foreach ($groups as $group)
                     <option value="{{ $group->id }}">{{ $group->name }}</option>
                 @endforeach
             </select>
-            <label>Masukkan ke Grup (Opsional)</label>
         </div>
 
-        <div class="margin-bottom">
-            <a href="{{ route('contacts.template') }}" class="button transparent small no-padding-left">
-                <i>download</i>
+        <div class="mb-4">
+            <a href="{{ route('contacts.template') }}" class="btn btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1.5" style="background: var(--surface-container, #ece6f0); color: var(--primary, #65558f);">
+                <i class="fas fa-file-arrow-down"></i>
                 <span>{{ __('contacts.import_template_download') }}</span>
             </a>
         </div>
 
-        <nav class="right-align margin-top">
-            <button type="button" class="button border round" onclick="closeModal('modal-import-contact')">Batal</button>
-            <button type="submit" class="button primary round">
-                <i>cloud_upload</i>
-                <span>Mulai Impor</span>
+        <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn rounded-pill px-3.5 py-2 fw-semibold" style="background: transparent; color: var(--on-surface-variant); border: 1px solid var(--outline-variant, #cac4d0);" onclick="closeModal('modal-import-contact')">{{ __('common.cancel') }}</button>
+            <button type="submit" class="btn rounded-pill px-4 py-2 fw-semibold shadow-sm" style="background: var(--primary, #65558f); color: #fff;">
+                <i class="fas fa-cloud-arrow-up me-1.5"></i>{{ __('contacts.start_import') }}
             </button>
-        </nav>
+        </div>
     </form>
 </dialog>
 
@@ -352,7 +356,7 @@
         } else {
             document.getElementById('edit-group').value = '';
         }
-        document.getElementById('edit-contact-form').action = '/contacts/' + contact.id;
+        document.getElementById('edit-contact-form').action = '{{ url("contacts") }}/' + contact.id;
         openModal('modal-edit-contact');
     }
 

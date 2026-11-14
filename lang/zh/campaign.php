@@ -12,6 +12,8 @@ return [
     'target_recipients' => '接收目标群',
     'all_contacts' => '数据库全量联系人 (:count 人)',
     'filter_by_group' => '按联系人分组筛选',
+    'by_group' => '按联系人分组',
+    'by_contacts' => '选择特定联系人',
     'total_selected' => '已选定 :count 个目标号码',
 
     // 消息模版与 Spintax
@@ -19,8 +21,17 @@ return [
     'message_placeholder' => '在此撰写您的营销内容...',
     'variables_hint' => '支持动态变量：{name} 表示联系人姓名，{phone} 表示电话号码。',
     'spintax_hint' => '支持 Spintax 变体随机语法：{您好|早上好|亲爱的顾客} {朋友|会员}。',
+    'spintax_hint_long' => '使用花括号与管道符如 {您好|Hi|问候} 随机生成内容变体，有效规避 WhatsApp 垃圾拦截。',
     'spintax_test' => '测试 Spintax 随机生成效果',
     'media_attachment' => '媒体附件 (可选: JPG/PNG 图片)',
+    'spintax_calculator' => 'Spintax 计算器',
+    'estimated_variations' => '预计唯一变体数',
+    'message_ready' => '消息就绪',
+    'preview_random_sample' => '预览随机变体',
+
+    // WhatsApp 会话与警告
+    'wa_not_connected' => 'WhatsApp 会话尚未连接',
+    'connect_wa_btn' => '连接 WhatsApp',
 
     // 防卡顿延迟设置
     'pacing_title' => '发送速度与防封控间隔设置 (Anti-Freeze)',
@@ -34,6 +45,18 @@ return [
     'pause_broadcast' => '暂停发送',
     'resume_broadcast' => '继续发送',
     'cancel_broadcast' => '取消活动',
+    'save_draft' => '保存为草稿',
+    'send_now' => '立即发送广播',
+    'all_status' => '所有状态',
+    'filter' => '筛选',
+    'search_placeholder' => '搜索活动名称...',
+
+    // 统计摘要
+    'total_campaigns' => '活动总数',
+    'messages_sent' => '已发送消息',
+    'messages_delivered' => '已送达消息',
+    'messages_read' => '已读消息',
+    'messages_failed' => '发送失败',
 
     // 状态
     'status_draft' => '草稿',
