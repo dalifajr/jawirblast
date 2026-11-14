@@ -35,6 +35,7 @@ Route::middleware('guest')->group(function () {
 
     // Rute Autentikasi Telegram (Dual Mode)
     Route::get('/auth/telegram/token', [TelegramAuthController::class, 'generateToken'])->name('telegram.token');
+    Route::match(['GET', 'POST'], '/auth/telegram/request', [TelegramAuthController::class, 'requestToken'])->name('auth.telegram.request');
     Route::get('/auth/telegram/check/{token}', [TelegramAuthController::class, 'checkToken'])->name('telegram.check');
     Route::match(['GET', 'POST'], '/auth/telegram/callback', [TelegramAuthController::class, 'handleCallback'])->name('telegram.callback');
 });

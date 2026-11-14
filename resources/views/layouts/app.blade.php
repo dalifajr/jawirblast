@@ -81,6 +81,7 @@
             }
         }
     </style>
+    @stack('styles')
 </head>
 <body class="surface light">
 

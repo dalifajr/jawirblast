@@ -1,12 +1,6 @@
 RANCANGAN PENGEMBANGAN SISTEM INFORMASI KAMPANYE BROADCAST WHATSAPP (JAWIRBLAST).
 
-saya ingin langsung melakukan proses development pada server dev saya. jadi saya ingin menginstall langsung aplikasi ini kedalam server dengan install.sh untuk membantu proses penginstallan. saya juga akan memasang domain untuk ini.
-
-jadi tolong buatkan install.sh yang berfungsi untuk menginstall project ini kedalam server, depedensi, paket-paket yang dibutuhkan juga harus terinstall.
-
-saya juga mau ada panel control pada terminal vps saya nanti yang berguna untuk start, stop dan restart service, change domain, reset password admin, ubah key turnsitle cf, ubah bot api key telegram, dan command untuk update website.
-
-saya sudah punya contoh programnya pada "D:\bot_tele_jualan"
+oke, sekarang kita build yang paling mudah terlebih dahulu. yaitu login page. buat login page yang hampir identik dengan yang sudah ada pada project bot_tele_jualan dzulfikrialifajri store.
 
 TEKNOLOGI YANG DIGUNAKAN;
 A. VPS UBUNTU 26 RAM 42GB 12CPUs
@@ -28,6 +22,6 @@ CATATAN PENTING BAGI KAMU;
 - selalu menggunakan /antislop /antislop-ui dan /antislop-code untuk mendapatkan ide desain yang tidak monoton.
 - gunakan pedoman gaya bahasa desain android M3 pada skill /beercss-material-you.
 - abaikan peringatan baileys api membuat nomor whatsapp terblokir.
-- karena ini akan digunakan pada perangkat mobile dan desktop, maka gunakan desain yang sudah jadi untuk dijadikan referensi "D:\bot_tele_jualan" project dalam folder ini berbeda dengan yang dikerjakan saat ini. jadi ambil saja yang sekiranya bermanfaat untuk project ini.
+- karena ini akan digunakan pada perangkat mobile dan desktop, maka gunakan desain yang sudah jadi untuk dijadikan referensi "D:\bot_tele_jualan" project dalam folder ini berbeda dengan yang dikerjakan saat ini. jadi ambil saja yang sekiranya bermanfaat untuk project ini, seperti login page, dashboard, layout menu, skema warna, dan elemen-lemen lain.
 - tempatkan semua dokumen yang kamu generate, pada folder docs di workspace ini, lalu buat subfolder baru lagi untuk merapihkan setiap dokumen step dan progress dari perkembangan project. dan kecualikan folder tersebut dari push github.
 - buat sub agent untuk bekerja sama dalam membangun project ini UI/UX designer, fullstack developer, QA/Tester. dan gunakan sdlc untuk framework pengembangannya.
