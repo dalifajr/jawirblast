@@ -16,102 +16,102 @@
         </div>
     </div>
 
-    <!-- 4 M3 Concentric Metric Cards -->
-    <div class="row g-3 mb-4">
-        <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: var(--primary-container, #eaddff); color: var(--primary, #65558f); flex-shrink: 0;">
-                        <i class="fas fa-users fs-5"></i>
+    <!-- 4 M3 Concentric Metric Cards (2x2 Grid on Mobile, 4x1 on Desktop) -->
+    <div class="row g-2 g-md-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm p-2.5 p-sm-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
+                <div class="d-flex align-items-center gap-2 gap-sm-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px; background: var(--primary-container, #eaddff); color: var(--primary, #65558f); flex-shrink: 0;">
+                        <i class="fas fa-users fs-6 fs-sm-5"></i>
                     </div>
-                    <div>
-                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('users.total_users') }}</div>
-                        <h4 class="fw-bold mb-0" style="color: var(--on-surface);">{{ number_format($stats['total_users']) }}</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: #e8f5e9; color: #1b5e20; flex-shrink: 0;">
-                        <i class="fas fa-user-check fs-5"></i>
-                    </div>
-                    <div>
-                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('users.active_users') }}</div>
-                        <h4 class="fw-bold mb-0" style="color: var(--on-surface);">{{ number_format($stats['active_users']) }}</h4>
+                    <div class="overflow-hidden">
+                        <div class="small fw-medium text-truncate" style="color: var(--on-surface-variant); font-size: 0.75rem;">{{ __('users.total_users') }}</div>
+                        <h4 class="fw-bold mb-0 text-truncate" style="color: var(--on-surface); font-size: 1.15rem;">{{ number_format($stats['total_users']) }}</h4>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: #fde8e8; color: #b91c1c; flex-shrink: 0;">
-                        <i class="fas fa-user-slash fs-5"></i>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm p-2.5 p-sm-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
+                <div class="d-flex align-items-center gap-2 gap-sm-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px; background: #e8f5e9; color: #1b5e20; flex-shrink: 0;">
+                        <i class="fas fa-user-check fs-6 fs-sm-5"></i>
                     </div>
-                    <div>
-                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('users.suspended_users') }}</div>
-                        <h4 class="fw-bold mb-0" style="color: var(--on-surface);">{{ number_format($stats['suspended_users']) }}</h4>
+                    <div class="overflow-hidden">
+                        <div class="small fw-medium text-truncate" style="color: var(--on-surface-variant); font-size: 0.75rem;">{{ __('users.active_users') }}</div>
+                        <h4 class="fw-bold mb-0 text-truncate" style="color: var(--on-surface); font-size: 1.15rem;">{{ number_format($stats['active_users']) }}</h4>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: var(--secondary-container, #e8def8); color: var(--secondary, #625b71); flex-shrink: 0;">
-                        <i class="fas fa-wallet fs-5"></i>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm p-2.5 p-sm-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
+                <div class="d-flex align-items-center gap-2 gap-sm-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px; background: #fde8e8; color: #b91c1c; flex-shrink: 0;">
+                        <i class="fas fa-user-slash fs-6 fs-sm-5"></i>
                     </div>
-                    <div>
-                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('users.total_circulating_balance') }}</div>
-                        <h4 class="fw-bold mb-0" style="color: var(--on-surface); font-size: 1.2rem;">Rp {{ number_format($stats['total_wallet_balance'], 0, ',', '.') }}</h4>
+                    <div class="overflow-hidden">
+                        <div class="small fw-medium text-truncate" style="color: var(--on-surface-variant); font-size: 0.75rem;">{{ __('users.suspended_users') }}</div>
+                        <h4 class="fw-bold mb-0 text-truncate" style="color: var(--on-surface); font-size: 1.15rem;">{{ number_format($stats['suspended_users']) }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm p-2.5 p-sm-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
+                <div class="d-flex align-items-center gap-2 gap-sm-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px; background: var(--secondary-container, #e8def8); color: var(--secondary, #625b71); flex-shrink: 0;">
+                        <i class="fas fa-wallet fs-6 fs-sm-5"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <div class="small fw-medium text-truncate" style="color: var(--on-surface-variant); font-size: 0.75rem;">{{ __('users.total_circulating_balance') }}</div>
+                        <h4 class="fw-bold mb-0 text-truncate" style="color: var(--on-surface); font-size: 1.05rem;">Rp {{ number_format($stats['total_wallet_balance'], 0, ',', '.') }}</h4>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Search & Filter Controls -->
-    <div class="card border-0 shadow-sm p-3 mb-4" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
-        <form method="GET" action="{{ route('admin.users.index') }}" class="row g-2 align-items-center">
-            <div class="col-12 col-md">
-                <div class="input-group">
-                    <span class="input-group-text rounded-start-pill ps-3 pe-2 bg-transparent" style="border-color: var(--outline-variant, #cac4d0); color: var(--on-surface-variant);"><i class="fas fa-search"></i></span>
-                    <input type="text" name="search" class="form-control rounded-end-pill py-2" placeholder="{{ __('users.search_placeholder') }}" value="{{ request('search') }}" style="border-color: var(--outline-variant, #cac4d0);">
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-auto" style="min-width: 170px;">
-                <select name="role" class="form-select rounded-pill py-2" onchange="this.form.submit()" style="border-color: var(--outline-variant, #cac4d0);">
-                    <option value="all" {{ request('role', 'all') === 'all' ? 'selected' : '' }}>{{ __('users.all_roles') }}</option>
-                    <option value="superadmin" {{ request('role') === 'superadmin' ? 'selected' : '' }}>{{ __('users.role_superadmin') }}</option>
-                    <option value="admin" {{ request('role') === 'admin' ? 'selected' : '' }}>{{ __('users.role_admin') }}</option>
-                    <option value="user" {{ request('role') === 'user' ? 'selected' : '' }}>{{ __('users.role_user') }}</option>
-                </select>
-            </div>
-            <div class="col-12 col-sm-6 col-md-auto" style="min-width: 170px;">
-                <select name="status" class="form-select rounded-pill py-2" onchange="this.form.submit()" style="border-color: var(--outline-variant, #cac4d0);">
-                    <option value="all" {{ request('status', 'all') === 'all' ? 'selected' : '' }}>{{ __('users.all_status') }}</option>
-                    <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>{{ __('users.status_active') }}</option>
-                    <option value="suspended" {{ request('status') === 'suspended' ? 'selected' : '' }}>{{ __('users.status_suspended') }}</option>
-                </select>
-            </div>
-            <div class="col-12 col-md-auto d-flex gap-2">
-                <button type="submit" class="btn rounded-pill px-3.5 py-2 fw-semibold" style="background: var(--surface-container-high, #e6e0e9); color: var(--on-surface, #1d1b20); border: 1px solid var(--outline-variant, #cac4d0);">
-                    <i class="fas fa-filter me-1.5"></i>{{ __('users.filter_btn') }}
-                </button>
-                @if(request()->hasAny(['search', 'role', 'status']))
-                    <a href="{{ route('admin.users.index') }}" class="btn rounded-pill px-3 py-2 fw-semibold" style="background: transparent; color: var(--on-surface-variant); border: 1px solid var(--outline-variant, #cac4d0);">
-                        <i class="fas fa-times me-1"></i>{{ __('users.reset_btn') }}
-                    </a>
-                @endif
-            </div>
-        </form>
-    </div>
-
-    <!-- User Table M3 (Edge-to-Edge Desktop Table / Mobile Responsive Cards) -->
+    <!-- Unified Filter Toolbar & User Table M3 Card (Edge-to-Edge Desktop Table / Mobile Responsive Cards) -->
     <div class="card border-0 shadow-sm mb-4 card-table-m3" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
-        <div class="table-responsive" style="border-radius: 20px;">
+        <!-- Integrated Toolbar: Search & Filter Controls -->
+        <div class="p-3 border-bottom" style="border-color: var(--outline-variant, #cac4d0) !important;">
+            <form method="GET" action="{{ route('admin.users.index') }}" class="row g-2 align-items-center">
+                <div class="col-12 col-md">
+                    <div class="input-group">
+                        <span class="input-group-text rounded-start-pill ps-3 pe-2 bg-transparent" style="border-color: var(--outline-variant, #cac4d0); color: var(--on-surface-variant);"><i class="fas fa-search"></i></span>
+                        <input type="text" name="search" class="form-control rounded-end-pill py-2" placeholder="{{ __('users.search_placeholder') }}" value="{{ request('search') }}" style="border-color: var(--outline-variant, #cac4d0);">
+                    </div>
+                </div>
+                <div class="col-6 col-md-auto" style="min-width: 150px;">
+                    <select name="role" class="form-select rounded-pill py-2" onchange="this.form.submit()" style="border-color: var(--outline-variant, #cac4d0); font-size: 0.85rem;">
+                        <option value="all" {{ request('role', 'all') === 'all' ? 'selected' : '' }}>{{ __('users.all_roles') }}</option>
+                        <option value="superadmin" {{ request('role') === 'superadmin' ? 'selected' : '' }}>{{ __('users.role_superadmin') }}</option>
+                        <option value="admin" {{ request('role') === 'admin' ? 'selected' : '' }}>{{ __('users.role_admin') }}</option>
+                        <option value="user" {{ request('role') === 'user' ? 'selected' : '' }}>{{ __('users.role_user') }}</option>
+                    </select>
+                </div>
+                <div class="col-6 col-md-auto" style="min-width: 150px;">
+                    <select name="status" class="form-select rounded-pill py-2" onchange="this.form.submit()" style="border-color: var(--outline-variant, #cac4d0); font-size: 0.85rem;">
+                        <option value="all" {{ request('status', 'all') === 'all' ? 'selected' : '' }}>{{ __('users.all_status') }}</option>
+                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>{{ __('users.status_active') }}</option>
+                        <option value="suspended" {{ request('status') === 'suspended' ? 'selected' : '' }}>{{ __('users.status_suspended') }}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-auto d-flex gap-2">
+                    <button type="submit" class="btn rounded-pill px-3.5 py-2 fw-semibold flex-grow-1 flex-md-grow-0" style="background: var(--surface-container-high, #e6e0e9); color: var(--on-surface, #1d1b20); border: 1px solid var(--outline-variant, #cac4d0);">
+                        <i class="fas fa-filter me-1.5"></i>{{ __('users.filter_btn') }}
+                    </button>
+                    @if(request()->hasAny(['search', 'role', 'status']))
+                        <a href="{{ route('admin.users.index') }}" class="btn rounded-pill px-3 py-2 fw-semibold" style="background: transparent; color: var(--on-surface-variant); border: 1px solid var(--outline-variant, #cac4d0);">
+                            <i class="fas fa-times me-1"></i>{{ __('users.reset_btn') }}
+                        </a>
+                    @endif
+                </div>
+            </form>
+        </div>
+
+        <div class="table-responsive" style="border-radius: 0 0 20px 20px;">
             <table class="table table-hover align-middle mb-0 table-responsive-cards w-100" style="margin: 0 !important; width: 100% !important;">
                 <thead style="background: var(--surface-container-low, #f3edf7); border-bottom: 1px solid var(--outline-variant, #cac4d0);">
                     <tr>

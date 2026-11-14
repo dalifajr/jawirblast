@@ -32,4 +32,11 @@ return [
     'pro_badge' => '专业版',
     'close_menu' => '关闭菜单',
     'menu' => '菜单',
+    'tab_broadcast' => '群发',
+    'tab_admin' => '管理',
+    'admin_dashboard' => '管理仪表板',
+    'start_broadcast' => '开始',
+    'system_settings' => '系统设置',
+    'devices' => '设备',
+    'home' => '首页',
 ];

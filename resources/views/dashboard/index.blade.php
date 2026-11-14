@@ -31,82 +31,82 @@
         </div>
     </div>
 
-    <!-- Row 2: 4 Metric Cards (.m3-dash-metric-card) -->
-    <div class="row g-3">
+    <!-- Row 2: 4 Metric Cards (2x2 Grid on Mobile, 4x1 on Desktop) -->
+    <div class="row g-2 g-md-3">
         <!-- Card 1: Total Kontak -->
-        <div class="col-12 col-sm-6 col-xl-3">
-            <a href="{{ route('contacts.index') }}" class="m3-dash-metric-card">
+        <div class="col-6 col-md-3">
+            <a href="{{ route('contacts.index') }}" class="m3-dash-metric-card p-2.5 p-sm-3">
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-secondary small fw-semibold">{{ __('dashboard.stats_total_contacts') }}</span>
-                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background: var(--surface-container); color: var(--primary);">
-                        <i class="fas fa-users"></i>
+                    <span class="text-secondary small fw-semibold text-truncate" style="font-size: 0.75rem;">{{ __('dashboard.stats_total_contacts') }}</span>
+                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; min-width: 32px; background: var(--surface-container); color: var(--primary);">
+                        <i class="fas fa-users fs-6"></i>
                     </div>
                 </div>
-                <div class="d-flex align-items-baseline justify-content-between mt-3">
-                    <div class="m3-dash-metric-val">{{ number_format($totalContacts ?? 0, 0, ',', '.') }}</div>
-                    <i class="fas fa-arrow-right text-secondary small"></i>
+                <div class="d-flex align-items-baseline justify-content-between mt-2 mt-sm-3">
+                    <div class="m3-dash-metric-val" style="font-size: 1.2rem;">{{ number_format($totalContacts ?? 0, 0, ',', '.') }}</div>
+                    <i class="fas fa-arrow-right text-secondary small d-none d-sm-inline"></i>
                 </div>
             </a>
         </div>
 
         <!-- Card 2: Kampanye Berjalan -->
-        <div class="col-12 col-sm-6 col-xl-3">
-            <a href="{{ route('campaigns.index') }}" class="m3-dash-metric-card">
+        <div class="col-6 col-md-3">
+            <a href="{{ route('campaigns.index') }}" class="m3-dash-metric-card p-2.5 p-sm-3">
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-secondary small fw-semibold">{{ __('dashboard.stats_active_campaigns') }}</span>
-                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background: var(--surface-container); color: var(--primary);">
-                        <i class="fas fa-bullhorn"></i>
+                    <span class="text-secondary small fw-semibold text-truncate" style="font-size: 0.75rem;">{{ __('dashboard.stats_active_campaigns') }}</span>
+                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; min-width: 32px; background: var(--surface-container); color: var(--primary);">
+                        <i class="fas fa-bullhorn fs-6"></i>
                     </div>
                 </div>
-                <div class="d-flex align-items-baseline justify-content-between mt-3">
-                    <div class="m3-dash-metric-val">{{ number_format($activeCampaigns ?? 0, 0, ',', '.') }}</div>
-                    <i class="fas fa-arrow-right text-secondary small"></i>
+                <div class="d-flex align-items-baseline justify-content-between mt-2 mt-sm-3">
+                    <div class="m3-dash-metric-val" style="font-size: 1.2rem;">{{ number_format($activeCampaigns ?? 0, 0, ',', '.') }}</div>
+                    <i class="fas fa-arrow-right text-secondary small d-none d-sm-inline"></i>
                 </div>
             </a>
         </div>
 
         <!-- Card 3: Pesan Terkirim -->
-        <div class="col-12 col-sm-6 col-xl-3">
-            <a href="{{ route('campaigns.index') }}" class="m3-dash-metric-card">
+        <div class="col-6 col-md-3">
+            <a href="{{ route('campaigns.index') }}" class="m3-dash-metric-card p-2.5 p-sm-3">
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-secondary small fw-semibold">{{ __('dashboard.stats_messages_sent') }}</span>
-                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background: var(--surface-container); color: #28a745;">
-                        <i class="fas fa-check-double"></i>
+                    <span class="text-secondary small fw-semibold text-truncate" style="font-size: 0.75rem;">{{ __('dashboard.stats_messages_sent') }}</span>
+                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; min-width: 32px; background: var(--surface-container); color: #28a745;">
+                        <i class="fas fa-check-double fs-6"></i>
                     </div>
                 </div>
-                <div class="d-flex align-items-baseline justify-content-between mt-3">
-                    <div class="m3-dash-metric-val">{{ number_format($sentMessagesCount ?? 0, 0, ',', '.') }}</div>
-                    <i class="fas fa-arrow-right text-secondary small"></i>
+                <div class="d-flex align-items-baseline justify-content-between mt-2 mt-sm-3">
+                    <div class="m3-dash-metric-val" style="font-size: 1.2rem;">{{ number_format($sentMessagesCount ?? 0, 0, ',', '.') }}</div>
+                    <i class="fas fa-arrow-right text-secondary small d-none d-sm-inline"></i>
                 </div>
             </a>
         </div>
 
         <!-- Card 4: WhatsApp Engine -->
-        <div class="col-12 col-sm-6 col-xl-3">
-            <a href="{{ route('whatsapp.index') }}" class="m3-dash-metric-card">
+        <div class="col-6 col-md-3">
+            <a href="{{ route('whatsapp.index') }}" class="m3-dash-metric-card p-2.5 p-sm-3">
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-secondary small fw-semibold">{{ __('dashboard.wa_session_title') }}</span>
-                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background: var(--surface-container); color: #25d366;">
-                        <i class="fab fa-whatsapp fs-5"></i>
+                    <span class="text-secondary small fw-semibold text-truncate" style="font-size: 0.75rem;">{{ __('dashboard.wa_session_title') }}</span>
+                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; min-width: 32px; background: var(--surface-container); color: #25d366;">
+                        <i class="fab fa-whatsapp fs-6"></i>
                     </div>
                 </div>
-                <div class="d-flex align-items-baseline justify-content-between mt-3">
-                    <div class="m3-dash-metric-val" style="font-size: 1.05rem;">
+                <div class="d-flex align-items-baseline justify-content-between mt-2 mt-sm-3">
+                    <div class="m3-dash-metric-val" style="font-size: 0.95rem;">
                         @if ($waSession && $waSession->status === 'connected')
-                            <span class="m3-badge m3-badge-success">
-                                <i class="fas fa-circle" style="font-size: 0.5rem;"></i> {{ __('dashboard.wa_connected') }}
+                            <span class="m3-badge m3-badge-success" style="font-size: 0.65rem; padding: 2px 6px;">
+                                <i class="fas fa-circle" style="font-size: 0.45rem;"></i> {{ __('dashboard.wa_connected') }}
                             </span>
                         @elseif ($waSession && $waSession->status === 'connecting')
-                            <span class="m3-badge m3-badge-warning">
+                            <span class="m3-badge m3-badge-warning" style="font-size: 0.65rem; padding: 2px 6px;">
                                 <i class="fas fa-circle-notch fa-spin" style="font-size: 0.65rem;"></i> {{ __('dashboard.wa_connecting') }}
                             </span>
                         @else
-                            <span class="m3-badge m3-badge-danger">
-                                <i class="fas fa-circle" style="font-size: 0.5rem;"></i> {{ __('dashboard.wa_disconnected') }}
+                            <span class="m3-badge m3-badge-danger" style="font-size: 0.65rem; padding: 2px 6px;">
+                                <i class="fas fa-circle" style="font-size: 0.45rem;"></i> {{ __('dashboard.wa_disconnected') }}
                             </span>
                         @endif
                     </div>
-                    <i class="fas fa-arrow-right text-secondary small"></i>
+                    <i class="fas fa-arrow-right text-secondary small d-none d-sm-inline"></i>
                 </div>
             </a>
         </div>

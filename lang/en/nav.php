@@ -32,4 +32,11 @@ return [
     'pro_badge' => 'PRO',
     'close_menu' => 'Close Menu',
     'menu' => 'Menu',
+    'tab_broadcast' => 'Broadcast',
+    'tab_admin' => 'Admin',
+    'admin_dashboard' => 'Admin Dashboard',
+    'start_broadcast' => 'Start',
+    'system_settings' => 'System Settings',
+    'devices' => 'Devices',
+    'home' => 'Home',
 ];

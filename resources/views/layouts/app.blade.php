@@ -237,6 +237,14 @@
                 padding-bottom: calc(68px + env(safe-area-inset-bottom)) !important;
             }
 
+            /* Hide user profile button & hamburger button on smartphone */
+            .m3-user-btn {
+                display: none !important;
+            }
+            #mobileMenuBtn {
+                display: none !important;
+            }
+
             #sidebar.sidebar {
                 position: fixed !important;
                 top: auto !important;
@@ -320,7 +328,7 @@
                 background: var(--surface-container-lowest, #ffffff) !important;
             }
 
-            /* Mobile Bottom Navigation Bar */
+            /* Mobile Bottom Navigation Bar: Centered Text & Ergonomic 10px Font */
             .mobile-bottom-nav {
                 position: fixed !important;
                 bottom: 0 !important;
@@ -346,15 +354,23 @@
                 padding: 4px 0 !important;
                 color: var(--on-surface-variant, #49454f) !important;
                 text-decoration: none !important;
-                font-family: var(--font-poppins, sans-serif) !important;
-                font-size: 0.6875rem !important;
-                font-weight: 600 !important;
-                line-height: 1.2 !important;
                 background: transparent !important;
                 border: none !important;
                 cursor: pointer !important;
+                text-align: center !important;
                 transition: color 0.15s cubic-bezier(0.2, 0, 0, 1) !important;
                 -webkit-tap-highlight-color: transparent !important;
+            }
+
+            .mobile-nav-item span {
+                text-align: center !important;
+                display: block !important;
+                width: 100% !important;
+                font-family: var(--font-poppins, sans-serif) !important;
+                font-size: 0.625rem !important; /* 10px */
+                letter-spacing: -0.01em !important;
+                line-height: 1.15 !important;
+                font-weight: 600 !important;
             }
 
             .mobile-nav-item i {
@@ -388,15 +404,87 @@
                 background: var(--surface-container-low, #1d1b20) !important;
                 border-top-color: var(--outline-variant, #49454f) !important;
             }
+
+            /* Mobile 4-Columns Compact Super-App Tile Grid (Sesuai D:\bot_tele_jualan) */
+            .menu-group {
+                padding: 0.4rem 0.65rem !important;
+                border-bottom: 1px solid var(--outline-variant, #cac4d0) !important;
+            }
+
+            .menu-header {
+                padding: 0.35rem 0.25rem 0.35rem !important;
+                font-size: 0.6875rem !important;
+                font-weight: 700 !important;
+                letter-spacing: 0.05em !important;
+                text-transform: uppercase !important;
+                color: var(--on-surface-variant, #49454f) !important;
+            }
+
+            .menu-items-grid {
+                display: grid !important;
+                grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+                gap: 8px 6px !important;
+            }
+
+            .menu-item {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                height: auto !important;
+                min-height: 72px !important;
+                margin: 0 !important;
+                padding: 8px 3px 6px !important;
+                border-radius: 16px !important;
+                background: var(--surface-container-lowest, #ffffff) !important;
+                border: 1px solid var(--outline-variant, #cac4d0) !important;
+                position: relative !important;
+                text-decoration: none !important;
+                box-shadow: none !important;
+                box-sizing: border-box !important;
+                transition: background-color 0.15s ease, border-color 0.15s ease !important;
+            }
+
+            [data-bs-theme="dark"] .menu-item {
+                background: var(--surface-container-high, #2b2930) !important;
+                border-color: var(--outline-variant, #49454f) !important;
+            }
+
+            .menu-item.active {
+                background: var(--secondary-container, #e8def8) !important;
+                border-color: var(--primary, #65558f) !important;
+            }
+
+            [data-bs-theme="dark"] .menu-item.active {
+                background: var(--secondary-container, #4a4458) !important;
+                border-color: var(--primary, #d0bcff) !important;
+            }
+
+            .menu-item .menu-icon-box {
+                width: 32px !important;
+                height: 32px !important;
+                font-size: 1.15rem !important;
+                margin-bottom: 4px !important;
+            }
+
+            .menu-item .menu-label-text {
+                font-size: 0.6875rem !important;
+                text-align: center !important;
+                white-space: normal !important;
+                line-height: 1.15 !important;
+                word-break: break-word !important;
+            }
         }
 
         /* === M3 EXPRESSIVE SIDEBAR BRAND HEADER === */
+        /* Border-bottom removed for seamless continuous connection with sidebar canvas */
         .m3-brand-header {
             position: sticky !important;
             top: 0 !important;
             z-index: 30 !important;
             background: var(--surface-container-low, #f3edf7) !important;
-            border-bottom: 1px solid var(--outline-variant, #cac4d0) !important;
+            border-bottom: none !important;
             backdrop-filter: blur(8px) !important;
             -webkit-backdrop-filter: blur(8px) !important;
             display: flex !important;
@@ -411,7 +499,59 @@
 
         [data-bs-theme="dark"] .m3-brand-header {
             background: var(--surface-container-low, #1d1b20) !important;
-            border-bottom-color: var(--outline-variant, #49454f) !important;
+            border-bottom: none !important;
+        }
+
+        /* Segmented Button (Figma M3 Pill Switch: Broadcast vs Admin) */
+        .m3-segmented-switch {
+            display: flex;
+            background: var(--surface-container-high, #e6e0e9);
+            border: 1px solid var(--outline-variant, #cac4d0);
+            border-radius: 9999px;
+            padding: 3px;
+            margin: 4px 16px 12px 16px;
+            position: relative;
+            user-select: none;
+        }
+
+        [data-bs-theme="dark"] .m3-segmented-switch {
+            background: var(--surface-container-high, #2b2930);
+            border-color: var(--outline-variant, #49454f);
+        }
+
+        .m3-segmented-item {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            height: 32px;
+            border-radius: 9999px;
+            font-family: var(--font-poppins, sans-serif);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--on-surface-variant, #49454f);
+            text-decoration: none !important;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .m3-segmented-item.active {
+            background: var(--secondary-container, #e8def8);
+            color: var(--on-secondary-container, #1d192b);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+        }
+
+        [data-bs-theme="dark"] .m3-segmented-item.active {
+            background: var(--secondary-container, #4a4458);
+            color: var(--on-secondary-container, #e8def8);
+        }
+
+        .m3-segmented-item:hover:not(.active) {
+            color: var(--on-surface, #1d1b20);
+            background: var(--surface-container, #eceef4);
         }
 
         .m3-brand-header a {
@@ -645,6 +785,8 @@
     @php
         $currentLocale = app()->getLocale();
         $user = auth()->user();
+        $isAdminOrSuper = $user && ($user->isSuperAdmin() || $user->isAdmin());
+        $isManagementMode = $isAdminOrSuper && (request()->routeIs('admin.*') || request('view') === 'admin');
     @endphp
 
     @if(session()->has('admin_impersonator_id'))
@@ -670,150 +812,201 @@
             <div class="sheet-handle-bar"></div>
         </div>
 
-        <!-- Mobile Sheet Top Header (Visible on Mobile < 992px) -->
-        <div class="sheet-header-mobile d-lg-none">
-            <div class="d-flex align-items-center justify-content-between px-3.5 py-2.5 border-bottom" style="border-color: var(--outline-variant) !important;">
-                <div class="d-flex align-items-center gap-2.5">
-                    @include('partials.brand-logo', ['style' => 'width: 32px; height: 32px; min-width: 32px;'])
-                    <div class="d-flex flex-column" style="line-height: 1.15;">
-                        <div class="d-flex align-items-center gap-1.5">
-                            <span class="fw-bold" style="font-size: 0.92rem; color: var(--on-surface);">JAWIRBLAST</span>
-                            <span class="m3-badge m3-badge-info" style="font-size: 0.62rem; padding: 1px 6px; border-radius: 9999px;">{{ __('nav.pro_badge') }}</span>
-                        </div>
-                        <small class="text-secondary" style="font-size: 0.7rem;">{{ __('nav.brand_tagline') }}</small>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-sm btn-icon rounded-circle" id="sidebarCloseBtn" aria-label="{{ __('nav.close_menu') }}" style="width: 32px; height: 32px; color: var(--on-surface-variant);">
-                    <i class="fas fa-times"></i>
-                </button>
+        @auth
+        <!-- Mobile Sheet User Profile Header (Visible on Mobile < 992px) - Sesuai D:\bot_tele_jualan -->
+        <div class="sidebar-header d-flex align-items-center gap-2.5 px-3 py-2.5 border-bottom d-lg-none" style="border-color: var(--outline-variant) !important;">
+            <div class="user-avatar rounded-circle d-flex align-items-center justify-content-center fw-bold text-white bg-primary overflow-hidden" style="width: 40px; height: 40px; min-width: 40px; flex-shrink: 0; font-size: 1rem;">
+                @if($user->avatar)
+                    <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                @else
+                    {{ strtoupper(substr($user->name ?? 'U', 0, 1)) }}
+                @endif
+            </div>
+            <div class="d-flex flex-column text-truncate" style="line-height: 1.2;">
+                <span class="fw-bold text-truncate" style="font-size: 0.9rem; color: var(--on-surface);">{{ $user->name }}</span>
+                <small class="text-secondary" style="font-size: 0.72rem;">
+                    @if($user->telegram_id)
+                        <i class="fab fa-telegram text-info"></i> TG: {{ $user->telegram_id }}
+                    @else
+                        <span class="text-capitalize">{{ $user->role ?? 'User' }}</span>
+                    @endif
+                </small>
+            </div>
+            <div class="ms-auto d-lg-none">
+                <form action="{{ route('logout') }}" method="POST" class="m-0">
+                    @csrf
+                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1 d-flex align-items-center gap-1.5" aria-label="{{ __('nav.logout') }}" title="{{ __('nav.logout') }}">
+                        <i class="fas fa-sign-out-alt"></i> <span style="font-size: 0.78rem;" class="fw-semibold">{{ __('nav.logout') }}</span>
+                    </button>
+                </form>
             </div>
         </div>
+
+        @if($isAdminOrSuper)
+        <!-- Mobile Segmented Switch (Visible on Mobile < 992px) -->
+        <div class="m3-segmented-switch my-2 mx-3 d-lg-none">
+            <button type="button" class="m3-segmented-item tab-btn-broadcast {{ !$isManagementMode ? 'active' : '' }}" onclick="switchSidebarRoleTab('broadcast')" title="{{ __('nav.tab_broadcast') }}">
+                <i class="fas fa-paper-plane me-1"></i> {{ __('nav.tab_broadcast') }}
+            </button>
+            <button type="button" class="m3-segmented-item tab-btn-admin {{ $isManagementMode ? 'active' : '' }}" onclick="switchSidebarRoleTab('admin')" title="{{ __('nav.tab_admin') }}">
+                <i class="fas fa-shield-alt me-1"></i> {{ __('nav.tab_admin') }}
+            </button>
+        </div>
+        @endif
+        @endauth
 
         <!-- Desktop Sidebar Brand Header (Visible on Desktop >= 992px) -->
-        <div class="m3-brand-header d-none d-lg-flex align-items-center justify-content-between">
-            <a href="{{ route('dashboard') }}" class="d-flex align-items-center gap-3 text-decoration-none" style="color: inherit; overflow: hidden;">
-                @include('partials.brand-logo', ['style' => 'width: 40px; height: 40px; min-width: 40px; flex-shrink: 0;'])
-                <div class="m3-brand-text">
-                    <div class="d-flex align-items-center gap-1.5">
-                        <span class="m3-brand-title">JAWIRBLAST</span>
-                        <span class="m3-badge m3-badge-info" style="font-size: 0.65rem; padding: 2px 8px; border-radius: 9999px;">{{ __('nav.pro_badge') }}</span>
+        <div class="d-none d-lg-block sticky-top" style="position: sticky; top: 0; z-index: 10; background: var(--surface-container-low, #f3edf7); padding-bottom: 2px;">
+            <div class="m3-brand-header d-flex align-items-center justify-content-between">
+                <a href="{{ route('dashboard') }}" class="d-flex align-items-center gap-3 text-decoration-none" style="color: inherit; overflow: hidden;">
+                    @include('partials.brand-logo', ['style' => 'width: 40px; height: 40px; min-width: 40px; flex-shrink: 0;'])
+                    <div class="m3-brand-text">
+                        <div class="d-flex align-items-center gap-1.5">
+                            <span class="m3-brand-title">JAWIRBLAST</span>
+                            <span class="m3-badge m3-badge-info" style="font-size: 0.65rem; padding: 2px 8px; border-radius: 9999px;">{{ __('nav.pro_badge') }}</span>
+                        </div>
+                        <span class="m3-brand-subtitle">{{ __('nav.brand_tagline') }}</span>
                     </div>
-                    <span class="m3-brand-subtitle">{{ __('nav.brand_tagline') }}</span>
+                </a>
+            </div>
+
+            @if($isAdminOrSuper)
+            <!-- Desktop Segmented Switch: Broadcast vs Admin (Figma M3 Style) -->
+            <div class="m3-segmented-switch mb-3 mx-3">
+                <button type="button" class="m3-segmented-item tab-btn-broadcast {{ !$isManagementMode ? 'active' : '' }}" onclick="switchSidebarRoleTab('broadcast')" title="{{ __('nav.tab_broadcast') }}">
+                    <i class="fas fa-paper-plane me-1"></i> {{ __('nav.tab_broadcast') }}
+                </button>
+                <button type="button" class="m3-segmented-item tab-btn-admin {{ $isManagementMode ? 'active' : '' }}" onclick="switchSidebarRoleTab('admin')" title="{{ __('nav.tab_admin') }}">
+                    <i class="fas fa-shield-alt me-1"></i> {{ __('nav.tab_admin') }}
+                </button>
+            </div>
+            @endif
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- 1. KONTEN MENU MODE BROADCAST (USER)                           -->
+        <!-- ============================================================== -->
+        <div id="sidebarMenuBroadcast" class="{{ ($isAdminOrSuper && $isManagementMode) ? 'd-none' : '' }}">
+            <!-- Group 1: Menu Siaran Utama -->
+            <div class="menu-group">
+                <div class="menu-header">
+                    <i class="fas fa-compass"></i>
+                    <span>{{ __('nav.main_menu') }}</span>
                 </div>
-            </a>
-        </div>
+                <div class="menu-items-grid">
+                    <a href="{{ route('dashboard') }}" class="menu-item {{ request()->routeIs('dashboard*') && !request()->routeIs('admin.*') ? 'active' : '' }}">
+                        <div class="menu-icon-box">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <span class="menu-label-text">{{ __('nav.home') }}</span>
+                    </a>
+                    <a href="{{ route('whatsapp.index') }}" class="menu-item {{ request()->routeIs('whatsapp*') || request()->routeIs('wa*') ? 'active' : '' }}">
+                        <div class="menu-icon-box">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <span class="menu-label-text">{{ __('nav.devices') }}</span>
+                    </a>
+                    <a href="{{ route('campaigns.create') }}" class="menu-item {{ request()->routeIs('campaigns.create') ? 'active' : '' }}" style="background: var(--primary-container, #eaddff); color: var(--on-primary-container, #21005d);">
+                        <div class="menu-icon-box">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <span class="menu-label-text fw-bold">{{ __('nav.start_broadcast') }}</span>
+                    </a>
+                    <a href="{{ route('profile') }}" class="menu-item {{ request()->routeIs('profile*') ? 'active' : '' }}">
+                        <div class="menu-icon-box">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <span class="menu-label-text">{{ __('nav.profile') }}</span>
+                    </a>
+                </div>
+            </div>
 
-        <!-- Navigation Group 1: Menu Utama -->
-        <div class="menu-group">
-            <div class="menu-header">
-                <i class="fas fa-compass"></i>
-                <span>{{ __('nav.main_menu') }}</span>
-            </div>
-            <div class="menu-items-grid">
-                <a href="{{ route('dashboard') }}" class="menu-item {{ request()->routeIs('dashboard*') ? 'active' : '' }}">
-                    <div class="menu-icon-box">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                    <span class="menu-label-text">{{ __('nav.dashboard') }}</span>
-                </a>
-                <a href="{{ route('campaigns.index') }}" class="menu-item {{ request()->routeIs('campaigns.index') || (request()->routeIs('campaigns.*') && !request()->routeIs('campaigns.create')) ? 'active' : '' }}">
-                    <div class="menu-icon-box">
-                        <i class="fas fa-bullhorn"></i>
-                    </div>
-                    <span class="menu-label-text">{{ __('nav.campaigns') }}</span>
-                </a>
-                <a href="{{ route('contacts.index') }}" class="menu-item {{ request()->routeIs('contacts.index') ? 'active' : '' }}">
-                    <div class="menu-icon-box">
-                        <i class="fas fa-address-book"></i>
-                    </div>
-                    <span class="menu-label-text">{{ __('nav.contacts') }}</span>
-                </a>
-                <a href="{{ route('contacts.groups.index') }}" class="menu-item {{ request()->routeIs('contacts.groups*') ? 'active' : '' }}">
-                    <div class="menu-icon-box">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <span class="menu-label-text">{{ __('nav.contact_groups') }}</span>
-                </a>
-                <a href="{{ route('whatsapp.index') }}" class="menu-item {{ request()->routeIs('whatsapp*') || request()->routeIs('wa*') ? 'active' : '' }}">
-                    <div class="menu-icon-box">
-                        <i class="fab fa-whatsapp"></i>
-                    </div>
-                    <span class="menu-label-text">{{ __('nav.whatsapp_session') }}</span>
-                </a>
-                @if(auth()->check() && (auth()->user()->isSuperAdmin() || auth()->user()->isAdmin()))
-                <a href="{{ route('admin.users.index') }}" class="menu-item {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
-                    <div class="menu-icon-box">
-                        <i class="fas fa-users-cog"></i>
-                    </div>
-                    <span class="menu-label-text">{{ __('nav.user_management') }}</span>
-                </a>
-                @endif
-            </div>
-        </div>
-
-        <!-- Navigation Group 2: Kampanye Siaran -->
-        <div class="menu-group">
-            <div class="menu-header">
-                <i class="fas fa-paper-plane"></i>
-                <span>{{ __('nav.broadcast_menu') }}</span>
-            </div>
-            <div class="menu-items-grid">
-                <a href="{{ route('campaigns.create') }}" class="menu-item {{ request()->routeIs('campaigns.create') ? 'active' : '' }}">
-                    <div class="menu-icon-box">
-                        <i class="fas fa-plus-circle"></i>
-                    </div>
-                    <span class="menu-label-text">{{ __('nav.create_campaign') }}</span>
-                </a>
-                <a href="{{ route('campaigns.index') }}" class="menu-item">
-                    <div class="menu-icon-box">
-                        <i class="fas fa-history"></i>
-                    </div>
-                    <span class="menu-label-text">{{ __('nav.delivery_logs') }}</span>
-                </a>
+            <!-- Group 2: Pengelolaan & Log Siaran -->
+            <div class="menu-group">
+                <div class="menu-header">
+                    <i class="fas fa-layer-group"></i>
+                    <span>{{ __('nav.broadcast_menu') }}</span>
+                </div>
+                <div class="menu-items-grid">
+                    <a href="{{ route('campaigns.index') }}" class="menu-item {{ request()->routeIs('campaigns.index') ? 'active' : '' }}">
+                        <div class="menu-icon-box">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <span class="menu-label-text">{{ __('nav.campaigns') }}</span>
+                    </a>
+                    <a href="{{ route('contacts.index') }}" class="menu-item {{ request()->routeIs('contacts.index') ? 'active' : '' }}">
+                        <div class="menu-icon-box">
+                            <i class="fas fa-address-book"></i>
+                        </div>
+                        <span class="menu-label-text">{{ __('nav.contacts') }}</span>
+                    </a>
+                    <a href="{{ route('contacts.groups.index') }}" class="menu-item {{ request()->routeIs('contacts.groups*') ? 'active' : '' }}">
+                        <div class="menu-icon-box">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <span class="menu-label-text">{{ __('nav.contact_groups') }}</span>
+                    </a>
+                    <a href="{{ route('campaigns.index') }}#logs" class="menu-item">
+                        <div class="menu-icon-box">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <span class="menu-label-text">{{ __('nav.delivery_logs') }}</span>
+                    </a>
+                </div>
             </div>
         </div>
 
-        <!-- Navigation Group 3: Pengaturan & Akun -->
-        <div class="menu-group">
-            <div class="menu-header">
-                <i class="fas fa-cog"></i>
-                <span>{{ __('nav.system_menu') }}</span>
-            </div>
-            <div class="menu-items-grid">
-                <a href="{{ route('profile') }}" class="menu-item {{ request()->routeIs('profile*') ? 'active' : '' }}">
-                    <div class="menu-icon-box">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <span class="menu-label-text">{{ __('nav.profile') }}</span>
-                </a>
-                @if(auth()->check() && (auth()->user()->isSuperAdmin() || auth()->user()->isAdmin()))
-                <a href="{{ route('admin.users.index') }}" class="menu-item {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
-                    <div class="menu-icon-box">
-                        <i class="fas fa-users-cog"></i>
-                    </div>
-                    <span class="menu-label-text">{{ __('nav.user_management') }}</span>
-                </a>
-                @endif
-                <a href="{{ route('dashboard') }}#telegram" class="menu-item">
-                    <div class="menu-icon-box">
-                        <i class="fab fa-telegram"></i>
-                    </div>
-                    <span class="menu-label-text">{{ __('nav.telegram_settings') }}</span>
-                </a>
+        <!-- ============================================================== -->
+        <!-- 2. KONTEN MENU MODE MANAGEMENT (SUPERADMIN / ADMIN)             -->
+        <!-- ============================================================== -->
+        @if($isAdminOrSuper)
+        <div id="sidebarMenuAdmin" class="{{ !$isManagementMode ? 'd-none' : '' }}">
+            <div class="menu-group">
+                <div class="menu-header text-primary">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>{{ __('nav.tab_admin') }}</span>
+                </div>
+                <div class="menu-items-grid">
+                    <a href="{{ route('dashboard') }}" class="menu-item {{ request()->routeIs('dashboard*') && !request()->routeIs('admin.*') ? 'active' : '' }}">
+                        <div class="menu-icon-box">
+                            <i class="fas fa-chart-line text-primary"></i>
+                        </div>
+                        <span class="menu-label-text">{{ __('nav.admin_dashboard') }}</span>
+                    </a>
+                    <a href="{{ route('campaigns.create') }}" class="menu-item {{ request()->routeIs('campaigns.create') ? 'active' : '' }}">
+                        <div class="menu-icon-box">
+                            <i class="fas fa-plus-circle text-success"></i>
+                        </div>
+                        <span class="menu-label-text">{{ __('nav.create_campaign') }}</span>
+                    </a>
+                    <a href="{{ route('admin.users.index') }}" class="menu-item {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
+                        <div class="menu-icon-box">
+                            <i class="fas fa-users-cog text-info"></i>
+                        </div>
+                        <span class="menu-label-text">{{ __('nav.user_management') }}</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}#telegram" class="menu-item">
+                        <div class="menu-icon-box">
+                            <i class="fas fa-sliders-h text-warning"></i>
+                        </div>
+                        <span class="menu-label-text">{{ __('nav.system_settings') }}</span>
+                    </a>
+                </div>
             </div>
         </div>
+        @endif
 
-        <!-- Sidebar User Mini Footer -->
+        <!-- Sidebar User Mini Footer on Desktop (>= 992px) -->
         @auth
-        <div class="sidebar-user-footer">
+        <div class="sidebar-user-footer d-none d-lg-flex">
             <div class="m3-avatar-circle" style="width: 36px; height: 36px; font-size: 0.9rem;">
                 {{ strtoupper(substr($user->name ?? 'U', 0, 1)) }}
             </div>
             <div class="sidebar-user-info">
                 <div class="fw-bold small text-truncate" style="color: var(--on-surface);">{{ $user->name }}</div>
-                <div class="text-secondary small text-truncate" style="font-size: 0.72rem;">{{ __('nav.user_role') }}</div>
+                <div class="text-secondary small text-truncate" style="font-size: 0.72rem;">{{ $user->role ?? __('nav.user_role') }}</div>
             </div>
-            <form method="POST" action="{{ route('logout') }}" class="m-0 p-0">
+            <form method="POST" action="{{ route('logout') }}" class="m-0 p-0 ms-auto">
                 @csrf
                 <button type="submit" class="btn btn-sm btn-icon rounded-circle" title="{{ __('nav.logout') }}" style="width: 32px; height: 32px; color: var(--on-surface-variant);">
                     <i class="fas fa-sign-out-alt"></i>
@@ -829,11 +1022,8 @@
     <!-- M3 Expressive Top Platform Bar -->
     <header class="m3-top-navbar d-flex align-items-center px-3 px-md-4">
         <div class="container-fluid d-flex align-items-center justify-content-between p-0">
-            <!-- Left Side: Mobile Menu Hamburger & Brand (Visible on Mobile < 992px) -->
+            <!-- Left Side: Brand Logo & Title on Mobile (Hamburger button eliminated per Helm's instruction) -->
             <div class="d-flex align-items-center gap-2">
-                <button type="button" class="m3-icon-btn d-lg-none" id="mobileMenuBtn" aria-label="{{ __('nav.menu') }}" title="{{ __('nav.menu') }}">
-                    <i class="fas fa-bars"></i>
-                </button>
                 <div class="d-flex align-items-center gap-2 d-lg-none">
                     @include('partials.brand-logo', ['style' => 'width: 30px; height: 30px;'])
                     <span class="fw-bold" style="font-size: 0.95rem; color: var(--on-surface);">JAWIRBLAST</span>
@@ -1404,6 +1594,44 @@
             window.addEventListener('mouseup', onDragEnd);
             window.addEventListener('touchcancel', onDragEnd);
         })();
+
+        // ==============================================================
+        // 5. SIDEBAR ROLE TAB SWITCHER (Broadcast vs Admin Mode)
+        // ==============================================================
+        window.switchSidebarRoleTab = function(mode) {
+            const broadcastMenu = document.getElementById('sidebarMenuBroadcast');
+            const adminMenu = document.getElementById('sidebarMenuAdmin');
+            const tabBroadcastBtns = document.querySelectorAll('.tab-btn-broadcast');
+            const tabAdminBtns = document.querySelectorAll('.tab-btn-admin');
+
+            if (mode === 'broadcast') {
+                if (broadcastMenu) broadcastMenu.classList.remove('d-none');
+                if (adminMenu) adminMenu.classList.add('d-none');
+                tabBroadcastBtns.forEach(b => b.classList.add('active'));
+                tabAdminBtns.forEach(b => b.classList.remove('active'));
+                try { localStorage.setItem('jawirblast_sidebar_tab', 'broadcast'); } catch(e) {}
+            } else {
+                if (broadcastMenu) broadcastMenu.classList.add('d-none');
+                if (adminMenu) adminMenu.classList.remove('d-none');
+                tabBroadcastBtns.forEach(b => b.classList.remove('active'));
+                tabAdminBtns.forEach(b => b.classList.add('active'));
+                try { localStorage.setItem('jawirblast_sidebar_tab', 'admin'); } catch(e) {}
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            @if(auth()->check() && (auth()->user()->isSuperAdmin() || auth()->user()->isAdmin()))
+                const isRouteAdmin = {{ (request()->routeIs('admin.*') || request('view') === 'admin') ? 'true' : 'false' }};
+                const savedTab = localStorage.getItem('jawirblast_sidebar_tab');
+                if (isRouteAdmin) {
+                    window.switchSidebarRoleTab('admin');
+                } else if (savedTab === 'admin' && !{{ request()->routeIs('campaigns.*') || request()->routeIs('contacts.*') || request()->routeIs('whatsapp.*') ? 'true' : 'false' }}) {
+                    window.switchSidebarRoleTab('admin');
+                } else {
+                    window.switchSidebarRoleTab('broadcast');
+                }
+            @endif
+        });
     </script>
 
     @stack('modals')

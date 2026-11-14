@@ -16,56 +16,56 @@
         </div>
     </div>
 
-    <!-- 4 Tonal Metric Cards (Concentric M3 Cards) -->
-    <div class="row g-3 mb-4">
-        <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 24px;">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: var(--primary-container, #eaddff); color: var(--primary, #65558f); flex-shrink: 0;">
-                        <i class="fas fa-bullhorn fs-5"></i>
+    <!-- 4 Tonal Metric Cards (2x2 Grid on Mobile, 4x1 on Desktop) -->
+    <div class="row g-2 g-md-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm p-2.5 p-sm-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
+                <div class="d-flex align-items-center gap-2 gap-sm-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px; background: var(--primary-container, #eaddff); color: var(--primary, #65558f); flex-shrink: 0;">
+                        <i class="fas fa-bullhorn fs-6 fs-sm-5"></i>
                     </div>
-                    <div>
-                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('campaign.total_campaigns') }}</div>
-                        <h4 class="fw-bold mb-0" style="color: var(--on-surface);">{{ number_format($stats['total_campaigns']) }}</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 24px;">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: var(--secondary-container, #e8def8); color: var(--secondary, #625b71); flex-shrink: 0;">
-                        <i class="fas fa-paper-plane fs-5"></i>
-                    </div>
-                    <div>
-                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('campaign.messages_sent') }}</div>
-                        <h4 class="fw-bold mb-0" style="color: var(--on-surface);">{{ number_format($stats['sent_messages']) }}</h4>
+                    <div class="overflow-hidden">
+                        <div class="small fw-medium text-truncate" style="color: var(--on-surface-variant); font-size: 0.75rem;">{{ __('campaign.total_campaigns') }}</div>
+                        <h4 class="fw-bold mb-0 text-truncate" style="color: var(--on-surface); font-size: 1.15rem;">{{ number_format($stats['total_campaigns']) }}</h4>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 24px;">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: #e8f5e9; color: #1b5e20; flex-shrink: 0;">
-                        <i class="fas fa-check-double fs-5"></i>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm p-2.5 p-sm-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
+                <div class="d-flex align-items-center gap-2 gap-sm-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px; background: var(--secondary-container, #e8def8); color: var(--secondary, #625b71); flex-shrink: 0;">
+                        <i class="fas fa-paper-plane fs-6 fs-sm-5"></i>
                     </div>
-                    <div>
-                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('campaign.messages_read') }}</div>
-                        <h4 class="fw-bold mb-0" style="color: var(--on-surface);">{{ number_format($stats['read_messages']) }}</h4>
+                    <div class="overflow-hidden">
+                        <div class="small fw-medium text-truncate" style="color: var(--on-surface-variant); font-size: 0.75rem;">{{ __('campaign.messages_sent') }}</div>
+                        <h4 class="fw-bold mb-0 text-truncate" style="color: var(--on-surface); font-size: 1.15rem;">{{ number_format($stats['sent_messages']) }}</h4>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm p-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 24px;">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: #fde8e8; color: #b91c1c; flex-shrink: 0;">
-                        <i class="fas fa-triangle-exclamation fs-5"></i>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm p-2.5 p-sm-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
+                <div class="d-flex align-items-center gap-2 gap-sm-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px; background: #e8f5e9; color: #1b5e20; flex-shrink: 0;">
+                        <i class="fas fa-check-double fs-6 fs-sm-5"></i>
                     </div>
-                    <div>
-                        <div class="small fw-medium" style="color: var(--on-surface-variant);">{{ __('campaign.messages_failed') }}</div>
-                        <h4 class="fw-bold mb-0" style="color: var(--on-surface);">{{ number_format($stats['failed_messages']) }}</h4>
+                    <div class="overflow-hidden">
+                        <div class="small fw-medium text-truncate" style="color: var(--on-surface-variant); font-size: 0.75rem;">{{ __('campaign.messages_read') }}</div>
+                        <h4 class="fw-bold mb-0 text-truncate" style="color: var(--on-surface); font-size: 1.15rem;">{{ number_format($stats['read_messages']) }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm p-2.5 p-sm-3 h-100" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
+                <div class="d-flex align-items-center gap-2 gap-sm-3">
+                    <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px; background: #fde8e8; color: #b91c1c; flex-shrink: 0;">
+                        <i class="fas fa-triangle-exclamation fs-6 fs-sm-5"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <div class="small fw-medium text-truncate" style="color: var(--on-surface-variant); font-size: 0.75rem;">{{ __('campaign.messages_failed') }}</div>
+                        <h4 class="fw-bold mb-0 text-truncate" style="color: var(--on-surface); font-size: 1.15rem;">{{ number_format($stats['failed_messages']) }}</h4>
                     </div>
                 </div>
             </div>

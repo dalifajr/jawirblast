@@ -3,13 +3,23 @@ PERLU DIBACA SECARA SEKSAMA DAN TELITI, KEMUDIAN /learn.
 RANCANGAN PENGEMBANGAN SISTEM INFORMASI KAMPANYE BROADCAST WHATSAPP (JAWIRBLAST).
 
 
-body > div:nth-of-type(3) (div.modal-backdrop.fade.shadow) salah dalam pelevelan, seharusnya dibelakang popup modal atau popup dialog.
+hilangkan garis dibawah class="m3-brand-header d-none d-lg-flex align-items-center justify-content-between" agar elemen memiliki kesan tersambung.
 
-class="table table-hover align-middle mb-0 table-responsive-cards" seharusnya full ke class="card border-0 shadow-sm overflow-hidden mb-4" 
+sembunyikan class="m3-user-btn dropdown-toggle" pada modus smarphone
 
-class="dropdown-menu dropdown-menu-end shadow-sm border show" tertutup elemen class="card border-0 shadow-sm overflow-hidden mb-4" 
+hilangkan tombol hamburger pada modus smarphone diheader class="m3-icon-btn d-lg-none"
 
-class="m3-brand-header d-none d-lg-flex align-items-center justify-content-between" seharusnya sticky pada sidebar. tidak ikut tergulir.
+elemen mobile-bottom-nav teks per menu nya dibuat centre. dan sesuaikan ukuran teks karena terlalu besar.
+
+row g-3 mb-4 seharusnya bisa disusun lebih rapi lagi. khusus untuk modus smartphone. termasuk pada menu kampanye dan kelola user.
+
+class="card border-0 shadow-sm p-3 mb-4" digabung saja satu elemen dengan class="card border-0 shadow-sm p-4" menjadi satu elemen card. dan sesuaikan ukurannya untuk modus smartphone.
+
+pisahkan menu admin dan user biasa dengan tab segmeted pada sidebar class="m3-segmented-switch mb-3 mx-3" seperti pada project referensi. menu untuk superadmin(dashbor admin, tambah kampanye, kelola user, pengaturan sistem), user(beranda, perangkat, start(tombol bulat), profil, lainnya)
+
+buat menu lainnya pada modus smartphone mengikuti desain #sidebar class="sidebar show" pada project referensi, baik layout tata letak menu, animasi, prilaku dll.
+
+
 
 
 TEKNOLOGI YANG DIGUNAKAN;

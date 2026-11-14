@@ -32,4 +32,11 @@ return [
     'pro_badge' => 'PRO',
     'close_menu' => 'Tutup Menu',
     'menu' => 'Menu',
+    'tab_broadcast' => 'Siaran',
+    'tab_admin' => 'Admin',
+    'admin_dashboard' => 'Dasbor Admin',
+    'start_broadcast' => 'Mulai',
+    'system_settings' => 'Pengaturan Sistem',
+    'devices' => 'Perangkat',
+    'home' => 'Beranda',
 ];
