@@ -488,13 +488,31 @@ cmd_telegram() {
 
 cmd_update_website() {
     check_root
-    echo -e "${THM_TITLE}:: PEMBARUAN SISTEM JAWIRBLAST (GIT PULL, MIGRATE & SEED) ::${THM_NC}"
+    echo -e "${THM_TITLE}:: PEMBARUAN SISTEM JAWIRBLAST (RESILIENT GIT SYNC, MIGRATE & SEED) ::${THM_NC}"
     cd "${APP_DIR}"
 
-    echo -e "${THM_ACCENT}[1/7] Menarik kode terbaru dari Git...${THM_NC}"
-    git pull origin main || git pull || {
-        echo -e "${THM_WARN}[!] Git pull mengalami kendala. Melanjutkan ke langkah dependensi...${THM_NC}"
-    }
+    echo -e "${THM_ACCENT}[1/7] Menarik kode terbaru dari Git (Auto-Stash & Force Sync)...${THM_NC}"
+
+    # Layer 1: Deteksi dan amankan modifikasi lokal ke git stash jika ada (mencegah abort overwrite)
+    if [[ -n "$(git status --porcelain 2>/dev/null || true)" ]]; then
+        echo -e "${THM_MUTED}[*] Mendeteksi perubahan lokal yang belum di-commit. Menyimpan otomatis ke git stash...${THM_NC}"
+        git stash push -u -m "auto-stash-jawirblast-update-$(date +%Y%m%d%H%M%S)" 2>/dev/null || true
+    fi
+
+    # Layer 2 & 3: Ambil referensi terbaru dan sinkronkan branch secara bersih ke origin/main
+    git fetch origin main --prune 2>/dev/null || git fetch origin 2>/dev/null || true
+    if git reset --hard origin/main 2>/dev/null; then
+        echo -e "${THM_OK}[✓] Kode aplikasi berhasil disinkronkan ke origin/main.${THM_NC}"
+    elif git pull origin main --rebase 2>/dev/null; then
+        echo -e "${THM_OK}[✓] Kode aplikasi berhasil diperbarui via git pull rebase.${THM_NC}"
+    elif git pull origin main 2>/dev/null; then
+        echo -e "${THM_OK}[✓] Kode aplikasi berhasil diperbarui via git pull.${THM_NC}"
+    else
+        echo -e "${THM_WARN}[!] Git sync mengalami kendala. Melanjutkan ke langkah dependensi...${THM_NC}"
+    fi
+
+    # Layer 4: Pulihkan izin eksekusi biner CLI dan artisan
+    chmod +x "${APP_DIR}/bin/jawirblast" "${APP_DIR}/artisan" 2>/dev/null || true
 
     echo -e "${THM_ACCENT}[2/7] Memperbarui dependensi Composer...${THM_NC}"
     composer install --no-dev --optimize-autoloader --no-interaction

@@ -3,9 +3,25 @@ PERLU DIBACA SECARA SEKSAMA DAN TELITI, KEMUDIAN /learn.
 RANCANGAN PENGEMBANGAN SISTEM INFORMASI KAMPANYE BROADCAST WHATSAPP (JAWIRBLAST).
 
 
-saya sudah melakukan update sistem dengan pembaharuan terakhir, namun saya masih tidak bisa login menggunakan akun superadmin. mungkin ada msalah pada proses migrasi atau yang lain karena saya coba login username tidak ditemukan. kemudian, tambahkan dukungan login menggunakan username. jadi saat proses pendaftaran tambahkan kolom username dan sistem akan mengecek ketersedian username secara live saat user mengetikan usernamenya menggunakan metode ajax. dan menu yang tidak tersedia untuk user role lain, sebaiknya tidak usah ditampilkan.
+root@localhost:~# jawirblast update
+:: PEMBARUAN SISTEM JAWIRBLAST (GIT PULL & MIGRATE) ::
+[1/6] Menarik kode terbaru dari Git...
+From https://github.com/dalifajr/jawirblast
+ * branch            main       -> FETCH_HEAD
+Updating baec085..762d82b
+error: Your local changes to the following files would be overwritten by merge:
+        bin/jawirblast
+Please commit your changes or stash them before you merge.
+Aborting
+Updating baec085..762d82b
+error: Your local changes to the following files would be overwritten by merge:
+        bin/jawirblast
+Please commit your changes or stash them before you merge.
+Aborting
+[!] Git pull mengalami kendala. Melanjutkan ke langkah dependensi...
 
-dan downgrade user admin ke role user biasa.
+siapkan logika untuk memitigasi hal tersebut terulang lagi secara otomatis.
+
 
 TEKNOLOGI YANG DIGUNAKAN;
 A. VPS UBUNTU 26 RAM 42GB 12CPUs
