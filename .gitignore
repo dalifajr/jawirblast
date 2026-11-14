@@ -1,0 +1,45 @@
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+.env.backup
+.env.production
+
+# Dependencies
+/node_modules
+/vendor
+
+# Storage & Cache
+*.log
+/storage/*.key
+/storage/pail
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+/bootstrap/cache/*
+/public/build
+/public/hot
+/public/storage
+
+# WhatsApp / Baileys session data
+/wa-service/auth_info*
+/wa-service/sessions*
+
+# Documentation (local development & progress tracking)
+/docs/
+
+# IDE, OS & Tooling
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+.phpunit.result.cache
+/.phpunit.cache
+/.cursor/
+/.nova/
+/.zed/
+/auth.json
+_ide_helper.php
+Homestead.json
+Homestead.yaml

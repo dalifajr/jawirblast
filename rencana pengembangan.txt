@@ -1,0 +1,39 @@
+RANCANGAN PENGEMBANGAN SISTEM INFORMASI KAMPANYE BROADCAST WHATSAPP (JAWIRBLAST).
+
+sistem ini ditujukan untuk user guna melakukan pengiriman pesan kampanye dalam jumlah tertentu ke nomor yang sudah ditentukan. 
+
+user dapat mengirimkan pesan kepada db nomor whatsapp yang sudah ditambahkan oleh admin dengan banyak, dan kecepatan tertentu perpesan.
+
+sistem dapat melakukan penautan akun whatsapp sebagai perangkat tertaut (desktop) pada sistem untuk digunakan sebagai sender.
+
+sistem dapat melakukan pengiriman pesan ke nomor yang tersedia pada db dengan pesan yang dapat dikustomisasi admin.
+
+sistem dapat melakukan tracking pesan, apakah sudah terkirim dan diterima nomor tujuan atau gagal, ditandai dengan centang 1 dan centang 2 lalu centang biru.
+
+tambahkan dukungan multi language pada website, indonesia, english dan china. jadi teks jangan dihardcode.
+
+user dapat mendaftar secara mandiri ke website.
+
+untuk run project ini pada saat development, saya menggunakan laragon. sehingga untuk php dan mysql sudah tersedia.
+
+TEKNOLOGI YANG DIGUNAKAN;
+A. VPS UBUNTU 26 RAM 42GB 12CPUs
+B. LARAVEL 13 FULLSTACK
+C. BAILEYS API untuk jembatan website dengan whatsapp. repo github https://github.com/WhiskeySockets/Baileys
+D. mySQL untuk database.
+E. GITHUB untuk manajemen versi.
+F. TELEGRAM bot untuk opsi login, dan notifikasi admin.
+
+
+CATATAN PENTING BAGI KAMU;
+- selalu melakukan brainstorming untuk mendapatkan hasil yang terbaik.
+- melakukan analisa kritik dan saran dalam pengembangan.
+- selalu memberikan /plan ke saya untuk saya review terlebih dahulu.
+- menggunakan /teamwork dan /boost untuk mempercepat pekerjaan dan mendapatkan hasil yang baik.
+- selalu /learn dari setiap ilmu dan pelajaran selama proses pengembangan.
+- selalu menggunakan /antislop /antislop-ui dan /antislop-code untuk mendapatkan ide desain yang tidak monoton.
+- gunakan pedoman gaya bahasa desain android M3 pada skill /beercss-material-you.
+- abaikan peringatan baileys api membuat nomor whatsapp terblokir.
+- karena ini akan digunakan pada perangkat mobile dan desktop, maka gunakan desain yang sudah jadi untuk dijadikan referensi "D:\bot_tele_jualan" project dalam folder ini berbeda dengan yang dikerjakan saat ini. jadi ambil saja yang sekiranya bermanfaat untuk project ini.
+- tempatkan semua dokumen yang kamu generate, pada folder docs di workspace ini, lalu buat subfolder baru lagi untuk merapihkan setiap dokumen step dan progress dari perkembangan project. dan kecualikan folder tersebut dari push github.
+- buat sub agent untuk bekerja sama dalam membangun project ini UI/UX designer, fullstack developer, QA/Tester. dan gunakan sdlc untuk framework pengembangannya.
