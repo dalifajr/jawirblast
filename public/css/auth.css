@@ -1,0 +1,445 @@
+/* ==============================================================================
+   JAWIRBLAST — AUTHENTICATION DESIGN SYSTEM
+   Figma M3 Expressive Lavender Spec & Flat Material You (Android 17)
+   Concentric Radii (28px Outer Card / 16px Glass / 12px Inputs / Full Pill Tabs)
+   Reference: D:\bot_tele_jualan\web\public\css\auth.css
+   ============================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
+
+:root {
+  --font-poppins: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  /* Concentric Radius Scale */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 9999px;
+
+  /* M3 Light Palette (Lavender & Deep Purple) */
+  --primary: #65558f;
+  --on-primary: #ffffff;
+  --primary-container: #eaddff;
+  --on-primary-container: #21005d;
+  --secondary: #625b71;
+  --on-secondary: #ffffff;
+  --surface: #fef7ff;
+  --on-surface: #1d1b20;
+  --on-surface-variant: #49454f;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f3edf7;
+  --surface-container: #ece6f0;
+  --surface-container-high: #e6e0e9;
+  --outline-variant: #cac4d0;
+  --outline: #79747e;
+}
+
+[data-bs-theme="dark"] {
+  --primary: #d0bcff;
+  --on-primary: #381e72;
+  --primary-container: #4f378b;
+  --on-primary-container: #eaddff;
+  --surface: #141218;
+  --on-surface: #e6e0e9;
+  --on-surface-variant: #cac4d0;
+  --surface-container-lowest: #0f0d13;
+  --surface-container-low: #1d1b20;
+  --surface-container: #211f26;
+  --surface-container-high: #2b2930;
+  --outline-variant: #49454f;
+  --outline: #938f99;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  background-color: var(--surface);
+  color: var(--on-surface);
+  position: relative;
+  overflow-x: hidden;
+  font-family: var(--font-poppins) !important;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Font Awesome Protection */
+.fa, .fas, .far, .fab, [class*="fa-"] {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "FontAwesome" !important;
+  font-style: normal !important;
+  line-height: 1 !important;
+}
+.fa::before, .fas::before, .far::before, .fab::before, [class*="fa-"]::before {
+  font-family: "Font Awesome 6 Free" !important;
+  font-style: normal !important;
+}
+.fab, .fab::before {
+  font-family: "Font Awesome 6 Brands" !important;
+}
+.fas, .fas::before {
+  font-weight: 900 !important;
+}
+
+/* Material You Ambient Tonal Spotlights */
+body::before {
+  content: '';
+  position: fixed;
+  top: -150px;
+  left: -150px;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(101, 85, 143, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -150px;
+  right: -150px;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(125, 82, 96, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Theme Toggle Button (Circular M3 Action) */
+.auth-theme-toggle {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 1050;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-pill) !important;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.auth-theme-toggle:hover {
+  background: var(--surface-container);
+  border-color: var(--primary);
+  transform: scale(1.05);
+}
+
+/* Login Card Wrapper (Figma M3 28px Card) */
+.login-wrapper {
+  width: 100%;
+  max-width: 980px;
+  border-radius: var(--radius-xl) !important;
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-low);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.04);
+  position: relative;
+  z-index: 10;
+  display: flex;
+  overflow: hidden;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+[data-bs-theme="dark"] .login-wrapper {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+}
+
+/* Left Section: Form */
+.login-section {
+  flex: 1 1 540px;
+  padding: 2.75rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--surface-container-lowest);
+  z-index: 2;
+  transition: background-color 0.2s ease;
+}
+
+/* Right Section: Info & Showcase (Primary Container Surface) */
+.info-section {
+  flex: 1 1 420px;
+  padding: 2.75rem 2.25rem;
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-section::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  opacity: 0.07;
+  background-image: radial-gradient(var(--on-primary-container) 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
+  pointer-events: none;
+}
+
+[data-bs-theme="dark"] .info-section {
+  background: var(--surface-container);
+  color: var(--on-surface);
+  border-left: 1px solid var(--outline-variant);
+}
+
+/* Card inside Info Section (Concentric 16px Radius) */
+.glass-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-md) !important;
+  padding: 1.75rem;
+  box-shadow: none;
+  position: relative;
+  z-index: 2;
+}
+
+[data-bs-theme="dark"] .glass-card {
+  background: var(--surface-container-lowest);
+  border-color: var(--outline-variant);
+}
+
+.glass-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+/* Form Controls & Seamless Input Group in Auth (12px Squircle Radius) */
+.login-section .form-control,
+.login-section .form-select {
+  border-radius: var(--radius-sm) !important;
+  padding: 0.65rem 1rem !important;
+  font-size: 0.92rem !important;
+  min-height: 46px;
+  background-color: var(--surface-container-lowest) !important;
+  border: 1px solid var(--outline-variant) !important;
+  color: var(--on-surface) !important;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login-section .form-control:focus,
+.login-section .form-select:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(101, 85, 143, 0.2) !important;
+}
+
+[data-bs-theme="dark"] .login-section .form-control:focus,
+[data-bs-theme="dark"] .login-section .form-select:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(208, 188, 255, 0.2) !important;
+}
+
+.login-section .input-group .input-group-text {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm) !important;
+  font-size: 0.92rem !important;
+  padding: 0.65rem 1rem !important;
+  min-height: 46px;
+  background-color: var(--surface-container) !important;
+  border: 1px solid var(--outline-variant) !important;
+  border-right: 0 !important;
+  color: var(--on-surface-variant) !important;
+}
+
+.login-section .input-group .form-control {
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0 !important;
+  margin-left: 0 !important;
+}
+
+/* Material You Segmented Button Tab Bar in Auth (Concentric Full Pill) */
+.login-section ul.nav-pills {
+  border-radius: var(--radius-pill) !important;
+  background-color: var(--surface-container) !important;
+  border: 1px solid var(--outline-variant) !important;
+  padding: 4px !important;
+}
+
+.login-section .nav-pills .nav-link {
+  border-radius: var(--radius-pill) !important;
+  padding: 0.55rem 1.25rem !important;
+  font-weight: 600 !important;
+  color: var(--on-surface-variant) !important;
+  border: none;
+  background: transparent;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.login-section .nav-pills .nav-link.active {
+  background-color: var(--surface-container-lowest) !important;
+  color: var(--primary) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-bs-theme="dark"] .login-section .nav-pills .nav-link.active {
+  background-color: var(--surface-container-high) !important;
+  color: var(--primary) !important;
+}
+
+/* Telegram Action Button */
+.m3-auth-tg-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #229ed9;
+  color: #ffffff !important;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  padding: 0.7rem 1.25rem;
+  transition: background 0.15s ease, transform 0.15s ease;
+  width: 100%;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.m3-auth-tg-btn:hover {
+  background: #1b87ba;
+  transform: translateY(-1px);
+  color: #ffffff;
+}
+
+/* Primary Submit Button */
+.btn-primary-m3 {
+  background-color: var(--primary) !important;
+  color: var(--on-primary) !important;
+  border: none !important;
+  border-radius: var(--radius-pill) !important;
+  padding: 0.7rem 1.5rem !important;
+  font-weight: 700 !important;
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-primary-m3:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+/* Language Chips */
+.lang-chips-container {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+.m3-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--outline-variant);
+  color: var(--on-surface-variant);
+  background: transparent;
+  transition: all 0.15s ease;
+}
+
+.m3-chip:hover {
+  background: var(--surface-container);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.m3-chip.active {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  border-color: var(--primary);
+}
+
+/* M3 Loader Overlay */
+#pageLoader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s cubic-bezier(0.2, 0, 0, 1), visibility 0.25s cubic-bezier(0.2, 0, 0, 1);
+  pointer-events: all;
+}
+
+#pageLoader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.m3-loader-card {
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-xl);
+  padding: 16px 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.m3-spinner-circle {
+  width: 26px;
+  height: 26px;
+  border: 3.5px solid var(--primary-container);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: m3SpinnerRotate 0.85s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  flex-shrink: 0;
+}
+
+@keyframes m3SpinnerRotate {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .login-wrapper {
+    max-width: 480px;
+    flex-direction: column;
+    border-radius: var(--radius-lg) !important;
+  }
+
+  .login-section {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 1rem 0.75rem;
+  }
+
+  .login-section {
+    padding: 1.5rem 1.25rem;
+  }
+}

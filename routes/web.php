@@ -16,10 +16,8 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// Halaman utama
-Route::get('/', function () {
-    return view('welcome');
-});
+// Halaman utama: Mengarahkan langsung ke login untuk pengunjung / tamu, atau dashboard jika terautentikasi
+Route::get('/', [AuthController::class, 'showLoginForm'])->name('home');
 
 // Pergantian Multi-Bahasa (Locale Switcher)
 Route::get('/lang/{locale}', [LocaleController::class, 'switch'])->name('lang.switch');
