@@ -142,10 +142,10 @@
               <form action="{{ route('login.post') }}" method="POST">
                   @csrf
                   <div class="mb-3">
-                      <label class="form-label text-muted small fw-semibold">{{ __('auth.email_label') }}</label>
+                      <label class="form-label text-muted small fw-semibold">{{ __('auth.login_input_label') }}</label>
                       <div class="input-group">
-                          <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                          <input type="email" name="email" class="form-control" placeholder="{{ __('auth.email_placeholder') }}" value="{{ old('email') }}" required autofocus autocomplete="username" />
+                          <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                          <input type="text" name="login" class="form-control" placeholder="{{ __('auth.login_input_placeholder') }}" value="{{ old('login', old('email')) }}" required autofocus autocomplete="username" />
                       </div>
                   </div>
                   <div class="mb-3">
@@ -194,7 +194,7 @@
 
           {{-- TAB DAFTAR (REGISTER) --}}
           <div class="tab-pane fade" id="register-pane" role="tabpanel">
-              <form action="{{ route('register.post') }}" method="POST">
+              <form action="{{ route('register.post') }}" method="POST" id="form-register">
                   @csrf
                   <div class="mb-3">
                       <label class="form-label text-muted small fw-semibold">{{ __('auth.name_label') }}</label>
@@ -202,6 +202,20 @@
                           <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                           <input type="text" name="name" class="form-control" placeholder="{{ __('auth.name_placeholder') }}" value="{{ old('name') }}" required />
                       </div>
+                  </div>
+
+                  <div class="mb-3">
+                      <label class="form-label text-muted small fw-semibold">{{ __('auth.username_label') }}</label>
+                      <div class="input-group has-validation">
+                          <span class="input-group-text"><i class="fas fa-at"></i></span>
+                          <input type="text" name="username" id="reg-username" class="form-control" placeholder="{{ __('auth.username_placeholder') }}" value="{{ old('username') }}" required autocomplete="off" autocapitalize="none" spellcheck="false" />
+                          <span class="input-group-text bg-transparent border-start-0" id="username-status-box" style="display: none;">
+                              <i class="fas fa-spinner fa-spin text-primary" id="username-spinner"></i>
+                              <i class="fas fa-check-circle text-success d-none" id="username-valid-icon"></i>
+                              <i class="fas fa-times-circle text-danger d-none" id="username-invalid-icon"></i>
+                          </span>
+                      </div>
+                      <div id="username-feedback" class="form-text small mt-1" style="min-height: 1.25rem;"></div>
                   </div>
 
                   <div class="mb-3">
@@ -464,11 +478,112 @@
         }
 
         // Auto-switch tab if url hash or validation errors on registration
-        @if($errors->has('name') || old('name') || ($initialTab ?? '') === 'register')
+        @if($errors->has('name') || $errors->has('username') || old('username') || old('name') || ($initialTab ?? '') === 'register')
             switchAuthTab('register');
         @elseif(request()->routeIs('register') || request()->get('tab') === 'register')
             switchAuthTab('register');
         @endif
+
+        // Live AJAX Username Availability Checker
+        const regUsernameInput = document.getElementById('reg-username');
+        const usernameStatusBox = document.getElementById('username-status-box');
+        const usernameSpinner = document.getElementById('username-spinner');
+        const usernameValidIcon = document.getElementById('username-valid-icon');
+        const usernameInvalidIcon = document.getElementById('username-invalid-icon');
+        const usernameFeedback = document.getElementById('username-feedback');
+        const regForm = document.getElementById('form-register');
+
+        let usernameDebounceTimer = null;
+        let isUsernameValid = false;
+
+        function setUsernameStatus(state, message = '') {
+            if (!usernameStatusBox || !regUsernameInput) return;
+
+            usernameStatusBox.style.display = state === 'hidden' ? 'none' : 'inline-flex';
+            usernameSpinner.classList.add('d-none');
+            usernameValidIcon.classList.add('d-none');
+            usernameInvalidIcon.classList.add('d-none');
+
+            regUsernameInput.classList.remove('is-valid', 'is-invalid');
+            usernameFeedback.className = 'form-text small mt-1';
+            usernameFeedback.innerText = message;
+
+            if (state === 'loading') {
+                usernameSpinner.classList.remove('d-none');
+                usernameFeedback.classList.add('text-muted');
+            } else if (state === 'valid') {
+                usernameValidIcon.classList.remove('d-none');
+                regUsernameInput.classList.add('is-valid');
+                usernameFeedback.classList.add('text-success');
+                isUsernameValid = true;
+            } else if (state === 'invalid') {
+                usernameInvalidIcon.classList.remove('d-none');
+                regUsernameInput.classList.add('is-invalid');
+                usernameFeedback.classList.add('text-danger');
+                isUsernameValid = false;
+            } else {
+                isUsernameValid = false;
+            }
+        }
+
+        if (regUsernameInput) {
+            regUsernameInput.addEventListener('input', function() {
+                const val = this.value.trim().toLowerCase();
+                clearTimeout(usernameDebounceTimer);
+
+                if (!val) {
+                    setUsernameStatus('hidden');
+                    return;
+                }
+
+                if (val.length < 3) {
+                    setUsernameStatus('invalid', "{{ __('auth.username_too_short') }}");
+                    return;
+                }
+
+                if (val.length > 30) {
+                    setUsernameStatus('invalid', "{{ __('auth.username_too_long') }}");
+                    return;
+                }
+
+                if (!/^[a-z0-9_.]+$/.test(val)) {
+                    setUsernameStatus('invalid', "{{ __('auth.username_invalid') }}");
+                    return;
+                }
+
+                setUsernameStatus('loading', "{{ __('auth.username_checking') }}");
+
+                usernameDebounceTimer = setTimeout(() => {
+                    fetch('{{ route("register.check-username") }}?username=' + encodeURIComponent(val), {
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.available) {
+                            setUsernameStatus('valid', data.message);
+                        } else {
+                            setUsernameStatus('invalid', data.message);
+                        }
+                    })
+                    .catch(() => {
+                        setUsernameStatus('invalid', "{{ __('auth.username_invalid') }}");
+                    });
+                }, 350);
+            });
+
+            if (regForm) {
+                regForm.addEventListener('submit', function(e) {
+                    const val = regUsernameInput.value.trim().toLowerCase();
+                    if (!val || regUsernameInput.classList.contains('is-invalid')) {
+                        e.preventDefault();
+                        regUsernameInput.focus();
+                    }
+                });
+            }
+        }
 
         // Telegram Auth Polling (Hardened Lifecycle)
         const btnTg = document.getElementById('btn-telegram-login');

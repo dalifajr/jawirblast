@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Seed Superadmin: Dzulfikri Alifajri (Sesuai arahan rencana pengembangan.txt)
-        User::firstOrCreate(
+        // 1. Seed Superadmin: Dzulfikri Alifajri (Satu-satunya Superadmin sesuai arahan rencana pengembangan.txt)
+        User::updateOrCreate(
             ['email' => 'dzulfikrialifajri@gmail.com'],
             [
                 'name' => 'Dzulfikri Alifajri',
@@ -31,13 +31,13 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 2. Seed Administrator
-        User::firstOrCreate(
+        // 2. Seed User: Administrator (Downgraded ke role 'user' biasa sesuai arahan rencana pengembangan.txt)
+        User::updateOrCreate(
             ['email' => 'admin@jawirblast.com'],
             [
                 'name' => 'Administrator',
                 'username' => 'admin',
-                'role' => 'admin',
+                'role' => 'user',
                 'password' => bcrypt('password123'),
                 'wallet_balance' => 500000,
                 'referral_balance' => 100000,

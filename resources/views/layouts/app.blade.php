@@ -709,12 +709,14 @@
                     </div>
                     <span class="menu-label-text">{{ __('nav.whatsapp_session') }}</span>
                 </a>
+                @if(auth()->check() && (auth()->user()->isSuperAdmin() || auth()->user()->isAdmin()))
                 <a href="{{ route('admin.users.index') }}" class="menu-item {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
                     <div class="menu-icon-box">
                         <i class="fas fa-users-cog"></i>
                     </div>
                     <span class="menu-label-text">{{ __('nav.user_management') }}</span>
                 </a>
+                @endif
             </div>
         </div>
 
@@ -753,12 +755,14 @@
                     </div>
                     <span class="menu-label-text">{{ __('nav.profile') }}</span>
                 </a>
+                @if(auth()->check() && (auth()->user()->isSuperAdmin() || auth()->user()->isAdmin()))
                 <a href="{{ route('admin.users.index') }}" class="menu-item {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
                     <div class="menu-icon-box">
                         <i class="fas fa-users-cog"></i>
                     </div>
                     <span class="menu-label-text">{{ __('nav.user_management') }}</span>
                 </a>
+                @endif
                 <a href="{{ route('dashboard') }}#telegram" class="menu-item">
                     <div class="menu-icon-box">
                         <i class="fab fa-telegram"></i>
@@ -893,12 +897,14 @@
                                 <span>{{ __('nav.profile') }}</span>
                             </a>
                         </li>
+                        @if(auth()->check() && (auth()->user()->isSuperAdmin() || auth()->user()->isAdmin()))
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="{{ route('admin.users.index') }}">
                                 <i class="fas fa-users-cog text-info"></i>
                                 <span>{{ __('nav.user_management') }}</span>
                             </a>
                         </li>
+                        @endif
                         <li><hr class="dropdown-divider my-1"></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}" class="m-0 p-1">

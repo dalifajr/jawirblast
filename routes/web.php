@@ -32,6 +32,7 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.post')->middleware('throttle:5,1');
+    Route::get('/register/check-username', [AuthController::class, 'checkUsername'])->name('register.check-username')->middleware('throttle:60,1');
 
     // Rute Autentikasi Telegram (Dual Mode)
     Route::get('/auth/telegram/token', [TelegramAuthController::class, 'generateToken'])->name('telegram.token');
