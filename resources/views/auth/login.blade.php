@@ -16,7 +16,7 @@
         })();
     </script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ __('Login / Daftar') }} — {{ config('app.name', 'JAWIRBLAST') }}</title>
+    <title>{{ __('auth.login_tab') }} / {{ __('auth.register_tab') }} — {{ config('app.name', 'JAWIRBLAST') }}</title>
     
     {{-- Google Fonts: Poppins (Clean Modern Material 3 Display & Body) --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,17 +71,15 @@
 <body style="cursor: default;">
 
   {{-- Theme Toggle Button (Circular M3 Action) --}}
-  <div class="auth-theme-toggle">
-    <button class="btn btn-link link-body-emphasis p-0 border-0" id="themeToggle" title="{{ __('Ganti Tema') }}" aria-label="{{ __('Ganti Tema') }}">
-        <i class="fas fa-moon fs-5" id="themeIcon"></i>
-    </button>
-  </div>
+  <button class="auth-theme-toggle" id="themeToggle" type="button" title="{{ __('auth.theme_toggle_title') }}" aria-label="{{ __('auth.theme_toggle_title') }}">
+      <i class="fas fa-moon fs-5" id="themeIcon"></i>
+  </button>
 
   {{-- Loader Overlay: Material You Android 17 Spinning Card --}}
   <div id="pageLoader" class="fade-out">
     <div class="m3-loader-card">
-      <div class="m3-spinner-circle" role="status" aria-label="{{ __('Memuat...') }}"></div>
-      <span class="fw-semibold small">{{ __('Memuat sistem...') }}</span>
+      <div class="m3-spinner-circle" role="status" aria-label="{{ __('auth.system_loading') }}"></div>
+      <span class="fw-semibold small">{{ __('auth.system_loading') }}</span>
     </div>
   </div>
 
@@ -93,25 +91,25 @@
         @include('partials.brand-logo', ['style' => 'width: 44px; height: 44px;'])
         <div>
           <h4 class="fw-bold text-primary m-0" style="line-height: 1.15; letter-spacing: -0.5px;">{{ config('app.name', 'JAWIRBLAST') }}</h4>
-          <span class="text-secondary small fw-medium">{{ __('WhatsApp High-Performance Broadcast Platform') }}</span>
+          <span class="text-secondary small fw-medium">{{ __('auth.app_tagline') }}</span>
         </div>
       </div>
 
       <div class="mb-3">
-        <h3 class="h4 fw-bold text-body mb-1" id="auth-title">{{ __('Selamat Datang') }}</h3>
-        <p class="small text-secondary mb-0" id="auth-subtitle">{{ __('Silakan masuk untuk mengakses portal broadcast Anda.') }}</p>
+        <h3 class="h4 fw-bold text-body mb-1" id="auth-title">{{ __('auth.welcome_title') }}</h3>
+        <p class="small text-secondary mb-0" id="auth-subtitle">{{ __('auth.welcome_subtitle') }}</p>
       </div>
 
       {{-- Auth Tabs Navigation (Concentric M3 Segmented Full Pill) --}}
       <ul class="nav nav-pills nav-fill mb-4" role="tablist">
           <li class="nav-item" role="presentation">
               <button class="nav-link active py-2 small fw-semibold" id="tab-btn-login" type="button" onclick="switchAuthTab('login')">
-                  <i class="fas fa-sign-in-alt me-1.5"></i>{{ __('Masuk') }}
+                  <i class="fas fa-sign-in-alt me-1.5"></i>{{ __('auth.login_tab') }}
               </button>
           </li>
           <li class="nav-item" role="presentation">
               <button class="nav-link py-2 small fw-semibold text-muted" id="tab-btn-register" type="button" onclick="switchAuthTab('register')">
-                  <i class="fas fa-user-plus me-1.5"></i>{{ __('Daftar') }}
+                  <i class="fas fa-user-plus me-1.5"></i>{{ __('auth.register_tab') }}
               </button>
           </li>
       </ul>
@@ -144,17 +142,17 @@
               <form action="{{ route('login.post') }}" method="POST">
                   @csrf
                   <div class="mb-3">
-                      <label class="form-label text-muted small fw-semibold">{{ __('Alamat Email') }}</label>
+                      <label class="form-label text-muted small fw-semibold">{{ __('auth.email_label') }}</label>
                       <div class="input-group">
                           <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                          <input type="email" name="email" class="form-control" placeholder="{{ __('admin@jawirblast.com') }}" value="{{ old('email') }}" required autofocus autocomplete="username" />
+                          <input type="email" name="email" class="form-control" placeholder="{{ __('auth.email_placeholder') }}" value="{{ old('email') }}" required autofocus autocomplete="username" />
                       </div>
                   </div>
                   <div class="mb-3">
-                      <label class="form-label text-muted small fw-semibold">{{ __('Kata Sandi') }}</label>
+                      <label class="form-label text-muted small fw-semibold">{{ __('auth.password_label') }}</label>
                       <div class="input-group">
                           <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                          <input type="password" name="password" id="login-password" class="form-control" placeholder="{{ __('Masukkan kata sandi...') }}" required autocomplete="current-password" />
+                          <input type="password" name="password" id="login-password" class="form-control" placeholder="{{ __('auth.password_placeholder') }}" required autocomplete="current-password" />
                           <button class="btn btn-outline-secondary border border-start-0" type="button" onclick="togglePasswordVisibility('login-password', this)">
                               <i class="fas fa-eye"></i>
                           </button>
@@ -164,7 +162,7 @@
                   <div class="d-flex justify-content-between align-items-center mb-3">
                       <div class="form-check">
                           <input type="checkbox" name="remember" class="form-check-input" id="rememberCheck" {{ old('remember') ? 'checked' : '' }}>
-                          <label class="form-check-label small text-secondary" for="rememberCheck">{{ __('Ingat Saya') }}</label>
+                          <label class="form-check-label small text-secondary" for="rememberCheck">{{ __('auth.remember_me') }}</label>
                       </div>
                   </div>
 
@@ -176,20 +174,20 @@
                   @endif
 
                   <button type="submit" class="btn btn-primary-m3 w-100 shadow-none d-flex align-items-center justify-content-center gap-2">
-                      <span>{{ __('Masuk Sistem') }}</span>
+                      <span>{{ __('auth.login_button') }}</span>
                       <i class="fas fa-arrow-right"></i>
                   </button>
               </form>
 
               <div class="position-relative my-4 text-center">
                   <hr class="text-secondary opacity-25 m-0">
-                  <span class="position-absolute top-50 start-50 translate-middle bg-body px-3 small text-secondary fw-semibold" style="font-size: 0.75rem;">{{ __('ATAU') }}</span>
+                  <span class="position-absolute top-50 start-50 translate-middle bg-body px-3 small text-secondary fw-semibold" style="font-size: 0.75rem;">{{ __('auth.or_divider') }}</span>
               </div>
 
               {{-- Tombol Login Telegram --}}
               <div class="d-grid">
                   <button type="button" class="m3-auth-tg-btn" id="btn-telegram-login">
-                      <i class="fab fa-telegram fs-5 me-1.5"></i>{{ __('Masuk dengan Telegram') }}
+                      <i class="fab fa-telegram fs-5 me-1.5"></i>{{ __('auth.telegram_login_btn') }}
                   </button>
               </div>
           </div>
@@ -199,34 +197,34 @@
               <form action="{{ route('register.post') }}" method="POST">
                   @csrf
                   <div class="mb-3">
-                      <label class="form-label text-muted small fw-semibold">{{ __('Nama Lengkap') }}</label>
+                      <label class="form-label text-muted small fw-semibold">{{ __('auth.name_label') }}</label>
                       <div class="input-group">
                           <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                          <input type="text" name="name" class="form-control" placeholder="{{ __('Nama Lengkap Anda') }}" value="{{ old('name') }}" required />
+                          <input type="text" name="name" class="form-control" placeholder="{{ __('auth.name_placeholder') }}" value="{{ old('name') }}" required />
                       </div>
                   </div>
 
                   <div class="mb-3">
-                      <label class="form-label text-muted small fw-semibold">{{ __('Alamat Email') }}</label>
+                      <label class="form-label text-muted small fw-semibold">{{ __('auth.email_label') }}</label>
                       <div class="input-group">
                           <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                          <input type="email" name="email" class="form-control" placeholder="{{ __('nama@domain.com') }}" value="{{ old('email') }}" required />
+                          <input type="email" name="email" class="form-control" placeholder="{{ __('auth.email_placeholder') }}" value="{{ old('email') }}" required />
                       </div>
                   </div>
 
                   <div class="row g-2 mb-3">
                       <div class="col-6">
-                          <label class="form-label text-muted small fw-semibold">{{ __('Kata Sandi') }}</label>
+                          <label class="form-label text-muted small fw-semibold">{{ __('auth.password_label') }}</label>
                           <div class="input-group">
                               <span class="input-group-text"><i class="fas fa-key"></i></span>
-                              <input type="password" name="password" id="reg-password" class="form-control" placeholder="{{ __('Min. 8 karakter') }}" required />
+                              <input type="password" name="password" id="reg-password" class="form-control" placeholder="{{ __('auth.password_hint') }}" required />
                           </div>
                       </div>
                       <div class="col-6">
-                          <label class="form-label text-muted small fw-semibold">{{ __('Ulangi Sandi') }}</label>
+                          <label class="form-label text-muted small fw-semibold">{{ __('auth.password_confirmation_label') }}</label>
                           <div class="input-group">
                               <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                              <input type="password" name="password_confirmation" id="reg-password-confirm" class="form-control" placeholder="{{ __('Ulangi Sandi') }}" required />
+                              <input type="password" name="password_confirmation" id="reg-password-confirm" class="form-control" placeholder="{{ __('auth.password_confirmation_placeholder') }}" required />
                           </div>
                       </div>
                   </div>
@@ -239,14 +237,14 @@
                   @endif
 
                   <button type="submit" id="btn-register" class="btn btn-primary-m3 w-100 shadow-none d-flex align-items-center justify-content-center gap-2">
-                      <span>{{ __('Daftar Sekarang') }}</span>
+                      <span>{{ __('auth.register_button') }}</span>
                       <i class="fas fa-user-plus"></i>
                   </button>
               </form>
           </div>
       </div>
 
-      {{-- Footer & Multi-Language Switcher --}}
+      {{-- Footer & Multi-Language Dropdown Menu --}}
       <div class="mt-4 pt-3 border-top border-secondary border-opacity-10 d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3">
         <div class="text-muted small">
           <span>© {{ date('Y') }}</span>
@@ -254,10 +252,43 @@
           <span class="ms-1 text-secondary">- WhatsApp Engine</span>
         </div>
 
-        <div class="lang-chips-container">
-          <a href="{{ route('lang.switch', 'id') }}" class="m3-chip {{ app()->getLocale() === 'id' ? 'active' : '' }}">ID</a>
-          <a href="{{ route('lang.switch', 'en') }}" class="m3-chip {{ app()->getLocale() === 'en' ? 'active' : '' }}">EN</a>
-          <a href="{{ route('lang.switch', 'zh') }}" class="m3-chip {{ app()->getLocale() === 'zh' ? 'active' : '' }}">ZH</a>
+        {{-- Dropdown Menu Pemilih Bahasa M3 --}}
+        <div class="dropdown">
+          <button class="language-dropdown-btn dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-globe text-primary"></i>
+            <span>
+              @if(app()->getLocale() === 'en')
+                English (EN)
+              @elseif(app()->getLocale() === 'zh')
+                中文 (ZH)
+              @else
+                Indonesia (ID)
+              @endif
+            </span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-m3 dropdown-menu-end shadow-sm" aria-labelledby="languageDropdown">
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 {{ app()->getLocale() === 'id' ? 'active' : '' }}" href="{{ route('lang.switch', 'id') }}">
+                <span>🇮🇩</span>
+                <span>Bahasa Indonesia</span>
+                @if(app()->getLocale() === 'id') <i class="fas fa-check ms-auto text-primary small"></i> @endif
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 {{ app()->getLocale() === 'en' ? 'active' : '' }}" href="{{ route('lang.switch', 'en') }}">
+                <span>🇬🇧</span>
+                <span>English</span>
+                @if(app()->getLocale() === 'en') <i class="fas fa-check ms-auto text-primary small"></i> @endif
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 {{ app()->getLocale() === 'zh' ? 'active' : '' }}" href="{{ route('lang.switch', 'zh') }}">
+                <span>🇨🇳</span>
+                <span>中文 (Mandarin)</span>
+                @if(app()->getLocale() === 'zh') <i class="fas fa-check ms-auto text-primary small"></i> @endif
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -267,41 +298,41 @@
       <div class="glass-card w-100">
         <div class="glass-header">
           <i class="fas fa-bullhorn me-1"></i>
-          <span>{{ __('Informasi JAWIRBLAST') }}</span>
+          <span>{{ __('auth.showcase_title') }}</span>
         </div>
         
         <div class="small text-body mb-4" style="line-height: 1.6;">
-          <p class="mb-2"><strong>JAWIRBLAST</strong> adalah platform kampanye broadcast WhatsApp berperforma tinggi berbasis microservice <em>Baileys v6</em> dan arsitektur antrean asinkron.</p>
+          <p class="mb-2">{{ __('auth.showcase_desc') }}</p>
           <ul class="ps-3 mb-0" style="font-size: 0.8125rem;">
-            <li>Jeda adaptif & anti-ban protection</li>
-            <li>Multi-sesi rotasi nomor WhatsApp</li>
-            <li>Notifikasi real-time & login instan Telegram</li>
-            <li>Manajemen grup kontak & impor CSV/VCF</li>
+            <li>{{ __('auth.feature_adaptive_delay') }}</li>
+            <li>{{ __('auth.feature_multi_session') }}</li>
+            <li>{{ __('auth.feature_telegram_notify') }}</li>
+            <li>{{ __('auth.feature_contact_groups') }}</li>
           </ul>
         </div>
 
         {{-- Kontak Admin Box (Identik referensi D:\bot_tele_jualan) --}}
         <div class="small mb-4 p-3 rounded-3 border" style="background-color: var(--surface-container-low); border-color: var(--outline-variant) !important;">
-            <strong class="d-block mb-2 text-body">{{ __('Kontak Admin & Bantuan:') }}</strong>
+            <strong class="d-block mb-2 text-body">{{ __('auth.contact_admin_title') }}</strong>
             <a href="https://wa.me/6282269245660" target="_blank" class="text-body text-decoration-none mt-1 d-flex align-items-center gap-2">
                 <i class="fab fa-whatsapp text-success fs-6"></i>
-                <span>082269245660 (WhatsApp)</span>
+                <span>{{ __('auth.contact_whatsapp') }}</span>
             </a>
             <a href="https://t.me/dzulfikrialifajri" target="_blank" class="text-body text-decoration-none mt-1 d-flex align-items-center gap-2">
                 <i class="fab fa-telegram text-primary fs-6"></i>
-                <span>@dzulfikrialifajri (Telegram)</span>
+                <span>{{ __('auth.contact_telegram') }}</span>
             </a>
         </div>
 
         {{-- Status Sistem --}}
         <div class="d-flex justify-content-between align-items-center small text-secondary pt-2 border-top border-secondary border-opacity-10">
-            <span>{{ __('Status Engine:') }} <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">ONLINE</span></span>
-            <span>Uptime: <strong>99.9%</strong></span>
+            <span>{{ __('auth.engine_status_label') }} <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">{{ __('auth.engine_status_online') }}</span></span>
+            <span>{{ __('auth.engine_uptime') }}</span>
         </div>
       </div>
 
       <div class="small text-secondary opacity-75 text-center mt-3" style="font-size: 0.75rem;">
-        <span>{{ __('Material Design 3 • Concentric Radius 28px') }}</span>
+        <span>{{ __('auth.m3_footer_note') }}</span>
       </div>
     </div>
   </div>
@@ -312,29 +343,29 @@
       <div class="modal-content rounded-4 border-0 p-3" style="background: var(--surface-container-high); color: var(--on-surface);">
         <div class="modal-header border-0 pb-0">
           <h5 class="modal-title fw-bold" id="modalTelegramLabel">
-            <i class="fab fa-telegram text-primary me-2"></i>{{ __('Otentikasi Telegram') }}
+            <i class="fab fa-telegram text-primary me-2"></i>{{ __('auth.telegram_modal_title') }}
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body text-center py-4">
-          <p class="small text-secondary mb-4">{{ __('Buka bot Telegram resmi kami dan tekan tombol START untuk login otomatis tanpa kata sandi.') }}</p>
+          <p class="small text-secondary mb-4">{{ __('auth.telegram_modal_desc') }}</p>
 
           <div id="telegram-loading" class="my-3">
             <div class="m3-spinner-circle mx-auto mb-3" style="width: 36px; height: 36px;"></div>
-            <p class="small text-secondary mb-0">{{ __('Menghubungkan ke bot Telegram...') }}</p>
+            <p class="small text-secondary mb-0">{{ __('auth.telegram_loading') }}</p>
           </div>
 
           <div id="telegram-ready" class="d-none my-3">
             <a id="telegram-deep-link" href="#" target="_blank" class="m3-auth-tg-btn py-2.5 px-4 d-inline-flex">
-              <i class="fas fa-external-link-alt me-2"></i>{{ __('Buka Bot Telegram Sekarang') }}
+              <i class="fas fa-external-link-alt me-2"></i>{{ __('auth.telegram_open_btn') }}
             </a>
-            <p class="small text-secondary mt-3 mb-0">{{ __('Menunggu konfirmasi tombol START di aplikasi Telegram Anda...') }}</p>
+            <p class="small text-secondary mt-3 mb-0">{{ __('auth.telegram_waiting') }}</p>
           </div>
 
           <div id="telegram-error" class="d-none alert alert-danger small py-2 mt-3"></div>
         </div>
         <div class="modal-footer border-0 pt-0 justify-content-center">
-          <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">{{ __('Batal') }}</button>
+          <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">{{ __('auth.telegram_btn_cancel') }}</button>
         </div>
       </div>
     </div>
@@ -344,7 +375,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // Tab Switcher Masuk / Daftar
+    // Tab Switcher Masuk / Daftar dengan teks terlokalisasi
     function switchAuthTab(target) {
         const btnLogin = document.getElementById('tab-btn-login');
         const btnReg = document.getElementById('tab-btn-register');
@@ -362,8 +393,8 @@
             paneLogin.classList.remove('show', 'active');
             paneReg.classList.add('show', 'active');
 
-            if (authTitle) authTitle.innerText = "{{ __('Buat Akun Baru') }}";
-            if (authSubtitle) authSubtitle.innerText = "{{ __('Daftar sekarang untuk memulai kampanye broadcast WhatsApp.') }}";
+            if (authTitle) authTitle.innerText = "{{ __('auth.register_title') }}";
+            if (authSubtitle) authSubtitle.innerText = "{{ __('auth.register_subtitle') }}";
         } else {
             btnReg.classList.remove('active');
             btnReg.classList.add('text-muted');
@@ -373,8 +404,8 @@
             paneReg.classList.remove('show', 'active');
             paneLogin.classList.add('show', 'active');
 
-            if (authTitle) authTitle.innerText = "{{ __('Selamat Datang') }}";
-            if (authSubtitle) authSubtitle.innerText = "{{ __('Silakan masuk untuk mengakses portal broadcast Anda.') }}";
+            if (authTitle) authTitle.innerText = "{{ __('auth.welcome_title') }}";
+            if (authSubtitle) authSubtitle.innerText = "{{ __('auth.welcome_subtitle') }}";
         }
     }
 
@@ -397,8 +428,10 @@
     document.addEventListener('DOMContentLoaded', function() {
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
 
         function updateThemeIcon(theme) {
+            if (!themeIcon) return;
             if (theme === 'dark') {
                 themeIcon.classList.remove('fa-moon');
                 themeIcon.classList.add('fa-sun');
@@ -408,18 +441,25 @@
             }
         }
 
-        const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'light';
+        const currentTheme = html.getAttribute('data-bs-theme') || 'light';
         updateThemeIcon(currentTheme);
 
         if (themeToggle) {
-            themeToggle.addEventListener('click', function() {
-                const activeTheme = document.documentElement.getAttribute('data-bs-theme') || 'light';
+            themeToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                const activeTheme = html.getAttribute('data-bs-theme') || 'light';
                 const nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-bs-theme', nextTheme);
-                document.documentElement.style.colorScheme = nextTheme;
+
+                html.classList.add('theme-transitioning');
+                html.setAttribute('data-bs-theme', nextTheme);
+                html.style.colorScheme = nextTheme;
                 localStorage.setItem('jualan-theme', nextTheme);
                 document.cookie = "jualan-theme=" + nextTheme + ";path=/;max-age=31536000;SameSite=Lax";
                 updateThemeIcon(nextTheme);
+
+                setTimeout(() => {
+                    html.classList.remove('theme-transitioning');
+                }, 300);
             });
         }
 
@@ -467,7 +507,7 @@
                             pollCount++;
                             if (pollCount > maxPolls) {
                                 clearInterval(pollTimer);
-                                errEl.innerText = "{{ __('Sesi token Telegram telah berakhir. Silakan tutup dan coba kembali.') }}";
+                                errEl.innerText = "{{ __('auth.telegram_expired') }}";
                                 errEl.classList.remove('d-none');
                                 readyEl.classList.add('d-none');
                                 return;
@@ -483,7 +523,7 @@
                                     window.location.href = status.redirect_url || '{{ route("dashboard") }}';
                                 } else if (status.status === 'expired') {
                                     clearInterval(pollTimer);
-                                    errEl.innerText = "{{ __('Token kedaluwarsa. Silakan muat ulang.') }}";
+                                    errEl.innerText = "{{ __('auth.telegram_token_expired') }}";
                                     errEl.classList.remove('d-none');
                                     readyEl.classList.add('d-none');
                                 }
@@ -498,7 +538,7 @@
                 })
                 .catch(err => {
                     loadEl.classList.add('d-none');
-                    errEl.innerText = err.message || "{{ __('Gagal menghubungi server bot Telegram.') }}";
+                    errEl.innerText = err.message || "{{ __('auth.telegram_connect_error') }}";
                     errEl.classList.remove('d-none');
                 });
             });
