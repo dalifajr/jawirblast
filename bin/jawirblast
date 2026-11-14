@@ -488,34 +488,45 @@ cmd_telegram() {
 
 cmd_update_website() {
     check_root
-    echo -e "${THM_TITLE}:: PEMBARUAN SISTEM JAWIRBLAST (GIT PULL & MIGRATE) ::${THM_NC}"
+    echo -e "${THM_TITLE}:: PEMBARUAN SISTEM JAWIRBLAST (GIT PULL, MIGRATE & SEED) ::${THM_NC}"
     cd "${APP_DIR}"
 
-    echo -e "${THM_ACCENT}[1/6] Menarik kode terbaru dari Git...${THM_NC}"
+    echo -e "${THM_ACCENT}[1/7] Menarik kode terbaru dari Git...${THM_NC}"
     git pull origin main || git pull || {
         echo -e "${THM_WARN}[!] Git pull mengalami kendala. Melanjutkan ke langkah dependensi...${THM_NC}"
     }
 
-    echo -e "${THM_ACCENT}[2/6] Memperbarui dependensi Composer...${THM_NC}"
+    echo -e "${THM_ACCENT}[2/7] Memperbarui dependensi Composer...${THM_NC}"
     composer install --no-dev --optimize-autoloader --no-interaction
 
-    echo -e "${THM_ACCENT}[3/6] Memperbarui dependensi Baileys WhatsApp Node.js...${THM_NC}"
+    echo -e "${THM_ACCENT}[3/7] Memperbarui dependensi Baileys WhatsApp Node.js...${THM_NC}"
     if [[ -d "${APP_DIR}/wa-service" ]]; then
         (cd "${APP_DIR}/wa-service" && npm install --production)
     fi
 
-    echo -e "${THM_ACCENT}[4/6] Menjalankan migrasi database...${THM_NC}"
+    echo -e "${THM_ACCENT}[4/7] Menjalankan migrasi database...${THM_NC}"
     php artisan migrate --force
 
-    echo -e "${THM_ACCENT}[5/6] Mengoptimalkan cache aplikasi...${THM_NC}"
+    echo -e "${THM_ACCENT}[5/7] Menjalankan seeder akun & sinkronisasi peran pengguna (Superadmin)...${THM_NC}"
+    php artisan db:seed --force
+
+    echo -e "${THM_ACCENT}[6/7] Mengoptimalkan cache aplikasi...${THM_NC}"
     php artisan optimize:clear
     php artisan optimize
 
-    echo -e "${THM_ACCENT}[6/6] Memulai ulang daemon WhatsApp dan Queue Worker...${THM_NC}"
+    echo -e "${THM_ACCENT}[7/7] Memulai ulang daemon WhatsApp dan Queue Worker...${THM_NC}"
     systemctl restart jawirblast-wa || true
     systemctl restart jawirblast-worker || true
 
-    echo -e "${THM_OK}[✓] Pembaruan website JAWIRBLAST selesai dengan sukses!${THM_NC}"
+    echo -e "${THM_OK}[✓] Pembaruan website JAWIRBLAST selesai dengan sukses! Akun superadmin & konfigurasi tersinkron.${THM_NC}"
+}
+
+cmd_seed_database() {
+    check_root
+    echo -e "${THM_TITLE}:: SINKRONISASI SEEDER BASIS DATA JAWIRBLAST ::${THM_NC}"
+    cd "${APP_DIR}"
+    php artisan db:seed --force
+    echo -e "${THM_OK}[✓] Seeder basis data berhasil dieksekusi. Akun superadmin 'dzulfikri' dan role pengguna tersinkronisasi.${THM_NC}"
 }
 
 cmd_logs() {
@@ -582,12 +593,13 @@ interactive_menu() {
         echo -e " ${THM_BADGE}[07]${THM_NC} ${THM_VAL}Reset Password Admin Website${THM_NC}"
         echo -e " ${THM_BADGE}[08]${THM_NC} ${THM_VAL}Ubah Cloudflare Turnstile Key${THM_NC}"
         echo -e " ${THM_BADGE}[09]${THM_NC} ${THM_VAL}Ubah Bot Token & Admin ID Telegram${THM_NC}"
-        echo -e " ${THM_BADGE}[10]${THM_NC} ${THM_VAL}Update Website (Git Pull + Migrate + Restart)${THM_NC}"
+        echo -e " ${THM_BADGE}[10]${THM_NC} ${THM_VAL}Update Website (Git Pull + Migrate + Seed + Restart)${THM_NC}"
         echo -e " ${THM_BADGE}[11]${THM_NC} ${THM_VAL}Lihat Live Log (Laravel / WhatsApp / Worker / Nginx)${THM_NC}"
         echo -e " ${THM_BADGE}[12]${THM_NC} ${THM_VAL}Backup Database MySQL${THM_NC}"
+        echo -e " ${THM_BADGE}[13]${THM_NC} ${THM_VAL}Seed Database (Sinkronisasi Akun Superadmin & User)${THM_NC}"
         echo -e " ${THM_BADGE}[00]${THM_NC} ${THM_MUTED}Keluar Dari Panel${THM_NC}"
         echo -e "${THM_BORDER}+====================================================================+${THM_NC}"
-        read -rp "Pilih menu [0-12]: " choice
+        read -rp "Pilih menu [0-13]: " choice
 
         case "${choice}" in
             1|01) cmd_status ;;
@@ -602,6 +614,7 @@ interactive_menu() {
             10) cmd_update_website ;;
             11) cmd_logs ;;
             12) cmd_backup ;;
+            13) cmd_seed_database ;;
             0|00|q|exit)
                 echo -e "${THM_OK}Sampai jumpa! JAWIRBLAST Panel ditutup.${THM_NC}"
                 exit 0
@@ -631,10 +644,11 @@ if [[ $# -gt 0 ]]; then
             cd "${APP_DIR}" && php artisan jawirblast:reset-admin "$@"
             ;;
         update) cmd_update_website ;;
+        seed|db-seed) cmd_seed_database ;;
         logs) cmd_logs ;;
         backup) cmd_backup ;;
         *)
-            echo "Penggunaan: jawirblast [status|start|stop|restart|change-domain|ssl-cloudflare|reset-admin|update|logs|backup]"
+            echo "Penggunaan: jawirblast [status|start|stop|restart|change-domain|ssl-cloudflare|reset-admin|update|seed|logs|backup]"
             exit 1
             ;;
     esac

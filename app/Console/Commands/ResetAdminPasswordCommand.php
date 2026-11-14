@@ -14,14 +14,14 @@ class ResetAdminPasswordCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'jawirblast:reset-admin {email? : Alamat email admin} {password? : Password baru}';
+    protected $signature = 'jawirblast:reset-admin {email? : Alamat email admin} {password? : Password baru} {--role= : Role pengguna (superadmin/admin/user)} {--username= : Username akun}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Reset password admin atau buat akun admin baru dari terminal';
+    protected $description = 'Reset password admin atau buat akun admin/superadmin baru dari terminal';
 
     /**
      * Execute the console command.
@@ -52,22 +52,40 @@ class ResetAdminPasswordCommand extends Command
 
         $user = User::where('email', $email)->first();
 
+        // Default role: jika email dzulfikri set superadmin
+        $isDzulfikri = str_contains(strtolower($email), 'dzulfikri');
+        $defaultRole = $isDzulfikri ? 'superadmin' : 'admin';
+        $role = $this->option('role') ?: $defaultRole;
+
+        $defaultUsername = $isDzulfikri ? 'dzulfikri' : explode('@', $email)[0];
+        $username = $this->option('username') ?: $defaultUsername;
+
         if ($user) {
             $user->password = Hash::make($password);
+            if ($role) {
+                $user->role = $role;
+            }
+            if (empty($user->username) || $isDzulfikri) {
+                $user->username = strtolower($username);
+            }
+            $user->is_suspended = false;
             $user->save();
 
-            $this->info("Password untuk admin [{$email}] berhasil direset.");
+            $this->info("Password untuk akun [{$email}] (Username: {$user->username}, Role: {$user->role}) berhasil direset.");
         } else {
-            $name = $this->ask('Akun belum ditemukan. Masukkan nama untuk akun admin baru:', 'Administrator');
+            $name = $isDzulfikri ? 'Dzulfikri Alifajri' : ($this->ask('Akun belum ditemukan. Masukkan nama untuk akun baru:', 'Administrator'));
 
             $user = User::create([
                 'name' => trim((string) $name),
+                'username' => strtolower($username),
                 'email' => $email,
+                'role' => $role,
                 'password' => Hash::make($password),
                 'locale' => 'id',
+                'is_suspended' => false,
             ]);
 
-            $this->info("Akun admin baru [{$email}] berhasil dibuat dengan ID: {$user->id}.");
+            $this->info("Akun baru [{$email}] (Username: {$user->username}, Role: {$user->role}) berhasil dibuat dengan ID: {$user->id}.");
         }
 
         return self::SUCCESS;
