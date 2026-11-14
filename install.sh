@@ -370,22 +370,147 @@ create_initial_admin() {
 }
 
 setup_domain_ssl() {
-    log_step "Konfigurasi Nama Domain & SSL Certbot (Opsional)..."
+    log_step "Konfigurasi Nama Domain & SSL (Let's Encrypt / Cloudflare Origin)..."
     read -rp "Apakah Anda ingin memasang nama domain sekarang? (y/n, default: n): " setup_dom
     if [[ "${setup_dom}" =~ ^[Yy]$ ]]; then
         read -rp "Masukkan nama domain (contoh: blast.domainanda.com): " domain_name
         domain_name="$(echo "${domain_name}" | tr -d ' ')"
-        if [[ -n "${domain_name}" ]]; then
+        if [[ -z "${domain_name}" ]]; then
+            echo -e "${YELLOW}[!] Nama domain kosong. Pemasangan domain dilewati.${NC}"
+            return
+        fi
+
+        echo -e "\n${CYAN}Pilih Metode Sertifikat SSL untuk Domain [${domain_name}]:${NC}"
+        echo -e "  [1] Otomatis via Let's Encrypt Certbot (Khusus DNS Non-Proxy / Awan Abu-abu Cloudflare)"
+        echo -e "  [2] Cloudflare Origin Certificate (Khusus DNS Proxied / Awan Oranye Cloudflare - 15 Tahun)"
+        echo -e "  [3] Lewati pemasangan SSL saat ini (Hanya HTTP)"
+        read -rp "Pilihan Anda [1-3, default: 2]: " ssl_choice
+        ssl_choice="${ssl_choice:-2}"
+
+        local php_sock
+        php_sock="$(find /run/php/ -name 'php*-fpm.sock' 2>/dev/null | head -n 1 || echo '/run/php/php8.3-fpm.sock')"
+
+        if [[ "${ssl_choice}" == "2" ]]; then
+            local ssl_dir="/etc/ssl/jawirblast"
+            mkdir -p "${ssl_dir}"
+
+            echo -e "\n${BLUE}Pilih cara memasukkan sertifikat & kunci Cloudflare:${NC}"
+            echo -e "  [1] Tempel (Paste) langsung di jendela terminal ini"
+            echo -e "  [2] Buka teks editor (nano) untuk paste"
+            read -rp "Pilihan Anda [1/2, default: 1]: " cf_input_method
+            cf_input_method="${cf_input_method:-1}"
+
+            if [[ "${cf_input_method}" == "2" ]]; then
+                echo -e "${BLUE}[*] Membuka nano untuk Origin Certificate (${ssl_dir}/cert.pem)...${NC}"
+                read -rp "Tekan [Enter] untuk membuka nano..." _
+                nano "${ssl_dir}/cert.pem"
+
+                echo -e "${BLUE}[*] Membuka nano untuk Private Key (${ssl_dir}/key.pem)...${NC}"
+                read -rp "Tekan [Enter] untuk membuka nano..." _
+                nano "${ssl_dir}/key.pem"
+            else
+                echo -e "\n${BLUE}[*] Langkah 1/2: Masukkan ORIGIN CERTIFICATE dari Cloudflare${NC}"
+                echo -e "${YELLOW}(Salin seluruh teks termasuk -----BEGIN CERTIFICATE----- s.d. -----END CERTIFICATE-----)${NC}"
+                echo -e "Setelah selesai menempelkan teks, ketik kata 'END' pada baris baru lalu tekan Enter:"
+                local cert_content=""
+                while IFS= read -r line; do
+                    if [[ "${line}" =~ ^[[:space:]]*END[[:space:]]*$ || "${line}" =~ ^[[:space:]]*end[[:space:]]*$ ]]; then
+                        break
+                    fi
+                    cert_content+="${line}\n"
+                done
+                printf "%b" "${cert_content}" > "${ssl_dir}/cert.pem"
+
+                echo -e "\n${BLUE}[*] Langkah 2/2: Masukkan PRIVATE KEY dari Cloudflare${NC}"
+                echo -e "${YELLOW}(Salin seluruh teks termasuk -----BEGIN PRIVATE KEY----- s.d. -----END PRIVATE KEY-----)${NC}"
+                echo -e "Setelah selesai menempelkan teks, ketik kata 'END' pada baris baru lalu tekan Enter:"
+                local key_content=""
+                while IFS= read -r line; do
+                    if [[ "${line}" =~ ^[[:space:]]*END[[:space:]]*$ || "${line}" =~ ^[[:space:]]*end[[:space:]]*$ ]]; then
+                        break
+                    fi
+                    key_content+="${line}\n"
+                done
+                printf "%b" "${key_content}" > "${ssl_dir}/key.pem"
+            fi
+
+            if [[ -s "${ssl_dir}/cert.pem" ]] && [[ -s "${ssl_dir}/key.pem" ]]; then
+                chmod 644 "${ssl_dir}/cert.pem"
+                chmod 600 "${ssl_dir}/key.pem"
+
+                cat <<EOF > /etc/nginx/sites-available/jawirblast
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ${domain_name};
+    return 301 https://\$host\$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name ${domain_name};
+    root ${INSTALL_DIR}/public;
+
+    ssl_certificate ${ssl_dir}/cert.pem;
+    ssl_certificate_key ${ssl_dir}/key.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.php index.html;
+    charset utf-8;
+
+    location / {
+        try_files \$uri \$uri/ /index.php?\$query_string;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:${php_sock};
+        fastcgi_param SCRIPT_FILENAME \$realpath_root\$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_hide_header X-Powered-By;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
+EOF
+                sed -i "s|^APP_URL=.*|APP_URL=https://${domain_name}|" "${INSTALL_DIR}/.env"
+                nginx -t && systemctl reload nginx
+                echo -e "${GREEN}[✓] Cloudflare Origin Certificate berhasil dipasang pada Nginx!${NC}"
+            else
+                echo -e "${YELLOW}[!] Sertifikat atau kunci kosong. Mengonfigurasi domain dengan HTTP standar.${NC}"
+                sed -i "s/server_name .*/server_name ${domain_name};/" /etc/nginx/sites-available/jawirblast
+                sed -i "s|^APP_URL=.*|APP_URL=http://${domain_name}|" "${INSTALL_DIR}/.env"
+                nginx -t && systemctl reload nginx
+            fi
+        elif [[ "${ssl_choice}" == "1" ]]; then
             sed -i "s/server_name .*/server_name ${domain_name};/" /etc/nginx/sites-available/jawirblast
             sed -i "s|^APP_URL=.*|APP_URL=https://${domain_name}|" "${INSTALL_DIR}/.env"
-            nginx -t
-            systemctl reload nginx
+            nginx -t && systemctl reload nginx
 
             echo -e "${BLUE}[*] Menjalankan Certbot SSL untuk domain ${domain_name}...${NC}"
             certbot --nginx -d "${domain_name}" --non-interactive --agree-tos --register-unsafely-without-email --redirect || {
                 echo -e "${YELLOW}[!] Gagal menerbitkan SSL Certbot. Anda dapat menjalankannya kembali melalui perintah 'jawirblast'.${NC}"
             }
+        else
+            sed -i "s/server_name .*/server_name ${domain_name};/" /etc/nginx/sites-available/jawirblast
+            sed -i "s|^APP_URL=.*|APP_URL=http://${domain_name}|" "${INSTALL_DIR}/.env"
+            nginx -t && systemctl reload nginx
+            echo -e "${GREEN}[✓] Domain ${domain_name} diset ke HTTP.${NC}"
         fi
+
+        cd "${INSTALL_DIR}" && php artisan config:clear || true
     fi
 }
 
