@@ -2,35 +2,6 @@
 
 @section('content')
 <div class="responsive padding" style="max-width: 1200px; margin: 0 auto; width: 100%;">
-    <!-- Top Navigation Bar -->
-    <nav class="top round margin-bottom surface-container">
-        <a href="{{ route('dashboard') }}" class="button transparent">
-            <i>dashboard</i>
-            <span>Dashboard</span>
-        </a>
-        <a href="{{ route('whatsapp.index') }}" class="button transparent">
-            <i>chat</i>
-            <span>WhatsApp</span>
-        </a>
-        <a href="{{ route('contacts.index') }}" class="button primary round">
-            <i>contacts</i>
-            <span>{{ __('contacts.title') }}</span>
-        </a>
-        <a href="{{ route('contacts.groups.index') }}" class="button transparent">
-            <i>group_work</i>
-            <span>{{ __('contacts.groups_title') }}</span>
-        </a>
-        <div class="max"></div>
-        <span class="small text-secondary margin-right">{{ auth()->user()->name }}</span>
-        <form method="POST" action="{{ route('logout') }}" class="no-margin">
-            @csrf
-            <button type="submit" class="button border error round small">
-                <i>logout</i>
-                <span>Keluar</span>
-            </button>
-        </form>
-    </nav>
-
     <!-- Header & Action Buttons -->
     <header class="row middle-align margin-bottom">
         <div class="max">

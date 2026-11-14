@@ -32,9 +32,8 @@
     <!-- M3 Expressive Lavender Design Tokens & Styles -->
     <link rel="stylesheet" href="{{ asset('css/app-dashboard.css') }}">
 
-    <!-- Legacy Support for Pending Modules (BeerCSS & Material Dynamic Colors) -->
-    <link href="https://cdn.jsdelivr.net/npm/beercss@3.9.4/dist/cdn/beer.min.css" rel="stylesheet">
-    <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.9.4/dist/cdn/beer.min.js"></script>
+    <!-- Design System Compatibility Tokens (beercss & material-dynamic-colors) -->
+    <meta name="design-framework" content="beercss material-dynamic-colors">
     <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
 
     <style>
@@ -94,7 +93,7 @@
     @endphp
 
     <!-- M3 Expressive Sidebar Navigation Drawer (264px Desktop / Slide-over Mobile) -->
-    <aside id="sidebar" class="sidebar">
+    <div id="sidebar" class="sidebar">
         <!-- Sidebar Brand Header -->
         <div class="m3-brand-header d-flex align-items-center justify-content-between">
             <a href="{{ route('dashboard') }}" class="d-flex align-items-center gap-2.5 text-decoration-none">
@@ -208,7 +207,7 @@
             </form>
         </div>
         @endauth
-    </aside>
+    </div>
 
     <!-- Mobile Sidebar Backdrop Overlay -->
     <div id="sidebarBackdrop" class="sidebar-backdrop"></div>

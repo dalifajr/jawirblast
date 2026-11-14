@@ -994,3 +994,164 @@ body {
   color: #ea868f;
 }
 
+/* ==============================================================================
+   M3 UI UTILITIES BRIDGE (For Clean Views across Campaigns, Contacts, WA)
+   Transforms legacy classes to Pure Material You M3 Aesthetics
+   ============================================================================== */
+.primary-text {
+  color: var(--primary) !important;
+}
+
+.surface-container {
+  background-color: var(--surface-container) !important;
+}
+
+.surface-container-low {
+  background-color: var(--surface-container-low) !important;
+}
+
+.surface-container-lowest {
+  background-color: var(--surface-container-lowest) !important;
+}
+
+/* M3 Card Styles */
+.card, .card.round {
+  background-color: var(--surface-container-low) !important;
+  border: 1px solid var(--outline-variant) !important;
+  border-radius: var(--radius-xl, 24px) !important;
+  padding: 1.5rem !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03) !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  margin-bottom: 1.5rem;
+}
+
+[data-bs-theme="dark"] .card, 
+[data-bs-theme="dark"] .card.round {
+  background-color: var(--surface-container-low) !important;
+  border-color: var(--outline-variant) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* M3 Button Utilities */
+.button, .button.round {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 8px 20px !important;
+  border-radius: var(--radius-pill) !important;
+  font-family: var(--font-poppins) !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  border: 1px solid transparent !important;
+}
+
+.button.primary, a.button.primary, button.primary {
+  background-color: var(--primary) !important;
+  color: var(--on-primary) !important;
+  border: none !important;
+}
+
+.button.primary:hover, a.button.primary:hover {
+  opacity: 0.92 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(101, 85, 143, 0.3) !important;
+}
+
+.button.transparent, a.button.transparent {
+  background-color: transparent !important;
+  color: var(--on-surface) !important;
+  border: 1px solid var(--outline-variant) !important;
+}
+
+.button.transparent:hover, a.button.transparent:hover {
+  background-color: var(--surface-container) !important;
+  color: var(--primary) !important;
+}
+
+.button.border.error, button.button.border.error {
+  background-color: transparent !important;
+  color: #dc3545 !important;
+  border: 1px solid rgba(220, 53, 69, 0.4) !important;
+}
+
+.button.border.error:hover {
+  background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+.button.circle {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+}
+
+/* Field / Input M3 Styling */
+.field, .field.label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.field input, .field select, .field textarea,
+input.form-control, select.form-select {
+  background-color: var(--surface-container-lowest) !important;
+  border: 1px solid var(--outline-variant) !important;
+  border-radius: var(--radius-sm, 12px) !important;
+  padding: 10px 14px !important;
+  color: var(--on-surface) !important;
+  font-family: var(--font-poppins) !important;
+  font-size: 0.875rem !important;
+  outline: none !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.field input:focus, .field select:focus, input.form-control:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(101, 85, 143, 0.18) !important;
+}
+
+[data-bs-theme="dark"] .field input, 
+[data-bs-theme="dark"] .field select,
+[data-bs-theme="dark"] input.form-control {
+  background-color: var(--surface-container-lowest) !important;
+  border-color: var(--outline-variant) !important;
+  color: var(--on-surface) !important;
+}
+
+/* Status Badges */
+.badge.green, .badge.success {
+  background-color: #28a745 !important;
+  color: #ffffff !important;
+}
+
+.badge.red, .badge.error {
+  background-color: #dc3545 !important;
+  color: #ffffff !important;
+}
+
+.badge.amber, .badge.warning {
+  background-color: #ffc107 !important;
+  color: #212529 !important;
+}
+
+.badge.grey {
+  background-color: var(--surface-container-high) !important;
+  color: var(--on-surface-variant) !important;
+}
+
+/* Responsive Grid Helper */
+.row.middle-align {
+  display: flex;
+  align-items: center;
+}
+
+.responsive.padding {
+  padding: 0 !important;
+}
+
+

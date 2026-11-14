@@ -33,3 +33,4 @@ CATATAN PENTING BAGI KAMU;
 - tempatkan semua dokumen yang kamu generate, pada folder docs di workspace ini, lalu buat subfolder baru lagi untuk merapihkan setiap dokumen step dan progress dari perkembangan project. dan kecualikan folder tersebut dari push github.
 - buat sub agent untuk bekerja sama dalam membangun project ini UI/UX designer, fullstack developer, QA/Tester. dan gunakan sdlc untuk framework pengembangannya.
 - TEKS BAHASA JANGAN dihardcoded. untuk dukungan multi bahasa.
+- lakukan testing fungsionalitas via browser agent.
