@@ -135,11 +135,14 @@ setup_mysql() {
     local db_pass
     db_pass="$(openssl rand -hex 16)"
 
-    # Buat DB dan user dengan hak akses penuh
+    # Buat DB dan user dengan hak akses penuh untuk localhost dan 127.0.0.1
     mysql -e "CREATE DATABASE IF NOT EXISTS \`${db_name}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
     mysql -e "CREATE USER IF NOT EXISTS '${db_user}'@'localhost' IDENTIFIED BY '${db_pass}';"
+    mysql -e "CREATE USER IF NOT EXISTS '${db_user}'@'127.0.0.1' IDENTIFIED BY '${db_pass}';"
     mysql -e "ALTER USER '${db_user}'@'localhost' IDENTIFIED BY '${db_pass}';"
+    mysql -e "ALTER USER '${db_user}'@'127.0.0.1' IDENTIFIED BY '${db_pass}';"
     mysql -e "GRANT ALL PRIVILEGES ON \`${db_name}\`.* TO '${db_user}'@'localhost';"
+    mysql -e "GRANT ALL PRIVILEGES ON \`${db_name}\`.* TO '${db_user}'@'127.0.0.1';"
     mysql -e "FLUSH PRIVILEGES;"
 
     echo "${db_name}:${db_user}:${db_pass}" > /tmp/jawirblast_db_creds.txt
@@ -150,6 +153,8 @@ deploy_app() {
     log_step "Menyiapkan direktori aplikasi JAWIRBLAST di ${INSTALL_DIR}..."
 
     mkdir -p "${INSTALL_DIR}"
+    git config --global --add safe.directory "${INSTALL_DIR}" || true
+    export COMPOSER_ALLOW_SUPERUSER=1
 
     # Jika skrip dijalankan dari dalam direktori source code
     if [[ -f "${CURRENT_DIR}/artisan" ]] && [[ "${CURRENT_DIR}" != "${INSTALL_DIR}" ]]; then
@@ -171,15 +176,25 @@ deploy_app() {
         fi
     fi
 
+    # Fungsi pembantu update atau append variabel .env (termasuk yang diawali #)
+    set_env_param() {
+        local file="$1" key="$2" val="$3"
+        if grep -qE "^#?[[:space:]]*${key}=" "${file}"; then
+            sed -i "s|^#\?[[:space:]]*${key}=.*|${key}=\"${val}\"|" "${file}"
+        else
+            echo "${key}=\"${val}\"" >> "${file}"
+        fi
+    }
+
     # Terapkan konfigurasi database ke .env
     if [[ -f "/tmp/jawirblast_db_creds.txt" ]]; then
         IFS=":" read -r db_name db_user db_pass < /tmp/jawirblast_db_creds.txt
-        sed -i "s|^DB_CONNECTION=.*|DB_CONNECTION=mysql|" "${INSTALL_DIR}/.env"
-        sed -i "s|^DB_HOST=.*|DB_HOST=127.0.0.1|" "${INSTALL_DIR}/.env"
-        sed -i "s|^DB_PORT=.*|DB_PORT=3306|" "${INSTALL_DIR}/.env"
-        sed -i "s|^DB_DATABASE=.*|DB_DATABASE=${db_name}|" "${INSTALL_DIR}/.env"
-        sed -i "s|^DB_USERNAME=.*|DB_USERNAME=${db_user}|" "${INSTALL_DIR}/.env"
-        sed -i "s|^DB_PASSWORD=.*|DB_PASSWORD=\"${db_pass}\"|" "${INSTALL_DIR}/.env"
+        set_env_param "${INSTALL_DIR}/.env" "DB_CONNECTION" "mysql"
+        set_env_param "${INSTALL_DIR}/.env" "DB_HOST" "127.0.0.1"
+        set_env_param "${INSTALL_DIR}/.env" "DB_PORT" "3306"
+        set_env_param "${INSTALL_DIR}/.env" "DB_DATABASE" "${db_name}"
+        set_env_param "${INSTALL_DIR}/.env" "DB_USERNAME" "${db_user}"
+        set_env_param "${INSTALL_DIR}/.env" "DB_PASSWORD" "${db_pass}"
         rm -f /tmp/jawirblast_db_creds.txt
     fi
 
@@ -192,6 +207,9 @@ deploy_app() {
         log_step "Menginstall dependensi Baileys WhatsApp Node.js..."
         (cd "${INSTALL_DIR}/wa-service" && npm install --production)
     fi
+
+    # Bersihkan cache sebelum migrasi untuk memastikan kredensial baru terbaca
+    php artisan config:clear || true
 
     # Generate key & migrasi
     log_step "Menjalankan migrasi basis data..."
