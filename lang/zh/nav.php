@@ -1,16 +1,24 @@
 <?php
 
 return [
+    'brand_tagline' => 'WhatsApp 群发营销引擎',
     'dashboard' => '控制台',
     'contacts' => '联系人',
     'contact_groups' => '联系人分组',
     'campaigns' => '群发活动',
-    'create_campaign' => '新建活动',
+    'create_campaign' => '新建群发',
     'whatsapp_session' => '设备会话',
-    'delivery_logs' => '投递日志',
+    'delivery_logs' => '发送日志',
     'settings' => '系统设置',
     'telegram_settings' => 'Telegram 通知',
     'profile' => '个人资料',
     'toggle_theme' => '切换亮色/深色主题',
     'logout' => '退出登录',
+    'user_role' => '管理员',
+    'telegram_connected' => 'Telegram 已绑定',
+    'telegram_not_connected' => 'Telegram 未绑定',
+    'select_language' => '选择语言',
+    'notifications' => '系统通知',
+    'all_caught_up' => '暂无新通知',
+    'no_notifications' => '没有待处理的通知。',
 ];

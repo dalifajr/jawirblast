@@ -43,7 +43,27 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/dashboard', function () {
-        return view('dashboard.index', ['user' => auth()->user()]);
+        $user = auth()->user();
+        $totalContacts = \App\Models\Contact::count();
+        $activeCampaigns = \App\Models\Campaign::whereIn('status', ['running', 'processing'])->count();
+        $completedCampaigns = \App\Models\Campaign::where('status', 'completed')->count();
+        $sentMessagesCount = \App\Models\CampaignMessage::whereIn('status', ['sent', 'delivered', 'read'])->count();
+        $deliveredMessagesCount = \App\Models\CampaignMessage::whereIn('status', ['delivered', 'read'])->count();
+        $failedMessagesCount = \App\Models\CampaignMessage::where('status', 'failed')->count();
+        $recentCampaigns = \App\Models\Campaign::latest()->take(5)->get();
+        $waSession = \App\Models\WhatsAppSession::first();
+
+        return view('dashboard.index', compact(
+            'user',
+            'totalContacts',
+            'activeCampaigns',
+            'completedCampaigns',
+            'sentMessagesCount',
+            'deliveredMessagesCount',
+            'failedMessagesCount',
+            'recentCampaigns',
+            'waSession'
+        ));
     })->name('dashboard');
 
     Route::get('/whatsapp', [WhatsAppSessionController::class, 'index'])->name('whatsapp.index');

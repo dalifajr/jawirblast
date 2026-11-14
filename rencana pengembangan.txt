@@ -1,6 +1,8 @@
+PERLU DIBACA SECARA SEKSAMA DAN TELITI, KEMUDIAN /learn.
+
 RANCANGAN PENGEMBANGAN SISTEM INFORMASI KAMPANYE BROADCAST WHATSAPP (JAWIRBLAST).
 
-oke, sekarang kita build yang paling mudah terlebih dahulu. yaitu login page. buat login page yang hampir identik dengan yang sudah ada pada project bot_tele_jualan dzulfikrialifajri store.
+lanjutkan perbaikan dashboard website untuk mengi gaya desain UI yang sama seperti pada project bot_tele_jualan, font, warna, tata letak, dan lain-lain.
 
 TEKNOLOGI YANG DIGUNAKAN;
 A. VPS UBUNTU 26 RAM 42GB 12CPUs
@@ -25,3 +27,4 @@ CATATAN PENTING BAGI KAMU;
 - karena ini akan digunakan pada perangkat mobile dan desktop, maka gunakan desain yang sudah jadi untuk dijadikan referensi "D:\bot_tele_jualan" project dalam folder ini berbeda dengan yang dikerjakan saat ini. jadi ambil saja yang sekiranya bermanfaat untuk project ini, seperti login page, dashboard, layout menu, skema warna, dan elemen-lemen lain.
 - tempatkan semua dokumen yang kamu generate, pada folder docs di workspace ini, lalu buat subfolder baru lagi untuk merapihkan setiap dokumen step dan progress dari perkembangan project. dan kecualikan folder tersebut dari push github.
 - buat sub agent untuk bekerja sama dalam membangun project ini UI/UX designer, fullstack developer, QA/Tester. dan gunakan sdlc untuk framework pengembangannya.
+- TEKS BAHASA JANGAN dihardcoded. untuk dukungan multi bahasa.

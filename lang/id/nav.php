@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'brand_tagline' => 'WhatsApp Broadcast Engine',
     'dashboard' => 'Dashboard',
     'contacts' => 'Kontak',
     'contact_groups' => 'Grup Kontak',
@@ -13,4 +14,11 @@ return [
     'profile' => 'Profil Saya',
     'toggle_theme' => 'Ganti Tema Terang/Gelap',
     'logout' => 'Keluar',
+    'user_role' => 'Administrator',
+    'telegram_connected' => 'Telegram Terhubung',
+    'telegram_not_connected' => 'Telegram Belum Tertaut',
+    'select_language' => 'Pilih Bahasa',
+    'notifications' => 'Notifikasi',
+    'all_caught_up' => 'Semua bersih!',
+    'no_notifications' => 'Tidak ada notifikasi baru.',
 ];
