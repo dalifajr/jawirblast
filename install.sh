@@ -52,35 +52,65 @@ setup_swap() {
 install_packages() {
     log_step "Memperbarui repositori dan menginstall paket sistem..."
     export DEBIAN_FRONTEND=noninteractive
-    apt-get update -qq
+    export NEEDRESTART_MODE=a
+    export NEEDRESTART_SUSPEND=1
+
+    # Bersihkan file PPA broken jika ada dari percobaan sebelumnya
+    rm -f /etc/apt/sources.list.d/ondrej-*.list /etc/apt/sources.list.d/ondrej-*.sources /etc/apt/sources.list.d/*php*
+    apt-get clean
+    apt-get update -qq || true
 
     # Install tools dasar
     apt-get install -y -qq software-properties-common curl git unzip zip jq ufw cron build-essential
 
-    # Repositori PHP Ondrej untuk PHP 8.3/8.4
-    LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php || true
-
-    # Repositori NodeSource Node.js 22 LTS
-    if ! command -v node >/dev/null 2>&1; then
-        log_step "Menyiapkan repositori Node.js 22.x LTS..."
-        curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+    # Deteksi codename Ubuntu
+    local codename=""
+    if [[ -f /etc/os-release ]]; then
+        codename="$(. /etc/os-release && echo "${VERSION_CODENAME:-}")"
     fi
 
-    apt-get update -qq
+    # Ubuntu 24.04 (noble) dan 26.04 (resolute) sudah membawa PHP 8.3/8.4 secara native di repo resmi Ubuntu.
+    # Hanya pasang Ondrej PPA jika OS versi lama (misal: jammy 22.04) dan belum memiliki php modern.
+    if [[ "${codename}" != "resolute" && "${codename}" != "noble" ]]; then
+        if ! apt-cache show php8.3-fpm >/dev/null 2>&1 && ! apt-cache show php8.4-fpm >/dev/null 2>&1; then
+            log_step "Menambahkan repositori PHP untuk Ubuntu ${codename}..."
+            LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php || true
+            if ! apt-get update -qq; then
+                # Jika PPA gagal atau 404, hapus segera agar tidak memblokir apt
+                rm -f /etc/apt/sources.list.d/ondrej-*.list /etc/apt/sources.list.d/ondrej-*.sources
+                apt-get update -qq || true
+            fi
+        fi
+    fi
 
-    # Deteksi versi PHP yang tersedia
-    local php_ver="8.3"
+    # Memasang Node.js & NPM
+    if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
+        log_step "Memasang Node.js & NPM..."
+        if [[ "${codename}" != "resolute" ]]; then
+            curl -fsSL https://deb.nodesource.com/setup_22.x | bash - || true
+        fi
+        apt-get install -y -qq nodejs npm || apt-get install -y -qq nodejs
+    fi
+
+    # Deteksi prefix paket PHP yang tersedia
+    local php_pkg_prefix="php"
     if apt-cache show php8.4-fpm >/dev/null 2>&1; then
-        php_ver="8.4"
+        php_pkg_prefix="php8.4"
+    elif apt-cache show php8.3-fpm >/dev/null 2>&1; then
+        php_pkg_prefix="php8.3"
     fi
 
-    log_step "Menginstall Nginx, PHP ${php_ver}, MySQL Server, Node.js, dan Certbot..."
+    log_step "Menginstall Nginx, ${php_pkg_prefix}, MySQL Server, Node.js, dan Certbot..."
     apt-get install -y -qq \
         nginx certbot python3-certbot-nginx \
-        "php${php_ver}-fpm" "php${php_ver}-cli" "php${php_ver}-curl" "php${php_ver}-mbstring" \
-        "php${php_ver}-xml" "php${php_ver}-zip" "php${php_ver}-mysql" "php${php_ver}-gd" \
-        "php${php_ver}-bcmath" "php${php_ver}-intl" "php${php_ver}-sqlite3" \
-        mysql-server nodejs
+        "${php_pkg_prefix}-fpm" "${php_pkg_prefix}-cli" "${php_pkg_prefix}-curl" "${php_pkg_prefix}-mbstring" \
+        "${php_pkg_prefix}-xml" "${php_pkg_prefix}-zip" "${php_pkg_prefix}-mysql" "${php_pkg_prefix}-gd" \
+        "${php_pkg_prefix}-bcmath" "${php_pkg_prefix}-intl" "${php_pkg_prefix}-sqlite3" \
+        mysql-server nodejs npm
+
+    # Pastikan service PHP-FPM aktif
+    systemctl enable "${php_pkg_prefix}-fpm" 2>/dev/null || systemctl enable php-fpm 2>/dev/null || true
+    systemctl start "${php_pkg_prefix}-fpm" 2>/dev/null || systemctl start php-fpm 2>/dev/null || true
 
     # Install Composer secara global
     if ! command -v composer >/dev/null 2>&1; then
