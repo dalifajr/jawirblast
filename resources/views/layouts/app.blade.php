@@ -30,7 +30,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- M3 Expressive Lavender Design Tokens & Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app-dashboard.css') }}?v={{ file_exists(public_path('css/app-dashboard.css')) ? filemtime(public_path('css/app-dashboard.css')) : time() }}">
+    <link rel="stylesheet" href="{{ asset('css/app-dashboard.css') }}?v={{ time() }}">
 
     <!-- Design System Compatibility Tokens (beercss & material-dynamic-colors) -->
     <meta name="design-framework" content="beercss material-dynamic-colors">
@@ -709,6 +709,12 @@
                     </div>
                     <span class="menu-label-text">{{ __('nav.whatsapp_session') }}</span>
                 </a>
+                <a href="{{ route('admin.users.index') }}" class="menu-item {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
+                    <div class="menu-icon-box">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <span class="menu-label-text">{{ __('nav.user_management') }}</span>
+                </a>
             </div>
         </div>
 
@@ -741,14 +747,18 @@
                 <span>{{ __('nav.system_menu') }}</span>
             </div>
             <div class="menu-items-grid">
-                @if(auth()->check() && (auth()->user()->isSuperAdmin() || auth()->user()->isAdmin()))
+                <a href="{{ route('profile') }}" class="menu-item {{ request()->routeIs('profile*') ? 'active' : '' }}">
+                    <div class="menu-icon-box">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <span class="menu-label-text">{{ __('nav.profile') }}</span>
+                </a>
                 <a href="{{ route('admin.users.index') }}" class="menu-item {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
                     <div class="menu-icon-box">
                         <i class="fas fa-users-cog"></i>
                     </div>
                     <span class="menu-label-text">{{ __('nav.user_management') }}</span>
                 </a>
-                @endif
                 <a href="{{ route('dashboard') }}#telegram" class="menu-item">
                     <div class="menu-icon-box">
                         <i class="fab fa-telegram"></i>
@@ -877,6 +887,19 @@
                                 @endif
                             </div>
                         </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="{{ route('profile') }}">
+                                <i class="fas fa-user-circle text-primary"></i>
+                                <span>{{ __('nav.profile') }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="{{ route('admin.users.index') }}">
+                                <i class="fas fa-users-cog text-info"></i>
+                                <span>{{ __('nav.user_management') }}</span>
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider my-1"></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}" class="m-0 p-1">
                                 @csrf

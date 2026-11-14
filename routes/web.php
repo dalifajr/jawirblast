@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactGroupController;
 use App\Http\Controllers\ContactImportExportController;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TelegramAuthController;
 use App\Http\Controllers\WhatsAppSessionController;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,11 @@ Route::middleware('guest')->group(function () {
 // Rute untuk Pengguna Terautentikasi (Auth Only)
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Rute Profil Saya (Milestone Rencana Pengembangan)
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 
     Route::get('/dashboard', function () {
         $user = auth()->user();
