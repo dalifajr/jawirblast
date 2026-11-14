@@ -442,6 +442,17 @@ setup_domain_ssl() {
                 local php_sock
                 php_sock="$(find /run/php/ -name 'php*-fpm.sock' 2>/dev/null | head -n 1 || echo '/run/php/php8.3-fpm.sock')"
 
+                local ssl_listen_1="listen 443 ssl http2;"
+                local ssl_listen_2="listen [::]:443 ssl http2;"
+                local http2_directive=""
+                local ngx_v
+                ngx_v="$(nginx -v 2>&1 || true)"
+                if echo "${ngx_v}" | grep -qE "nginx/([2-9]\.|1\.(2[5-9]|[3-9][0-9]))"; then
+                    ssl_listen_1="listen 443 ssl;"
+                    ssl_listen_2="listen [::]:443 ssl;"
+                    http2_directive="http2 on;"
+                fi
+
                 cat <<EOF > /etc/nginx/sites-available/jawirblast
 server {
     listen 80;
@@ -451,9 +462,9 @@ server {
 }
 
 server {
-    listen 443 ssl;
-    listen [::]:443 ssl;
-    http2 on;
+    ${ssl_listen_1}
+    ${ssl_listen_2}
+    ${http2_directive}
     server_name ${domain_name};
     root ${INSTALL_DIR}/public;
 
