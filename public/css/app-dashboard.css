@@ -920,6 +920,44 @@ body {
   background: var(--surface-container);
 }
 
+/* Card Table M3 Edge-to-Edge Container & Dropdown Float Guard */
+.card-table-m3 {
+  overflow: visible !important;
+  padding: 0 !important;
+}
+
+.card-table-m3 .table-responsive {
+  overflow-x: auto;
+  overflow-y: visible !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.card-table-m3 table {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.card-table-m3 thead th:first-child {
+  border-top-left-radius: 20px;
+}
+
+.card-table-m3 thead th:last-child {
+  border-top-right-radius: 20px;
+}
+
+.card-table-m3 tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 20px;
+}
+
+.card-table-m3 tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 20px;
+}
+
+.card-table-m3 .dropdown-menu {
+  z-index: 1035 !important;
+}
+
 /* Mobile Table to Card Transformation */
 @media (max-width: 768px) {
   .m3-table-responsive thead {

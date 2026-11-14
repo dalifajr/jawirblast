@@ -109,10 +109,10 @@
         </form>
     </div>
 
-    <!-- User Table M3 (Desktop Table / Mobile Responsive Cards) -->
-    <div class="card border-0 shadow-sm overflow-hidden mb-4" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0 table-responsive-cards">
+    <!-- User Table M3 (Edge-to-Edge Desktop Table / Mobile Responsive Cards) -->
+    <div class="card border-0 shadow-sm mb-4 card-table-m3" style="background: var(--surface-container-lowest, #fff); border: 1px solid var(--outline-variant, #cac4d0) !important; border-radius: 20px;">
+        <div class="table-responsive" style="border-radius: 20px;">
+            <table class="table table-hover align-middle mb-0 table-responsive-cards w-100" style="margin: 0 !important; width: 100% !important;">
                 <thead style="background: var(--surface-container-low, #f3edf7); border-bottom: 1px solid var(--outline-variant, #cac4d0);">
                     <tr>
                         <th class="ps-4 py-3 text-secondary small text-uppercase fw-bold" style="letter-spacing: 0.05em; width: 60px;">{{ __('users.th_user_id') }}</th>
@@ -222,7 +222,7 @@
                             <!-- Actions Dropdown -->
                             <td class="pe-4 py-3 text-end" data-label="{{ __('users.th_actions') }}" onclick="event.stopPropagation()">
                                 <div class="dropdown">
-                                    <button class="btn btn-sm btn-icon rounded-circle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 34px; height: 34px; background: var(--surface-container-high, #e6e0e9); color: var(--on-surface);">
+                                    <button class="btn btn-sm btn-icon rounded-circle border-0" type="button" data-bs-toggle="dropdown" data-bs-boundary="viewport" data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false" style="width: 34px; height: 34px; background: var(--surface-container-high, #e6e0e9); color: var(--on-surface);">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end shadow-sm border" style="border-radius: 16px; min-width: 200px; border-color: var(--outline-variant, #cac4d0) !important;">
@@ -317,7 +317,9 @@
         @endif
     </div>
 </div>
+@endsection
 
+@push('modals')
 <!-- ============================================================== -->
 <!-- MODAL 1: CREATE USER (TAMBAH PENGGUNA BARU) -->
 <!-- ============================================================== -->
@@ -688,10 +690,41 @@
         </div>
     </div>
 </div>
-@endsection
+@endpush
 
 @push('styles')
 <style>
+    /* Table Card M3 Edge-to-Edge & Dropdown Overflow Fix */
+    .card-table-m3 {
+        overflow: visible !important;
+        padding: 0 !important;
+    }
+    .card-table-m3 .table-responsive {
+        overflow-x: auto;
+        overflow-y: visible !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .card-table-m3 .table-responsive-cards {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+    .card-table-m3 thead th:first-child {
+        border-top-left-radius: 20px;
+    }
+    .card-table-m3 thead th:last-child {
+        border-top-right-radius: 20px;
+    }
+    .card-table-m3 tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 20px;
+    }
+    .card-table-m3 tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 20px;
+    }
+    .card-table-m3 .dropdown-menu {
+        z-index: 1035 !important;
+    }
+
     /* Styling nav-tabs M3 Expressive */
     #userDetailTabs .nav-link {
         color: var(--on-surface-variant, #49454f);

@@ -392,14 +392,26 @@
 
         /* === M3 EXPRESSIVE SIDEBAR BRAND HEADER === */
         .m3-brand-header {
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 30 !important;
+            background: var(--surface-container-low, #f3edf7) !important;
+            border-bottom: 1px solid var(--outline-variant, #cac4d0) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
             display: flex !important;
             align-items: center !important;
             gap: 12px !important;
-            padding: 20px 16px 16px 16px !important;
+            padding: 16px !important;
             text-decoration: none !important;
             color: inherit !important;
             min-height: 64px !important;
             box-sizing: border-box !important;
+        }
+
+        [data-bs-theme="dark"] .m3-brand-header {
+            background: var(--surface-container-low, #1d1b20) !important;
+            border-bottom-color: var(--outline-variant, #49454f) !important;
         }
 
         .m3-brand-header a {
@@ -535,6 +547,9 @@
 
         /* Sidebar User Mini Footer */
         .sidebar-user-footer {
+            position: sticky !important;
+            bottom: 0 !important;
+            z-index: 25 !important;
             margin-top: auto !important;
             padding: 14px 16px !important;
             border-top: 1px solid var(--outline-variant, #cac4d0) !important;
@@ -542,6 +557,22 @@
             display: flex !important;
             align-items: center !important;
             gap: 10px !important;
+        }
+
+        [data-bs-theme="dark"] .sidebar-user-footer {
+            background: var(--surface-container-low, #1d1b20) !important;
+            border-top-color: var(--outline-variant, #49454f) !important;
+        }
+
+        /* === MODAL & BACKDROP STACKING CONTEXT FIX === */
+        .modal-backdrop {
+            z-index: 1050 !important;
+        }
+        .modal {
+            z-index: 1055 !important;
+        }
+        .dropdown-menu {
+            z-index: 1035 !important;
         }
 
         .m3-avatar-circle {
@@ -1375,6 +1406,7 @@
         })();
     </script>
 
+    @stack('modals')
     @stack('scripts')
 </body>
 </html>

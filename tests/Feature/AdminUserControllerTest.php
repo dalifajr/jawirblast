@@ -177,4 +177,32 @@ class AdminUserControllerTest extends TestCase
         $this->assertEquals($this->superadmin->id, auth()->id());
         $this->assertFalse(session()->has('admin_impersonator_id'));
     }
+
+    public function test_ui_components_modal_placement_and_table_structure(): void
+    {
+        $response = $this->actingAs($this->superadmin)->get(route('admin.users.index'));
+
+        $response->assertStatus(200);
+        $content = $response->getContent();
+
+        // 1. Table Card M3 Edge-to-Edge
+        $this->assertStringContainsString('card-table-m3', $content);
+        $this->assertStringContainsString('table-responsive-cards', $content);
+
+        // 2. Dropdown Fixed Popper Strategy
+        $this->assertStringContainsString('data-bs-popper-config', $content);
+        $this->assertStringContainsString('"strategy":"fixed"', $content);
+
+        // 3. Modal Stacking (Modal rendered outside of main-content canvas)
+        $this->assertStringContainsString('id="createUserModal"', $content);
+        $this->assertStringContainsString('id="userDetailModal"', $content);
+
+        $footerPos = strpos($content, '</footer>');
+        $modalPos = strpos($content, 'id="createUserModal"');
+        $this->assertGreaterThan($footerPos, $modalPos, 'Modal harus dirender di stack modals setelah penutup footer/main-content');
+
+        // 4. Sticky Brand Header CSS rule
+        $this->assertStringContainsString('.m3-brand-header', $content);
+        $this->assertStringContainsString('position: sticky', $content);
+    }
 }

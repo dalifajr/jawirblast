@@ -3,24 +3,13 @@ PERLU DIBACA SECARA SEKSAMA DAN TELITI, KEMUDIAN /learn.
 RANCANGAN PENGEMBANGAN SISTEM INFORMASI KAMPANYE BROADCAST WHATSAPP (JAWIRBLAST).
 
 
-root@localhost:~# jawirblast update
-:: PEMBARUAN SISTEM JAWIRBLAST (GIT PULL & MIGRATE) ::
-[1/6] Menarik kode terbaru dari Git...
-From https://github.com/dalifajr/jawirblast
- * branch            main       -> FETCH_HEAD
-Updating baec085..762d82b
-error: Your local changes to the following files would be overwritten by merge:
-        bin/jawirblast
-Please commit your changes or stash them before you merge.
-Aborting
-Updating baec085..762d82b
-error: Your local changes to the following files would be overwritten by merge:
-        bin/jawirblast
-Please commit your changes or stash them before you merge.
-Aborting
-[!] Git pull mengalami kendala. Melanjutkan ke langkah dependensi...
+body > div:nth-of-type(3) (div.modal-backdrop.fade.shadow) salah dalam pelevelan, seharusnya dibelakang popup modal atau popup dialog.
 
-siapkan logika untuk memitigasi hal tersebut terulang lagi secara otomatis.
+class="table table-hover align-middle mb-0 table-responsive-cards" seharusnya full ke class="card border-0 shadow-sm overflow-hidden mb-4" 
+
+class="dropdown-menu dropdown-menu-end shadow-sm border show" tertutup elemen class="card border-0 shadow-sm overflow-hidden mb-4" 
+
+class="m3-brand-header d-none d-lg-flex align-items-center justify-content-between" seharusnya sticky pada sidebar. tidak ikut tergulir.
 
 
 TEKNOLOGI YANG DIGUNAKAN;

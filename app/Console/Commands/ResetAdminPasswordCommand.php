@@ -71,9 +71,9 @@ class ResetAdminPasswordCommand extends Command
             $user->is_suspended = false;
             $user->save();
 
-            $this->info("Password untuk akun [{$email}] (Username: {$user->username}, Role: {$user->role}) berhasil direset.");
+            $this->info("Password untuk admin [{$email}] berhasil direset.");
         } else {
-            $name = $isDzulfikri ? 'Dzulfikri Alifajri' : ($this->ask('Akun belum ditemukan. Masukkan nama untuk akun baru:', 'Administrator'));
+            $name = $this->ask('Akun belum ditemukan. Masukkan nama untuk akun admin baru:', $isDzulfikri ? 'Dzulfikri Alifajri' : 'Administrator');
 
             $user = User::create([
                 'name' => trim((string) $name),
@@ -85,7 +85,7 @@ class ResetAdminPasswordCommand extends Command
                 'is_suspended' => false,
             ]);
 
-            $this->info("Akun baru [{$email}] (Username: {$user->username}, Role: {$user->role}) berhasil dibuat dengan ID: {$user->id}.");
+            $this->info("Akun admin baru [{$email}] berhasil dibuat dengan ID: {$user->id}.");
         }
 
         return self::SUCCESS;
