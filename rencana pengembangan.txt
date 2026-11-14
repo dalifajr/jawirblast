@@ -2,7 +2,12 @@ PERLU DIBACA SECARA SEKSAMA DAN TELITI, KEMUDIAN /learn.
 
 RANCANGAN PENGEMBANGAN SISTEM INFORMASI KAMPANYE BROADCAST WHATSAPP (JAWIRBLAST).
 
-lanjutkan perbaikan dashboard website untuk mengi gaya desain UI yang sama seperti pada project bot_tele_jualan, font, warna, tata letak, dan lain-lain.
+
+Buatkan navigasi utama menggunakan sidebar. implementasikan pada halaman dashboard, dan buat navigasi sidebar tersebut sesuai dengan gaya desain UI yang sama seperti pada project bot_tele_jualan (referensi) font, warna, tata letak, dan lain-lain. kemudian pindahkan menu-menu pada header ke sidebar.
+
+rapihkan layout pada menu-menu yang ada didalam menu sidrbar. seperti padding, ukuran tombol, dll.
+
+perbaiki bahasa pada menu dashboard, terutama pada elemen container belum menerapkan multi bahasa.
 
 TEKNOLOGI YANG DIGUNAKAN;
 A. VPS UBUNTU 26 RAM 42GB 12CPUs

@@ -21,4 +21,11 @@ return [
     'notifications' => '系统通知',
     'all_caught_up' => '暂无新通知',
     'no_notifications' => '没有待处理的通知。',
+    'main_menu' => '主菜单',
+    'broadcast_menu' => '群发营销',
+    'system_menu' => '系统与设置',
+    'menu_more' => '更多',
+    'pro_badge' => '专业版',
+    'close_menu' => '关闭菜单',
+    'menu' => '菜单',
 ];

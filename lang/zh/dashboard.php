@@ -70,4 +70,9 @@ return [
     'live_status' => '实时状态',
     'safe_pacing' => '安全防封间隔生效中',
     'app_copyright' => 'JAWIRBLAST &copy; :year — WhatsApp 高性能群发与 Telegram 平台',
+    'campaign_id_prefix' => 'ID: #',
+    'sender_phone_label' => '发送者号码：',
+    'no_phone_connected' => '尚未绑定发送号码',
+    'empty_recent_title' => '暂无群发任务',
+    'empty_recent_subtitle' => '立即开启您的第一次 WhatsApp 高速安全消息群发。',
 ];

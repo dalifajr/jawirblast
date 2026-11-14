@@ -70,4 +70,9 @@ return [
     'live_status' => 'Status Langsung',
     'safe_pacing' => 'Jeda Pengiriman Aman',
     'app_copyright' => 'JAWIRBLAST &copy; :year — WhatsApp High-Performance Broadcast & Telegram Platform',
+    'campaign_id_prefix' => 'ID: #',
+    'sender_phone_label' => 'Nomor Pengirim:',
+    'no_phone_connected' => 'Belum ada nomor yang ditautkan',
+    'empty_recent_title' => 'Belum ada kampanye yang dijalankan',
+    'empty_recent_subtitle' => 'Mulai kirim pesan broadcast WhatsApp berkecepatan tinggi dengan aman sekarang.',
 ];

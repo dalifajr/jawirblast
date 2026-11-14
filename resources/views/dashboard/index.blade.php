@@ -133,8 +133,8 @@
                         <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px; background: var(--surface-container); color: var(--primary);">
                             <i class="fas fa-bullhorn fs-4"></i>
                         </div>
-                        <h5 class="fw-bold mb-1" style="color: var(--on-surface);">{{ __('dashboard.no_recent_campaigns') }}</h5>
-                        <p class="text-secondary small mb-3">{{ __('dashboard.subtitle') }}</p>
+                        <h5 class="fw-bold mb-1" style="color: var(--on-surface);">{{ __('dashboard.empty_recent_title') }}</h5>
+                        <p class="text-secondary small mb-3">{{ __('dashboard.empty_recent_subtitle') }}</p>
                         <a href="{{ route('campaigns.create') }}" class="btn-m3-primary">
                             <i class="fas fa-plus"></i>
                             <span>{{ __('dashboard.btn_start_first') }}</span>
@@ -163,7 +163,7 @@
                                     <tr>
                                         <td data-label="{{ __('dashboard.col_campaign_name') }}">
                                             <div class="fw-bold" style="color: var(--on-surface);">{{ $c->title ?? $c->name }}</div>
-                                            <small class="text-secondary">ID: #{{ $c->id }}</small>
+                                            <small class="text-secondary">{{ __('dashboard.campaign_id_prefix') }}{{ $c->id }}</small>
                                         </td>
                                         <td data-label="{{ __('dashboard.col_target') }}">
                                             <span class="fw-semibold">{{ number_format($c->total_contacts ?? 0, 0, ',', '.') }}</span>
@@ -227,12 +227,12 @@
                 </div>
 
                 <div class="p-3 mb-3" style="background: var(--surface-container); border-radius: var(--radius-md);">
-                    <div class="small text-secondary mb-1">{{ __('dashboard.wa_paired_phone', ['phone' => '']) }}</div>
+                    <div class="small text-secondary mb-1">{{ __('dashboard.sender_phone_label') }}</div>
                     <div class="fw-bold" style="color: var(--on-surface);">
                         @if ($waSession && $waSession->user_jid)
                             {{ explode('@', $waSession->user_jid)[0] }}
                         @else
-                            <span class="text-secondary fw-normal">{{ __('dashboard.wa_no_phone') }}</span>
+                            <span class="text-secondary fw-normal">{{ __('dashboard.no_phone_connected') }}</span>
                         @endif
                     </div>
                 </div>

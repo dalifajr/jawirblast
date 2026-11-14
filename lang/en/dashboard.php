@@ -70,4 +70,9 @@ return [
     'live_status' => 'Live Status',
     'safe_pacing' => 'Safe Pacing Active',
     'app_copyright' => 'JAWIRBLAST &copy; :year — WhatsApp High-Performance Broadcast & Telegram Platform',
+    'campaign_id_prefix' => 'ID: #',
+    'sender_phone_label' => 'Sender Phone:',
+    'no_phone_connected' => 'No phone number linked yet',
+    'empty_recent_title' => 'No campaigns executed yet',
+    'empty_recent_subtitle' => 'Start delivering high-speed WhatsApp broadcasts securely right now.',
 ];

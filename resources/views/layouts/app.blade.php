@@ -93,49 +93,142 @@
         $user = auth()->user();
     @endphp
 
-    <!-- M3 Expressive Top Navbar -->
-    <nav class="m3-top-navbar d-flex align-items-center px-3 px-md-4">
-        <div class="container-fluid d-flex align-items-center justify-content-between p-0">
-            <!-- Brand Logo & Name -->
+    <!-- M3 Expressive Sidebar Navigation Drawer (264px Desktop / Slide-over Mobile) -->
+    <aside id="sidebar" class="sidebar">
+        <!-- Sidebar Brand Header -->
+        <div class="m3-brand-header d-flex align-items-center justify-content-between">
             <a href="{{ route('dashboard') }}" class="d-flex align-items-center gap-2.5 text-decoration-none">
                 @include('partials.brand-logo', ['style' => 'width: 36px; height: 36px;'])
-                <div class="d-flex flex-column" style="line-height: 1.15;">
+                <div class="m3-brand-text">
                     <div class="d-flex align-items-center gap-1.5">
-                        <span class="fw-bold" style="font-size: 1.05rem; letter-spacing: -0.01em; color: var(--on-surface);">JAWIRBLAST</span>
-                        <span class="m3-badge m3-badge-info" style="font-size: 0.65rem; padding: 2px 7px;">PRO</span>
+                        <span class="m3-brand-title">JAWIRBLAST</span>
+                        <span class="m3-badge m3-badge-info" style="font-size: 0.65rem; padding: 2px 7px;">{{ __('nav.pro_badge') }}</span>
                     </div>
-                    <span class="d-none d-sm-inline text-secondary" style="font-size: 0.72rem; font-weight: 500;">{{ __('nav.brand_tagline') }}</span>
+                    <span class="m3-brand-subtitle">{{ __('nav.brand_tagline') }}</span>
                 </div>
             </a>
+            <button type="button" class="btn btn-sm btn-icon rounded-circle d-lg-none" id="sidebarCloseBtn" aria-label="{{ __('nav.close_menu') }}" style="width: 32px; height: 32px; color: var(--on-surface-variant);">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
 
-            <!-- Desktop Center Segmented Navigation Pills -->
-            <div class="d-none d-lg-flex align-items-center">
-                <div class="m3-nav-pills-bar">
-                    <a href="{{ route('dashboard') }}" class="m3-nav-pill-item {{ request()->routeIs('dashboard*') ? 'active' : '' }}">
+        <!-- Navigation Group 1: Menu Utama -->
+        <div class="menu-group">
+            <div class="menu-header">
+                <i class="fas fa-compass"></i>
+                <span>{{ __('nav.main_menu') }}</span>
+            </div>
+            <div class="menu-items-grid">
+                <a href="{{ route('dashboard') }}" class="menu-item {{ request()->routeIs('dashboard*') ? 'active' : '' }}">
+                    <div class="menu-icon-box">
                         <i class="fas fa-chart-pie"></i>
-                        <span>{{ __('nav.dashboard') }}</span>
-                    </a>
-                    <a href="{{ route('campaigns.index') }}" class="m3-nav-pill-item {{ request()->routeIs('campaigns*') ? 'active' : '' }}">
+                    </div>
+                    <span class="menu-label-text">{{ __('nav.dashboard') }}</span>
+                </a>
+                <a href="{{ route('campaigns.index') }}" class="menu-item {{ request()->routeIs('campaigns.index') || (request()->routeIs('campaigns.*') && !request()->routeIs('campaigns.create')) ? 'active' : '' }}">
+                    <div class="menu-icon-box">
                         <i class="fas fa-bullhorn"></i>
-                        <span>{{ __('nav.campaigns') }}</span>
-                    </a>
-                    <a href="{{ route('contacts.index') }}" class="m3-nav-pill-item {{ request()->routeIs('contacts.index') ? 'active' : '' }}">
+                    </div>
+                    <span class="menu-label-text">{{ __('nav.campaigns') }}</span>
+                </a>
+                <a href="{{ route('contacts.index') }}" class="menu-item {{ request()->routeIs('contacts.index') ? 'active' : '' }}">
+                    <div class="menu-icon-box">
                         <i class="fas fa-address-book"></i>
-                        <span>{{ __('nav.contacts') }}</span>
-                    </a>
-                    <a href="{{ route('contacts.groups.index') }}" class="m3-nav-pill-item {{ request()->routeIs('contacts.groups*') ? 'active' : '' }}">
+                    </div>
+                    <span class="menu-label-text">{{ __('nav.contacts') }}</span>
+                </a>
+                <a href="{{ route('contacts.groups.index') }}" class="menu-item {{ request()->routeIs('contacts.groups*') ? 'active' : '' }}">
+                    <div class="menu-icon-box">
                         <i class="fas fa-users"></i>
-                        <span>{{ __('nav.contact_groups') }}</span>
-                    </a>
-                    <a href="{{ route('whatsapp.index') }}" class="m3-nav-pill-item {{ request()->routeIs('whatsapp*') || request()->routeIs('wa*') ? 'active' : '' }}">
+                    </div>
+                    <span class="menu-label-text">{{ __('nav.contact_groups') }}</span>
+                </a>
+                <a href="{{ route('whatsapp.index') }}" class="menu-item {{ request()->routeIs('whatsapp*') || request()->routeIs('wa*') ? 'active' : '' }}">
+                    <div class="menu-icon-box">
                         <i class="fab fa-whatsapp"></i>
-                        <span>{{ __('nav.whatsapp_session') }}</span>
-                    </a>
+                    </div>
+                    <span class="menu-label-text">{{ __('nav.whatsapp_session') }}</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Navigation Group 2: Kampanye Siaran -->
+        <div class="menu-group">
+            <div class="menu-header">
+                <i class="fas fa-paper-plane"></i>
+                <span>{{ __('nav.broadcast_menu') }}</span>
+            </div>
+            <div class="menu-items-grid">
+                <a href="{{ route('campaigns.create') }}" class="menu-item {{ request()->routeIs('campaigns.create') ? 'active' : '' }}">
+                    <div class="menu-icon-box">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <span class="menu-label-text">{{ __('nav.create_campaign') }}</span>
+                </a>
+                <a href="{{ route('campaigns.index') }}" class="menu-item">
+                    <div class="menu-icon-box">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <span class="menu-label-text">{{ __('nav.delivery_logs') }}</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Navigation Group 3: Pengaturan & Akun -->
+        <div class="menu-group">
+            <div class="menu-header">
+                <i class="fas fa-cog"></i>
+                <span>{{ __('nav.system_menu') }}</span>
+            </div>
+            <div class="menu-items-grid">
+                <a href="{{ route('dashboard') }}#telegram" class="menu-item">
+                    <div class="menu-icon-box">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <span class="menu-label-text">{{ __('nav.telegram_settings') }}</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Sidebar User Mini Footer -->
+        @auth
+        <div class="sidebar-user-footer">
+            <div class="m3-avatar-circle" style="width: 36px; height: 36px; font-size: 0.9rem;">
+                {{ strtoupper(substr($user->name ?? 'U', 0, 1)) }}
+            </div>
+            <div class="sidebar-user-info">
+                <div class="fw-bold small text-truncate" style="color: var(--on-surface);">{{ $user->name }}</div>
+                <div class="text-secondary small text-truncate" style="font-size: 0.72rem;">{{ __('nav.user_role') }}</div>
+            </div>
+            <form method="POST" action="{{ route('logout') }}" class="m-0 p-0">
+                @csrf
+                <button type="submit" class="btn btn-sm btn-icon rounded-circle" title="{{ __('nav.logout') }}" style="width: 32px; height: 32px; color: var(--on-surface-variant);">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </form>
+        </div>
+        @endauth
+    </aside>
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
+    <!-- M3 Expressive Top Platform Bar -->
+    <header class="m3-top-navbar d-flex align-items-center px-3 px-md-4">
+        <div class="container-fluid d-flex align-items-center justify-content-between p-0">
+            <!-- Left Side: Mobile Menu Hamburger & Brand (Visible on Mobile < 992px) -->
+            <div class="d-flex align-items-center gap-2">
+                <button type="button" class="m3-icon-btn d-lg-none" id="mobileMenuBtn" aria-label="{{ __('nav.menu') }}" title="{{ __('nav.menu') }}">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="d-flex align-items-center gap-2 d-lg-none">
+                    @include('partials.brand-logo', ['style' => 'width: 30px; height: 30px;'])
+                    <span class="fw-bold" style="font-size: 0.95rem; color: var(--on-surface);">JAWIRBLAST</span>
                 </div>
             </div>
 
             <!-- Right Controls: Language Dropdown, Theme Toggle, User Profile -->
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2 ms-auto">
                 <!-- Multi-Language Dropdown -->
                 <div class="dropdown">
                     <button class="language-dropdown-btn dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false" title="{{ __('nav.select_language') }}">
@@ -230,41 +323,43 @@
                 @endauth
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Main Container Wrapper -->
-    <main class="container-fluid px-3 px-md-4 py-4" style="max-width: 1400px; margin: 0 auto;">
-        <!-- Flash Message Alerts -->
-        @if (session('success'))
-            <div class="m3-alert m3-alert-success d-flex align-items-center justify-content-between shadow-sm">
-                <div class="d-flex align-items-center gap-2">
-                    <i class="fas fa-check-circle fs-5"></i>
-                    <span>{{ session('success') }}</span>
+    <!-- Main Content Canvas (Offset 264px on Desktop) -->
+    <div class="main-content">
+        <main class="container-fluid px-3 px-md-4 py-4" style="max-width: 1400px; margin: 0 auto;">
+            <!-- Flash Message Alerts -->
+            @if (session('success'))
+                <div class="m3-alert m3-alert-success d-flex align-items-center justify-content-between shadow-sm">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fas fa-check-circle fs-5"></i>
+                        <span>{{ session('success') }}</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()"></button>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()"></button>
-            </div>
-        @endif
+            @endif
 
-        @if (session('error'))
-            <div class="m3-alert m3-alert-danger d-flex align-items-center justify-content-between shadow-sm">
-                <div class="d-flex align-items-center gap-2">
-                    <i class="fas fa-exclamation-triangle fs-5"></i>
-                    <span>{{ session('error') }}</span>
+            @if (session('error'))
+                <div class="m3-alert m3-alert-danger d-flex align-items-center justify-content-between shadow-sm">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fas fa-exclamation-triangle fs-5"></i>
+                        <span>{{ session('error') }}</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()"></button>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()"></button>
-            </div>
-        @endif
+            @endif
 
-        @yield('content')
-    </main>
+            @yield('content')
+        </main>
 
-    <!-- Footer Copyright -->
-    <footer class="text-center py-4 text-secondary small">
-        <p class="m-0">{!! __('dashboard.app_copyright', ['year' => date('Y')]) !!}</p>
-    </footer>
+        <!-- Footer Copyright -->
+        <footer class="text-center py-4 text-secondary small">
+            <p class="m-0">{!! __('dashboard.app_copyright', ['year' => date('Y')]) !!}</p>
+        </footer>
+    </div>
 
     <!-- Mobile Bottom Navigation Bar (Visible on Viewports < 992px) -->
-    <div class="mobile-bottom-nav">
+    <nav class="mobile-bottom-nav">
         <a href="{{ route('dashboard') }}" class="mobile-bottom-item {{ request()->routeIs('dashboard*') ? 'active' : '' }}">
             <i class="fas fa-chart-pie"></i>
             <span>{{ __('nav.dashboard') }}</span>
@@ -277,22 +372,23 @@
             <i class="fas fa-address-book"></i>
             <span>{{ __('nav.contacts') }}</span>
         </a>
-        <a href="{{ route('contacts.groups.index') }}" class="mobile-bottom-item {{ request()->routeIs('contacts.groups*') ? 'active' : '' }}">
-            <i class="fas fa-users"></i>
-            <span>{{ __('nav.contact_groups') }}</span>
-        </a>
         <a href="{{ route('whatsapp.index') }}" class="mobile-bottom-item {{ request()->routeIs('whatsapp*') || request()->routeIs('wa*') ? 'active' : '' }}">
             <i class="fab fa-whatsapp"></i>
             <span>{{ __('nav.whatsapp_session') }}</span>
         </a>
-    </div>
+        <button type="button" class="mobile-bottom-item btn border-0 bg-transparent" id="mobileBottomMenuBtn">
+            <i class="fas fa-bars"></i>
+            <span>{{ __('nav.menu') }}</span>
+        </button>
+    </nav>
 
     <!-- Bootstrap 5.3.3 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Unified Theme Toggle Script -->
+    <!-- Unified Theme Toggle & Mobile Sidebar Scripts -->
     <script>
         (function() {
+            // Theme Toggle
             const themeToggleBtn = document.getElementById('themeToggle');
             const themeIcon = document.getElementById('themeIcon');
 
@@ -327,6 +423,30 @@
                     }, 300);
                 });
             }
+
+            // Mobile Sidebar Drawer Toggle
+            const sidebar = document.getElementById('sidebar');
+            const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileBottomMenuBtn = document.getElementById('mobileBottomMenuBtn');
+            const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+
+            function openSidebar() {
+                if (sidebar) sidebar.classList.add('show');
+                if (sidebarBackdrop) sidebarBackdrop.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeSidebar() {
+                if (sidebar) sidebar.classList.remove('show');
+                if (sidebarBackdrop) sidebarBackdrop.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+
+            if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openSidebar);
+            if (mobileBottomMenuBtn) mobileBottomMenuBtn.addEventListener('click', openSidebar);
+            if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', closeSidebar);
+            if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);
         })();
     </script>
 

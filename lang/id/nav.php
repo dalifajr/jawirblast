@@ -21,4 +21,11 @@ return [
     'notifications' => 'Notifikasi',
     'all_caught_up' => 'Semua bersih!',
     'no_notifications' => 'Tidak ada notifikasi baru.',
+    'main_menu' => 'Menu Utama',
+    'broadcast_menu' => 'Kampanye Siaran',
+    'system_menu' => 'Sistem & Pengaturan',
+    'menu_more' => 'Lainnya',
+    'pro_badge' => 'PRO',
+    'close_menu' => 'Tutup Menu',
+    'menu' => 'Menu',
 ];

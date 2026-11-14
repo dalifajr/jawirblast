@@ -21,4 +21,11 @@ return [
     'notifications' => 'Notifications',
     'all_caught_up' => 'All caught up!',
     'no_notifications' => 'No new notifications.',
+    'main_menu' => 'Main Menu',
+    'broadcast_menu' => 'Broadcast Campaigns',
+    'system_menu' => 'System & Settings',
+    'menu_more' => 'More',
+    'pro_badge' => 'PRO',
+    'close_menu' => 'Close Menu',
+    'menu' => 'Menu',
 ];
