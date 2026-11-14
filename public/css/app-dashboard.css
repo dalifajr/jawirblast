@@ -231,10 +231,6 @@ body {
   text-overflow: ellipsis;
   overflow: hidden;
 }
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
 
 /* Menu Groups & Headers */
 .menu-group {
@@ -384,21 +380,33 @@ body {
 @media (min-width: 992px) {
   body {
     background-color: var(--surface-container-low, #f3edf7) !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   .m3-top-navbar {
-    margin-left: var(--sidebar-width, 264px) !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: var(--sidebar-width, 264px) !important;
     width: calc(100% - var(--sidebar-width, 264px)) !important;
+    height: var(--top-navbar-height, 64px) !important;
+    min-height: var(--top-navbar-height, 64px) !important;
+    z-index: 1030 !important;
     background: var(--surface-container-low, #f3edf7) !important;
     border-bottom: none !important;
     border: none !important;
     box-shadow: none !important;
   }
   .app-container {
+    padding-top: var(--top-navbar-height, 64px) !important;
+    min-height: 100vh !important;
     background: var(--surface-container-low, #f3edf7) !important;
+    box-sizing: border-box !important;
   }
   .main-content {
     margin-left: var(--sidebar-width, 264px) !important;
     width: calc(100% - var(--sidebar-width, 264px)) !important;
+    min-height: calc(100vh - var(--top-navbar-height, 64px)) !important;
+    box-sizing: border-box !important;
     background-color: var(--surface-container-lowest, #ffffff) !important;
     border-top-left-radius: 28px !important;
     border-top: 1px solid var(--outline-variant, #cac4d0) !important;
@@ -407,12 +415,22 @@ body {
     z-index: 10 !important;
     box-shadow: -2px -2px 14px rgba(0, 0, 0, 0.03) !important;
   }
-  .sidebar {
+  .sidebar,
+  #sidebar.sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: var(--sidebar-width, 264px) !important;
+    height: 100vh !important;
+    z-index: 1040 !important;
     transform: none !important;
     background: var(--surface-container-low, #f3edf7) !important;
     border-right: none !important;
     border: none !important;
     box-shadow: none !important;
+    overflow-y: auto !important;
+    scrollbar-width: none !important;
   }
   .sidebar-backdrop,
   .sidebar-overlay,

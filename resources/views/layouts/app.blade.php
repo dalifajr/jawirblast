@@ -49,6 +49,24 @@
         @media (min-width: 992px) {
             body {
                 background-color: var(--surface-container-low, #f3edf7) !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .m3-top-navbar {
+                position: fixed !important;
+                top: 0 !important;
+                left: 264px !important;
+                width: calc(100% - 264px) !important;
+                height: 64px !important;
+                min-height: 64px !important;
+                z-index: 1030 !important;
+                background: var(--surface-container-low, #f3edf7) !important;
+                border-bottom: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
             }
 
             #sidebar.sidebar {
@@ -66,6 +84,7 @@
                 border: none !important;
                 box-shadow: none !important;
                 overflow-y: auto !important;
+                overscroll-behavior: contain !important;
                 box-sizing: border-box !important;
                 transform: none !important;
                 scrollbar-width: none !important;
@@ -75,21 +94,11 @@
                 display: none !important;
             }
 
-            .m3-top-navbar {
-                margin-left: 264px !important;
-                width: calc(100% - 264px) !important;
-                position: sticky !important;
-                top: 0 !important;
-                z-index: 1020 !important;
-                background: var(--surface-container-low, #f3edf7) !important;
-                border-bottom: none !important;
-                border: none !important;
-                box-shadow: none !important;
-                min-height: 64px !important;
-            }
-
             .app-container {
+                padding-top: 64px !important;
+                min-height: 100vh !important;
                 background: var(--surface-container-low, #f3edf7) !important;
+                box-sizing: border-box !important;
             }
 
             .main-content {
@@ -607,6 +616,22 @@
         $user = auth()->user();
     @endphp
 
+    @if(session()->has('admin_impersonator_id'))
+    <div class="bg-warning text-warning-emphasis py-2 px-4 d-flex justify-content-between align-items-center position-fixed w-100 shadow-sm" style="z-index: 1070; top: 0; left: 0; font-size: 0.9rem; height: 40px;">
+        <div class="d-flex align-items-center gap-2">
+            <i class="fas fa-user-secret"></i> 
+            <span>{{ __('users.impersonating_banner', ['name' => Auth::user()->name]) }}</span>
+        </div>
+        <form action="{{ route('admin.users.stop-impersonating') }}" method="POST" class="m-0">
+            @csrf
+            <button type="submit" class="btn btn-xs btn-outline-dark rounded-pill px-3 py-0 font-weight-bold" style="font-size: 0.8rem; border-width: 2px; line-height: 1.5;">
+                <i class="fas fa-sign-out-alt me-1"></i> {{ __('users.stop_impersonating') }}
+            </button>
+        </form>
+    </div>
+    @endif
+
+    <div class="app-container">
     <!-- M3 Expressive Sidebar Navigation Drawer (Desktop 264px / Mobile Draggable Bottom Sheet) -->
     <div id="sidebar" class="sidebar">
         <!-- Mobile Bottom Sheet Grab Handle Area (Interactive Swipeable Realtime Gestures) -->
@@ -716,6 +741,14 @@
                 <span>{{ __('nav.system_menu') }}</span>
             </div>
             <div class="menu-items-grid">
+                @if(auth()->check() && (auth()->user()->isSuperAdmin() || auth()->user()->isAdmin()))
+                <a href="{{ route('admin.users.index') }}" class="menu-item {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
+                    <div class="menu-icon-box">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <span class="menu-label-text">{{ __('nav.user_management') }}</span>
+                </a>
+                @endif
                 <a href="{{ route('dashboard') }}#telegram" class="menu-item">
                     <div class="menu-icon-box">
                         <i class="fab fa-telegram"></i>
@@ -892,6 +925,7 @@
             <p class="m-0">{!! __('dashboard.app_copyright', ['year' => date('Y')]) !!}</p>
         </footer>
     </div>
+    </div><!-- /.app-container -->
 
     <!-- Mobile Bottom Navigation Bar (Visible on Viewports < 992px) -->
     <nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="{{ __('nav.menu') }}">

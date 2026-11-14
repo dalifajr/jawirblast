@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\ContactController;
@@ -101,4 +102,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/campaigns/{campaign}/pause', [CampaignController::class, 'pause'])->name('campaigns.pause')->whereNumber('campaign');
     Route::post('/campaigns/{campaign}/resume', [CampaignController::class, 'resume'])->name('campaigns.resume')->whereNumber('campaign');
     Route::post('/campaigns/{campaign}/cancel', [CampaignController::class, 'cancel'])->name('campaigns.cancel')->whereNumber('campaign');
+
+    // Rute Modul User Management (Kelola Pengguna) untuk Superadmin
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::post('/users/stop-impersonating', [UserController::class, 'stopImpersonating'])->name('users.stop-impersonating');
+        Route::post('/users/{user}/impersonate', [UserController::class, 'impersonate'])->name('users.impersonate');
+        Route::post('/users/{user}/suspend', [UserController::class, 'suspend'])->name('users.suspend');
+        Route::post('/users/{user}/unsuspend', [UserController::class, 'unsuspend'])->name('users.unsuspend');
+        Route::resource('users', UserController::class);
+    });
 });

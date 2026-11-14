@@ -3,11 +3,9 @@ PERLU DIBACA SECARA SEKSAMA DAN TELITI, KEMUDIAN /learn.
 RANCANGAN PENGEMBANGAN SISTEM INFORMASI KAMPANYE BROADCAST WHATSAPP (JAWIRBLAST).
 
 
-Buatkan navigasi utama menggunakan sidebar. implementasikan pada halaman dashboard, dan buat navigasi sidebar tersebut sesuai dengan gaya desain UI yang sama seperti pada project bot_tele_jualan (referensi) font, warna, tata letak, dan lain-lain. kemudian pindahkan menu-menu pada header ke sidebar.
+seed user baru bernama Dzulfikri Alifajri, dengan role superadmin. dimana user superadmin nantinya memegang full control atas website, dibandingkan dengan admin, superadmin dapat melakukan maintenance website, seperti menjalankan perintah update, restart website, atur key turnsitle, bot dll hampir sama seperti pada panel vps. user superadmin juga dapat menambahkan admin baru pada halaman user. namun admin tidak dapat melakukan tambah user superadmin. admin hanya dapat menaikan user biasa ke admin. 
 
-rapihkan layout pada menu-menu yang ada didalam menu sidrbar. seperti padding, ukuran tombol, dll.
-
-perbaiki bahasa pada menu dashboard, terutama pada elemen container belum menerapkan multi bahasa.
+buatkan menu profil saya, pada sidebar untuk melihat profil. seperti pada project referensi.
 
 TEKNOLOGI YANG DIGUNAKAN;
 A. VPS UBUNTU 26 RAM 42GB 12CPUs

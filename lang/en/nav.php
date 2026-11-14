@@ -21,6 +21,7 @@ return [
     'notifications' => 'Notifications',
     'all_caught_up' => 'All caught up!',
     'no_notifications' => 'No new notifications.',
+    'user_management' => 'User Management',
     'main_menu' => 'Main Menu',
     'broadcast_menu' => 'Broadcast Campaigns',
     'system_menu' => 'System & Settings',

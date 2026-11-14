@@ -11,7 +11,25 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'telegram_id', 'telegram_username', 'locale', 'role', 'photo_url'])]
+#[Fillable([
+    'name',
+    'username',
+    'avatar',
+    'email',
+    'password',
+    'telegram_id',
+    'telegram_username',
+    'locale',
+    'role',
+    'photo_url',
+    'wallet_balance',
+    'referral_balance',
+    'total_earnings',
+    'max_daily_earnings',
+    'is_suspended',
+    'suspended_reason',
+    'last_active_at',
+])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -29,6 +47,12 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'telegram_id' => 'integer',
+            'wallet_balance' => 'decimal:2',
+            'referral_balance' => 'decimal:2',
+            'total_earnings' => 'decimal:2',
+            'max_daily_earnings' => 'decimal:2',
+            'is_suspended' => 'boolean',
+            'last_active_at' => 'datetime',
         ];
     }
 
@@ -38,6 +62,14 @@ class User extends Authenticatable
     public function telegramLoginTokens(): HasMany
     {
         return $this->hasMany(TelegramLoginToken::class, 'telegram_id', 'telegram_id');
+    }
+
+    /**
+     * Relasi ke riwayat penarikan dana pengguna.
+     */
+    public function withdrawals(): HasMany
+    {
+        return $this->hasMany(Withdrawal::class)->latest();
     }
 
     /**
@@ -65,10 +97,34 @@ class User extends Authenticatable
     }
 
     /**
-     * Cek apakah pengguna memiliki peran administrator.
+     * Cek apakah pengguna memiliki peran superadmin.
+     */
+    public function isSuperAdmin(): bool
+    {
+        return ($this->role ?? 'user') === 'superadmin';
+    }
+
+    /**
+     * Cek apakah pengguna memiliki peran administrator atau superadmin.
      */
     public function isAdmin(): bool
     {
-        return ($this->role ?? 'user') === 'admin';
+        return in_array($this->role ?? 'user', ['admin', 'superadmin'], true);
+    }
+
+    /**
+     * Cek apakah akun pengguna dalam status dibatasi/suspended.
+     */
+    public function isSuspended(): bool
+    {
+        return (bool) ($this->is_suspended ?? false);
+    }
+
+    /**
+     * Lama waktu bergabung dalam format teks yang ramah manusia.
+     */
+    public function getTimeJoinedAttribute(): string
+    {
+        return $this->created_at ? $this->created_at->diffForHumans() : '-';
     }
 }

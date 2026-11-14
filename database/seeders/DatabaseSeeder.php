@@ -15,11 +15,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // 1. Seed Superadmin: Dzulfikri Alifajri (Sesuai arahan rencana pengembangan.txt)
+        User::firstOrCreate(
+            ['email' => 'dzulfikrialifajri@gmail.com'],
+            [
+                'name' => 'Dzulfikri Alifajri',
+                'username' => 'dzulfikri',
+                'role' => 'superadmin',
+                'password' => bcrypt('password123'),
+                'wallet_balance' => 2500000,
+                'referral_balance' => 500000,
+                'total_earnings' => 5000000,
+                'max_daily_earnings' => 1250000,
+                'is_suspended' => false,
+            ]
+        );
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // 2. Seed Administrator
+        User::firstOrCreate(
+            ['email' => 'admin@jawirblast.com'],
+            [
+                'name' => 'Administrator',
+                'username' => 'admin',
+                'role' => 'admin',
+                'password' => bcrypt('password123'),
+                'wallet_balance' => 500000,
+                'referral_balance' => 100000,
+                'is_suspended' => false,
+            ]
+        );
     }
 }

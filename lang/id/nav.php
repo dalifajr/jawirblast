@@ -21,6 +21,7 @@ return [
     'notifications' => 'Notifikasi',
     'all_caught_up' => 'Semua bersih!',
     'no_notifications' => 'Tidak ada notifikasi baru.',
+    'user_management' => 'Kelola Pengguna',
     'main_menu' => 'Menu Utama',
     'broadcast_menu' => 'Kampanye Siaran',
     'system_menu' => 'Sistem & Pengaturan',
