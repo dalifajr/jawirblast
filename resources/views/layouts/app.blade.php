@@ -30,7 +30,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- M3 Expressive Lavender Design Tokens & Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app-dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app-dashboard.css') }}?v={{ file_exists(public_path('css/app-dashboard.css')) ? filemtime(public_path('css/app-dashboard.css')) : time() }}">
 
     <!-- Design System Compatibility Tokens (beercss & material-dynamic-colors) -->
     <meta name="design-framework" content="beercss material-dynamic-colors">
@@ -44,8 +44,13 @@
             --top-navbar-height: 64px;
         }
 
-        /* Critical M3 Sidebar & Master Canvas Framework */
+        /* === CONNECTED HEADER & SIDEBAR WITH ROUNDED CORNERS (M3 EXPRESSIVE CANVAS) === */
+        /* Reference: D:\bot_tele_jualan\web\public\css\app.css line 4019-4049 */
         @media (min-width: 992px) {
+            body {
+                background-color: var(--surface-container-low, #f3edf7) !important;
+            }
+
             #sidebar.sidebar {
                 position: fixed !important;
                 top: 0 !important;
@@ -57,28 +62,64 @@
                 display: flex !important;
                 flex-direction: column !important;
                 background: var(--surface-container-low, #f3edf7) !important;
-                border-right: 1px solid var(--outline-variant, #cac4d0) !important;
+                border-right: none !important;
+                border: none !important;
+                box-shadow: none !important;
                 overflow-y: auto !important;
                 box-sizing: border-box !important;
                 transform: none !important;
+                scrollbar-width: none !important;
             }
+
+            #sidebar.sidebar::-webkit-scrollbar {
+                display: none !important;
+            }
+
             .m3-top-navbar {
                 margin-left: 264px !important;
                 width: calc(100% - 264px) !important;
                 position: sticky !important;
                 top: 0 !important;
                 z-index: 1020 !important;
-                background: var(--surface-container-lowest, #ffffff) !important;
-                border-bottom: 1px solid var(--outline-variant, #cac4d0) !important;
+                background: var(--surface-container-low, #f3edf7) !important;
+                border-bottom: none !important;
+                border: none !important;
+                box-shadow: none !important;
                 min-height: 64px !important;
             }
+
+            .app-container {
+                background: var(--surface-container-low, #f3edf7) !important;
+            }
+
             .main-content {
                 margin-left: 264px !important;
                 width: calc(100% - 264px) !important;
                 min-height: calc(100vh - 64px) !important;
                 box-sizing: border-box !important;
-                background: var(--surface, #fef7ff) !important;
+                background-color: var(--surface-container-lowest, #ffffff) !important;
+                border-top-left-radius: 28px !important;
+                border-top: 1px solid var(--outline-variant, #cac4d0) !important;
+                border-left: 1px solid var(--outline-variant, #cac4d0) !important;
+                position: relative !important;
+                z-index: 10 !important;
+                box-shadow: -2px -2px 14px rgba(0, 0, 0, 0.03) !important;
+                padding-bottom: 2rem !important;
             }
+
+            [data-bs-theme="dark"] body,
+            [data-bs-theme="dark"] #sidebar.sidebar,
+            [data-bs-theme="dark"] .m3-top-navbar,
+            [data-bs-theme="dark"] .app-container {
+                background: var(--surface-container-low, #1d1b20) !important;
+            }
+
+            [data-bs-theme="dark"] .main-content {
+                background-color: var(--surface-container-lowest, #0f0d13) !important;
+                border-top-color: var(--outline-variant, #49454f) !important;
+                border-left-color: var(--outline-variant, #49454f) !important;
+            }
+
             #mobileMenuBtn, #sidebarCloseBtn, .sidebar-backdrop, .mobile-bottom-nav {
                 display: none !important;
             }
@@ -108,12 +149,104 @@
             .m3-top-navbar {
                 margin-left: 0 !important;
                 width: 100% !important;
+                background: var(--surface-container-low, #f3edf7) !important;
+                border-bottom: 1px solid var(--outline-variant, #cac4d0) !important;
             }
             .main-content {
                 margin-left: 0 !important;
                 width: 100% !important;
                 padding-bottom: 76px !important;
+                border-top-left-radius: 0 !important;
+                border: none !important;
+                background: var(--surface-container-lowest, #ffffff) !important;
             }
+        }
+
+        /* === M3 EXPRESSIVE SIDEBAR BRAND HEADER === */
+        .m3-brand-header {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            padding: 20px 16px 16px 16px !important;
+            text-decoration: none !important;
+            color: inherit !important;
+            min-height: 64px !important;
+            box-sizing: border-box !important;
+        }
+
+        .m3-brand-header a {
+            color: inherit !important;
+            text-decoration: none !important;
+        }
+
+        .m3-cloud-icon {
+            width: 40px !important;
+            height: 40px !important;
+            min-width: 40px !important;
+            border-radius: 14px !important;
+            background-color: var(--primary-container, #eaddff) !important;
+            color: var(--primary, #65558f) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 1.15rem !important;
+            flex-shrink: 0 !important;
+        }
+
+        .m3-brand-text {
+            display: flex !important;
+            flex-direction: column !important;
+            line-height: 1.2 !important;
+            overflow: hidden !important;
+        }
+
+        .m3-brand-title {
+            font-family: var(--font-poppins, sans-serif) !important;
+            font-size: 1rem !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.01em !important;
+            color: var(--on-surface, #1d1b20) !important;
+            white-space: nowrap !important;
+            text-overflow: ellipsis !important;
+            overflow: hidden !important;
+        }
+
+        .m3-brand-subtitle {
+            font-family: var(--font-poppins, sans-serif) !important;
+            font-size: 0.75rem !important;
+            font-weight: 500 !important;
+            color: var(--on-surface-variant, #49454f) !important;
+            white-space: nowrap !important;
+            text-overflow: ellipsis !important;
+            overflow: hidden !important;
+        }
+
+        /* === M3 EXPRESSIVE MENU ITEMS & HEADERS === */
+        .menu-group {
+            padding: 0.35rem 0.5rem !important;
+            border-bottom: 1px solid var(--outline-variant, #cac4d0) !important;
+        }
+
+        .menu-group:last-of-type {
+            border-bottom: none !important;
+        }
+
+        .menu-header {
+            padding: 0.65rem 1rem 0.25rem 1rem !important;
+            font-family: var(--font-poppins, sans-serif) !important;
+            font-size: 0.6875rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.06em !important;
+            color: var(--on-surface-variant, #49454f) !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+        }
+
+        .menu-header i {
+            font-size: 0.75rem !important;
+            opacity: 0.8 !important;
         }
 
         .menu-items-grid {
@@ -126,15 +259,17 @@
             display: flex !important;
             align-items: center !important;
             gap: 12px !important;
-            height: 42px !important;
-            margin: 2px 4px !important;
+            height: 44px !important;
+            margin: 3px 12px !important;
             padding: 0 16px !important;
             border-radius: 9999px !important;
+            border: none !important;
             color: var(--on-surface-variant, #49454f) !important;
             text-decoration: none !important;
+            font-family: var(--font-poppins, sans-serif) !important;
             font-size: 0.875rem !important;
             font-weight: 500 !important;
-            transition: background-color 0.15s ease, color 0.15s ease !important;
+            transition: background-color 0.15s cubic-bezier(0.2, 0, 0, 1), color 0.15s cubic-bezier(0.2, 0, 0, 1) !important;
         }
 
         .menu-item:hover {
@@ -145,7 +280,12 @@
         .menu-item.active {
             background-color: var(--secondary-container, #e8def8) !important;
             color: var(--on-secondary-container, #1d192b) !important;
-            font-weight: 700 !important;
+            font-weight: 600 !important;
+        }
+
+        .menu-item i,
+        .menu-icon-box i {
+            color: inherit !important;
         }
 
         .menu-icon-box {
@@ -156,6 +296,38 @@
             justify-content: center !important;
             font-size: 0.95rem !important;
             flex-shrink: 0 !important;
+        }
+
+        .menu-label-text {
+            flex-grow: 1 !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+        }
+
+        /* Sidebar User Mini Footer */
+        .sidebar-user-footer {
+            margin-top: auto !important;
+            padding: 14px 16px !important;
+            border-top: 1px solid var(--outline-variant, #cac4d0) !important;
+            background: var(--surface-container-low, #f3edf7) !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+
+        .m3-avatar-circle {
+            width: 38px !important;
+            height: 38px !important;
+            min-width: 38px !important;
+            border-radius: 50% !important;
+            background: var(--primary-container, #eaddff) !important;
+            color: var(--primary, #65558f) !important;
+            font-weight: 700 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 0.95rem !important;
         }
 
         /* Mobile Table to Card Transformation (Pattern from D:\bot_tele_jualan) */
@@ -212,17 +384,17 @@
     <div id="sidebar" class="sidebar">
         <!-- Sidebar Brand Header -->
         <div class="m3-brand-header d-flex align-items-center justify-content-between">
-            <a href="{{ route('dashboard') }}" class="d-flex align-items-center gap-2.5 text-decoration-none">
-                @include('partials.brand-logo', ['style' => 'width: 36px; height: 36px;'])
+            <a href="{{ route('dashboard') }}" class="d-flex align-items-center gap-3 text-decoration-none" style="color: inherit; overflow: hidden;">
+                @include('partials.brand-logo', ['style' => 'width: 40px; height: 40px; min-width: 40px; flex-shrink: 0;'])
                 <div class="m3-brand-text">
                     <div class="d-flex align-items-center gap-1.5">
                         <span class="m3-brand-title">JAWIRBLAST</span>
-                        <span class="m3-badge m3-badge-info" style="font-size: 0.65rem; padding: 2px 7px;">{{ __('nav.pro_badge') }}</span>
+                        <span class="m3-badge m3-badge-info" style="font-size: 0.65rem; padding: 2px 8px; border-radius: 9999px;">{{ __('nav.pro_badge') }}</span>
                     </div>
                     <span class="m3-brand-subtitle">{{ __('nav.brand_tagline') }}</span>
                 </div>
             </a>
-            <button type="button" class="btn btn-sm btn-icon rounded-circle d-lg-none" id="sidebarCloseBtn" aria-label="{{ __('nav.close_menu') }}" style="width: 32px; height: 32px; color: var(--on-surface-variant);">
+            <button type="button" class="btn btn-sm btn-icon rounded-circle d-lg-none" id="sidebarCloseBtn" aria-label="{{ __('nav.close_menu') }}" style="width: 32px; height: 32px; color: var(--on-surface-variant); flex-shrink: 0;">
                 <i class="fas fa-times"></i>
             </button>
         </div>
