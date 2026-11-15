@@ -36,6 +36,79 @@
     <meta name="design-framework" content="beercss material-dynamic-colors">
     <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
 
+    <!-- SweetAlert2 11 (Material Design 3 Alert & Toast Engine) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Material Design 3 Alert Dialog & Toast System (Identical to Reference D:\bot_tele_jualan)
+        if (typeof Swal !== 'undefined') {
+            const originalSwalFire = Swal.fire.bind(Swal);
+            window.Swal.fire = function(...args) {
+                let opts = {};
+                if (args.length === 1 && typeof args[0] === 'object' && args[0] !== null) {
+                    opts = args[0];
+                } else if (args.length >= 1 && typeof args[0] === 'string') {
+                    opts = {
+                        title: args[0],
+                        html: args[1] || '',
+                        icon: args[2] || 'info'
+                    };
+                }
+
+                if (opts.toast) {
+                    opts.backdrop = false; // Zero backdrop flash
+                    opts.showConfirmButton = false;
+                    opts.showCancelButton = false;
+                    opts.showDenyButton = false;
+                    if (!opts.timer) opts.timer = 2200;
+                    if (!opts.position) opts.position = 'top-end';
+
+                    const origDidOpen = opts.didOpen;
+                    opts.didOpen = (toastEl) => {
+                        if (typeof origDidOpen === 'function') origDidOpen(toastEl);
+                        setTimeout(() => {
+                            if (document.body.contains(toastEl)) {
+                                Swal.close();
+                            }
+                        }, (opts.timer || 2200) + 300);
+                    };
+                } else {
+                    if (opts.showCancelButton || opts.cancelButtonText) {
+                        opts.showCancelButton = true;
+                        if (!opts.cancelButtonText || opts.cancelButtonText === 'Dismiss' || opts.cancelButtonText === 'Cancel') {
+                            opts.cancelButtonText = 'Batal';
+                        }
+                    }
+                    if (opts.showCancelButton) {
+                        if (!opts.confirmButtonText || opts.confirmButtonText === 'Confirm' || opts.confirmButtonText === 'OK') {
+                            opts.confirmButtonText = 'Konfirmasi';
+                        }
+                    }
+                    if (opts.icon === 'warning' || opts.icon === 'question' || (!opts.icon && opts.showCancelButton)) {
+                        opts.icon = 'info';
+                    }
+
+                    opts.reverseButtons = false;
+                    if (typeof opts.allowOutsideClick === 'undefined') opts.allowOutsideClick = true;
+                    if (typeof opts.allowEscapeKey === 'undefined') opts.allowEscapeKey = true;
+                    if (typeof opts.focusConfirm === 'undefined') opts.focusConfirm = false;
+
+                    if (!opts.customClass) {
+                        opts.customClass = {
+                            popup: 'm3-dialog-popup',
+                            title: 'm3-dialog-title',
+                            htmlContainer: 'm3-dialog-content',
+                            actions: 'm3-dialog-actions',
+                            confirmButton: 'm3-dialog-btn-confirm',
+                            cancelButton: 'm3-dialog-btn-cancel'
+                        };
+                    }
+                }
+
+                return originalSwalFire(opts);
+            };
+        }
+    </script>
+
     <style>
         :root {
             --primary: #65558f;
@@ -807,9 +880,23 @@
     <div class="app-container">
     <!-- M3 Expressive Sidebar Navigation Drawer (Desktop 264px / Mobile Draggable Bottom Sheet) -->
     <div id="sidebar" class="sidebar">
-        <!-- Mobile Bottom Sheet Grab Handle Area (Interactive Swipeable Realtime Gestures) -->
-        <div class="sheet-handle-area d-lg-none" id="sheetHandleArea" title="{{ __('nav.swipe_hint') }}">
-            <div class="sheet-handle-bar"></div>
+        <!-- Mobile Bottom Sheet Grab Handle & Sticky Brand Header (Mobile Only < 992px) - Sesuai D:\bot_tele_jualan -->
+        <div class="sheet-header-mobile d-lg-none sticky-top pt-2 pb-1 border-bottom" style="background: var(--surface-container-low, #f3edf7); border-color: var(--outline-variant) !important; border-top-left-radius: 28px; border-top-right-radius: 28px; z-index: 10;">
+            <div class="sheet-handle-area" id="sheetHandleArea" title="{{ __('nav.swipe_hint') }}">
+                <div class="sheet-handle-bar"></div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between px-3 pb-2 pt-1">
+                <a href="{{ route('dashboard') }}" class="d-flex align-items-center gap-2 text-decoration-none">
+                    @include('partials.brand-logo', ['style' => 'width: 32px; height: 32px; min-width: 32px;'])
+                    <div class="d-flex flex-column text-start" style="line-height: 1.15;">
+                        <span class="fw-bold" style="font-size: 0.92rem; color: var(--on-surface); letter-spacing: -0.01em;">JAWIRBLAST</span>
+                        <small class="text-secondary" style="font-size: 0.72rem; font-weight: 500;">{{ __('nav.brand_tagline') }}</small>
+                    </div>
+                </a>
+                <button type="button" class="btn btn-sm btn-icon rounded-pill text-secondary" id="sidebarCloseBtn" aria-label="{{ __('nav.close_menu') }}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; padding: 0;">
+                    <i class="fas fa-times" style="font-size: 0.9rem;"></i>
+                </button>
+            </div>
         </div>
 
         @auth
@@ -995,6 +1082,41 @@
             </div>
         </div>
         @endif
+
+        {{-- Sidebar Footer (Figma Navigasi Spec: Telegram Help Card & Language Switcher) --}}
+        <div class="m3-sidebar-footer mt-auto pt-3 border-top" style="border-color: var(--outline-variant) !important;">
+            <div class="m3-help-card">
+                <div class="m3-help-title">
+                    <i class="far fa-question-circle text-primary"></i> {{ __('nav.need_help') }}
+                </div>
+                <div class="m3-help-sub">
+                    {{ __('nav.contact_admin_telegram') }}
+                </div>
+                <a href="https://t.me/{{ config('telegram.bot_username', 'jawirblast_bot') }}" target="_blank" rel="noopener noreferrer" class="m3-help-link">
+                    {{ __('nav.chat_telegram') }} <i class="fas fa-arrow-up-right-from-square" style="font-size: 0.72rem;"></i>
+                </a>
+            </div>
+
+            @php
+                $currentLocale = App::getLocale();
+            @endphp
+            <div class="d-flex align-items-center justify-content-between px-2 pt-2">
+                <div class="m3-lang-footer">
+                    <span>{{ $currentLocale === 'id' ? 'Bahasa Indonesia' : ($currentLocale === 'zh' ? '中文' : 'English') }}</span>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-xs btn-outline-secondary rounded-pill py-0.5 px-2 text-decoration-none d-flex align-items-center gap-1 dropdown-toggle" 
+                            type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.72rem;">
+                        <i class="fas fa-globe"></i> <span>{{ strtoupper($currentLocale) }}</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" style="border-radius: 12px; font-size: 0.8rem;">
+                        <li><a class="dropdown-item {{ $currentLocale === 'id' ? 'active' : '' }}" href="{{ route('lang.switch', 'id') }}">🇮🇩 Bahasa Indonesia</a></li>
+                        <li><a class="dropdown-item {{ $currentLocale === 'en' ? 'active' : '' }}" href="{{ route('lang.switch', 'en') }}">🇬🇧 English</a></li>
+                        <li><a class="dropdown-item {{ $currentLocale === 'zh' ? 'active' : '' }}" href="{{ route('lang.switch', 'zh') }}">🇨🇳 中文</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
         <!-- Sidebar User Mini Footer on Desktop (>= 992px) -->
         @auth
@@ -1636,5 +1758,14 @@
 
     @stack('modals')
     @stack('scripts')
+
+    <script>
+        // Global fix for Bootstrap modals: ensure modal is never trapped inside parent stacking context (e.g. z-index, backdrop-filter, overflow)
+        document.addEventListener('show.bs.modal', function(event) {
+            if (event.target && event.target.parentElement !== document.body) {
+                document.body.appendChild(event.target);
+            }
+        });
+    </script>
 </body>
 </html>

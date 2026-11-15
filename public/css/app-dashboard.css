@@ -1431,4 +1431,593 @@ input.form-control, select.form-select {
   padding: 0 !important;
 }
 
+/* ==============================================================================
+   STANDARDIZED M3 COMPONENT LIBRARY (IDENTICAL TO PROJECT REFERENCE D:\bot_tele_jualan)
+   Covers: Table, Form/Input, Button, Alert, Toast, Modal, Dropdown, Carousel,
+           Tabs/Nav-Tabs/Nav-Pills, Stepper, Card
+   ============================================================================== */
+
+/* 1. M3 TABLE COMPONENT & RESPONSIVE CARDS */
+.card-table-m3 {
+  background: var(--surface-container-lowest) !important;
+  border: 1px solid var(--outline-variant) !important;
+  border-radius: var(--radius-lg, 20px) !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.table {
+  color: var(--on-surface) !important;
+  border-color: var(--outline-variant) !important;
+  margin-bottom: 0 !important;
+}
+
+.table thead th {
+  background: var(--surface-container-low) !important;
+  color: var(--on-surface-variant) !important;
+  font-family: var(--font-poppins) !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding: 0.75rem 1rem !important;
+  border-bottom: 1px solid var(--outline-variant) !important;
+  white-space: nowrap !important;
+}
+
+.table tbody td {
+  padding: 0.85rem 1rem !important;
+  vertical-align: middle !important;
+  border-color: var(--outline-variant) !important;
+  font-size: 0.875rem !important;
+}
+
+.table-hover tbody tr:hover {
+  background-color: var(--surface-container-high) !important;
+}
+
+/* Mobile Table to Card Transformation */
+@media (max-width: 768px) {
+  .table-responsive-cards thead {
+    display: none !important;
+  }
+  .table-responsive-cards tbody,
+  .table-responsive-cards tr,
+  .table-responsive-cards td {
+    display: block !important;
+    width: 100% !important;
+  }
+  .table-responsive-cards tr {
+    background: var(--surface-container-lowest) !important;
+    border: 1px solid var(--outline-variant) !important;
+    border-radius: var(--radius-md, 16px) !important;
+    margin-bottom: 1rem !important;
+    padding: 0.85rem 1rem !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+    position: relative !important;
+  }
+  .table-responsive-cards td {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border: none !important;
+    padding: 0.5rem 0 !important;
+    text-align: right !important;
+    font-size: 0.85rem !important;
+  }
+  .table-responsive-cards td::before {
+    content: attr(data-label) !important;
+    font-weight: 600 !important;
+    color: var(--on-surface-variant) !important;
+    text-align: left !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.03em !important;
+    margin-right: 1rem !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+/* 2. M3 FORM & INPUT CONTROLS */
+.form-label {
+  font-family: var(--font-poppins) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  color: var(--on-surface-variant) !important;
+  margin-bottom: 0.35rem !important;
+}
+
+.form-control,
+.form-select {
+  background-color: var(--surface-container-lowest) !important;
+  border: 1px solid var(--outline-variant) !important;
+  border-radius: var(--radius-sm, 12px) !important;
+  color: var(--on-surface) !important;
+  font-family: var(--font-poppins) !important;
+  font-size: 0.875rem !important;
+  padding: 0.6rem 0.9rem !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(var(--bs-primary-rgb), 0.18) !important;
+  outline: none !important;
+  background-color: var(--surface-container-lowest) !important;
+  color: var(--on-surface) !important;
+}
+
+.input-group-text {
+  background-color: var(--surface-container-low) !important;
+  border: 1px solid var(--outline-variant) !important;
+  color: var(--on-surface-variant) !important;
+  font-size: 0.875rem !important;
+}
+
+/* 3. M3 BUTTON STANDARDIZATION */
+.btn {
+  font-family: var(--font-poppins) !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius-pill) !important;
+  padding: 0.5rem 1.25rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  transition: all 0.15s ease !important;
+}
+
+.btn-primary {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--on-primary) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  filter: brightness(1.08) !important;
+  box-shadow: 0 2px 8px rgba(var(--bs-primary-rgb), 0.3) !important;
+}
+
+.btn-primary:active {
+  transform: scale(0.98) !important;
+}
+
+.btn-tonal,
+.btn-secondary {
+  background-color: var(--secondary-container) !important;
+  border-color: transparent !important;
+  color: var(--on-secondary-container) !important;
+}
+
+.btn-tonal:hover,
+.btn-secondary:hover {
+  filter: brightness(0.95) !important;
+  color: var(--on-secondary-container) !important;
+}
+
+.btn-outline-primary {
+  border: 1.5px solid var(--primary) !important;
+  color: var(--primary) !important;
+  background: transparent !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary) !important;
+  color: var(--on-primary) !important;
+}
+
+.btn-icon,
+.m3-icon-btn {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  border-radius: var(--radius-pill) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--on-surface-variant) !important;
+  transition: background-color 0.15s ease, transform 0.1s ease !important;
+}
+
+.btn-icon:hover,
+.m3-icon-btn:hover {
+  background-color: var(--surface-container-high) !important;
+  color: var(--on-surface) !important;
+}
+
+.btn-icon:active,
+.m3-icon-btn:active {
+  transform: scale(0.94) !important;
+}
+
+/* 4. M3 ALERTS (FLAT TONAL 16PX) */
+.alert {
+  border-radius: var(--radius-md, 16px) !important;
+  border: 1px solid var(--outline-variant) !important;
+  box-shadow: none !important;
+  font-family: var(--font-poppins) !important;
+  font-size: 0.875rem !important;
+  padding: 0.85rem 1.15rem !important;
+}
+
+.alert-success {
+  background-color: #d1e7dd !important;
+  border-color: #badbcc !important;
+  color: #0f5132 !important;
+}
+
+[data-bs-theme="dark"] .alert-success {
+  background-color: rgba(40, 167, 69, 0.2) !important;
+  border-color: rgba(40, 167, 69, 0.35) !important;
+  color: #75b798 !important;
+}
+
+.alert-danger {
+  background-color: #f8d7da !important;
+  border-color: #f5c2c7 !important;
+  color: #842029 !important;
+}
+
+[data-bs-theme="dark"] .alert-danger {
+  background-color: rgba(220, 53, 69, 0.2) !important;
+  border-color: rgba(220, 53, 69, 0.35) !important;
+  color: #ea868f !important;
+}
+
+.alert-warning {
+  background-color: #fff3cd !important;
+  border-color: #ffecb5 !important;
+  color: #664d03 !important;
+}
+
+[data-bs-theme="dark"] .alert-warning {
+  background-color: rgba(255, 193, 7, 0.18) !important;
+  border-color: rgba(255, 193, 7, 0.3) !important;
+  color: #ffda6a !important;
+}
+
+.alert-info {
+  background-color: var(--secondary-container) !important;
+  border-color: var(--outline-variant) !important;
+  color: var(--on-secondary-container) !important;
+}
+
+/* 5. M3 MODALS (28PX SQUIRCLE WITH BACKDROP BLUR) */
+.modal-backdrop {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+}
+
+.modal-content {
+  border-radius: var(--radius-xl, 28px) !important;
+  border: 1px solid var(--outline-variant) !important;
+  background-color: var(--surface-container-high) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25) !important;
+  color: var(--on-surface) !important;
+  overflow: hidden !important;
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--outline-variant) !important;
+  padding: 1.25rem 1.5rem !important;
+  background-color: transparent !important;
+}
+
+.modal-title {
+  font-family: var(--font-poppins) !important;
+  font-weight: 700 !important;
+  font-size: 1.15rem !important;
+  color: var(--on-surface) !important;
+}
+
+.modal-footer {
+  border-top: 1px solid var(--outline-variant) !important;
+  padding: 1rem 1.5rem !important;
+  background-color: transparent !important;
+}
+
+/* 6. M3 DROPDOWNS */
+.dropdown-menu {
+  background-color: var(--surface-container-lowest) !important;
+  border: 1px solid var(--outline-variant) !important;
+  border-radius: var(--radius-md, 16px) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1) !important;
+  padding: 6px !important;
+  z-index: 1035 !important;
+}
+
+.dropdown-item {
+  border-radius: var(--radius-xs, 8px) !important;
+  padding: 8px 14px !important;
+  font-family: var(--font-poppins) !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  color: var(--on-surface) !important;
+  transition: background-color 0.1s ease, color 0.1s ease !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--surface-container-high) !important;
+  color: var(--primary) !important;
+}
+
+/* 7. M3 CAROUSEL (HORIZONTAL SCROLL TRACK WITH SNAP) */
+.m3-promo-carousel-container {
+  position: relative;
+  width: 100%;
+}
+
+.m3-promo-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+
+.m3-promo-track::-webkit-scrollbar {
+  display: none;
+}
+
+.m3-promo-card {
+  scroll-snap-align: start;
+  flex: 0 0 calc(50% - 8px);
+  min-width: 320px;
+  border-radius: var(--radius-lg, 20px);
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-lowest);
+  position: relative;
+  overflow: hidden;
+  padding: 1.25rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (max-width: 991.98px) {
+  .m3-promo-card {
+    flex: 0 0 100%;
+    min-width: 260px;
+  }
+}
+
+.m3-promo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* 8. M3 TABS, NAV-TABS & NAV-PILLS */
+.nav-tabs,
+.m3-subnav-tabs {
+  border-bottom: 1px solid var(--outline-variant) !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: none !important;
+  gap: 4px !important;
+  margin-bottom: 0 !important;
+}
+
+.nav-tabs::-webkit-scrollbar,
+.m3-subnav-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-tabs .nav-link,
+.m3-subnav-tabs .nav-link {
+  font-family: var(--font-poppins) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+  padding: 0.6rem 1rem !important;
+  color: var(--on-surface-variant) !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 2.5px solid transparent !important;
+  border-radius: 0 !important;
+  transition: color 0.15s ease, border-color 0.15s ease !important;
+  white-space: nowrap !important;
+}
+
+.nav-tabs .nav-link:hover,
+.m3-subnav-tabs .nav-link:hover {
+  color: var(--on-surface) !important;
+  border-bottom-color: var(--outline-variant) !important;
+}
+
+.nav-tabs .nav-link.active,
+.m3-subnav-tabs .nav-link.active {
+  color: var(--primary) !important;
+  font-weight: 700 !important;
+  border-bottom: 2.5px solid var(--primary) !important;
+  background: transparent !important;
+}
+
+.nav-pills .nav-link {
+  border-radius: var(--radius-pill) !important;
+  font-family: var(--font-poppins) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  padding: 0.45rem 1rem !important;
+  color: var(--on-surface-variant) !important;
+}
+
+.nav-pills .nav-link.active {
+  background-color: var(--secondary-container) !important;
+  color: var(--on-secondary-container) !important;
+}
+
+/* 9. M3 STEPPER (PROGRESS STEP BAR & TOUCH STEPPER) */
+.m3-stepper {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.stepper-item {
+  text-align: center;
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.stepper-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.stepper-circle.active {
+  background-color: var(--primary) !important;
+  color: var(--on-primary) !important;
+  box-shadow: 0 0 0 3px rgba(var(--bs-primary-rgb), 0.25) !important;
+}
+
+.stepper-circle.completed {
+  background-color: #28a745 !important;
+  color: #ffffff !important;
+}
+
+.stepper-circle.pending {
+  background-color: var(--surface-container-high) !important;
+  color: var(--on-surface-variant) !important;
+  border: 1px solid var(--outline-variant) !important;
+}
+
+.stepper-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  text-align: center;
+}
+
+.stepper-item.active .stepper-label {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.btn-stepper-touch {
+  min-width: 38px;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm, 12px);
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-low);
+  color: var(--on-surface);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.btn-stepper-touch:hover {
+  background: var(--surface-container-high);
+}
+
+/* 10. M3 CARD STANDARDIZATION (ZERO HARSH SHADOW & CONCENTRIC HARMONY) */
+.card,
+.m3-card {
+  background-color: var(--surface-container-lowest) !important;
+  border: 1px solid var(--outline-variant) !important;
+  border-radius: var(--radius-md, 16px) !important;
+  box-shadow: none !important;
+  transition: border-color 0.15s ease, background-color 0.15s ease !important;
+}
+
+.m3-metric-card {
+  background-color: var(--surface-container-lowest) !important;
+  border: 1px solid var(--outline-variant) !important;
+  border-radius: var(--radius-md, 16px) !important;
+  box-shadow: none !important;
+  transition: border-color 0.15s ease, transform 0.15s ease !important;
+}
+
+.m3-metric-card:hover {
+  border-color: var(--primary) !important;
+  transform: translateY(-2px);
+}
+
+/* 11. SIDEBAR TELEGRAM HELP CARD & FOOTER (Matches D:\bot_tele_jualan) */
+.m3-sidebar-footer {
+  margin-top: auto;
+  padding: 12px 14px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.m3-help-card,
+.sidebar-help-card {
+  padding: 12px 14px;
+  border-radius: var(--radius-md, 16px) !important;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant) !important;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.m3-help-card:hover,
+.sidebar-help-card:hover {
+  background: var(--surface-container-low);
+  border-color: var(--primary) !important;
+}
+
+.m3-help-title {
+  font-family: var(--font-google-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--on-surface);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.m3-help-sub {
+  font-size: 0.75rem;
+  color: var(--on-surface-variant);
+}
+
+.m3-help-link {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.m3-help-link:hover {
+  text-decoration: underline !important;
+}
+
+.m3-lang-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--on-surface-variant);
+  padding: 0 4px;
+}
+
+
 

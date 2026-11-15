@@ -39,4 +39,7 @@ return [
     'system_settings' => '系统设置',
     'devices' => '设备',
     'home' => '首页',
+    'need_help' => '需要帮助？',
+    'contact_admin_telegram' => '通过 Telegram 联系管理员。',
+    'chat_telegram' => '电报咨询',
 ];

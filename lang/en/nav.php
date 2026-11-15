@@ -39,4 +39,7 @@ return [
     'system_settings' => 'System Settings',
     'devices' => 'Devices',
     'home' => 'Home',
+    'need_help' => 'Need help?',
+    'contact_admin_telegram' => 'Contact admin via Telegram.',
+    'chat_telegram' => 'Chat Telegram',
 ];

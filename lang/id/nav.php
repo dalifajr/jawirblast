@@ -39,4 +39,7 @@ return [
     'system_settings' => 'Pengaturan Sistem',
     'devices' => 'Perangkat',
     'home' => 'Beranda',
+    'need_help' => 'Butuh bantuan?',
+    'contact_admin_telegram' => 'Hubungi admin via Telegram.',
+    'chat_telegram' => 'Chat Telegram',
 ];
