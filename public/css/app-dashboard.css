@@ -695,6 +695,252 @@ body {
     background: var(--surface-container-low, #1d1b20) !important;
     border-top-color: var(--outline-variant, #49454f) !important;
   }
+
+  /* Isolasi total footer desktop agar tidak bocor di mobile */
+  .sidebar-user-footer {
+    display: none !important;
+  }
+
+  /* Header Atas Laci Mobile */
+  .sheet-header-mobile {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+    background: var(--surface-container-low, #f3edf7) !important;
+    border-bottom: 1px solid var(--outline-variant, #cac4d0) !important;
+    border-top-left-radius: 28px !important;
+    border-top-right-radius: 28px !important;
+  }
+
+  /* Kartu Profil User Mobile (Floating M3 Card persis D:\bot_tele_jualan) */
+  .sidebar-header {
+    flex-shrink: 0 !important;
+    padding: 0.75rem 1rem !important;
+    margin: 8px 10px 4px 10px !important;
+    border-radius: 16px !important;
+    border: 1px solid var(--outline-variant, #cac4d0) !important;
+    background: var(--surface-container-lowest, #ffffff) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  [data-bs-theme="dark"] .sidebar-header {
+    background: var(--surface-container-lowest, #1d1b20) !important;
+    border-color: var(--outline-variant, #49454f) !important;
+  }
+
+  /* Segmented Switch (Pill container persis D:\bot_tele_jualan) */
+  .m3-segmented-switch {
+    display: flex !important;
+    background: var(--surface-container-high, #e6e0e9) !important;
+    border: 1px solid var(--outline-variant, #cac4d0) !important;
+    border-radius: 9999px !important;
+    padding: 3px !important;
+    margin: 6px 12px 14px 12px !important;
+    position: relative !important;
+    user-select: none !important;
+  }
+
+  [data-bs-theme="dark"] .m3-segmented-switch {
+    background: var(--surface-container-high, #2b2930) !important;
+    border-color: var(--outline-variant, #49454f) !important;
+  }
+
+  .m3-segmented-item {
+    flex: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    height: 32px !important;
+    border-radius: 9999px !important;
+    font-family: var(--font-poppins, sans-serif) !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    color: var(--on-surface-variant, #49454f) !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1) !important;
+  }
+
+  .m3-segmented-item.active {
+    background: var(--surface-container-lowest, #ffffff) !important;
+    color: var(--on-surface, #1d1b20) !important;
+    font-weight: 600 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  [data-bs-theme="dark"] .m3-segmented-item.active {
+    background: var(--surface-container-lowest, #2b2930) !important;
+    color: var(--on-surface, #e6e1e5) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .menu-group {
+    padding: 0.4rem 0.65rem !important;
+    border-bottom: 1px solid var(--outline-variant, #cac4d0) !important;
+  }
+
+  .menu-header {
+    padding: 0.35rem 0.25rem 0.35rem !important;
+    font-size: 0.6875rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    color: var(--on-surface-variant, #49454f) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  .menu-items-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px 6px !important;
+  }
+
+  .menu-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: center !important;
+    height: auto !important;
+    min-height: 74px !important;
+    margin: 0 !important;
+    padding: 8px 3px 6px !important;
+    border-radius: 14px !important;
+    background: var(--surface-container-lowest, #ffffff) !important;
+    border: 1px solid var(--outline-variant, #cac4d0) !important;
+    position: relative !important;
+    transform: none !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
+  }
+
+  [data-bs-theme="dark"] .menu-item {
+    background: var(--surface-container-lowest, #1d1b20) !important;
+    border-color: var(--outline-variant, #49454f) !important;
+  }
+
+  .menu-item:hover,
+  .menu-item:active {
+    background: var(--surface-container-high, #e6e0e9) !important;
+    border-color: var(--outline-variant, #cac4d0) !important;
+  }
+
+  .menu-item.active {
+    background: var(--secondary-container, #e8def8) !important;
+    border: 1.5px solid var(--primary, #65558f) !important;
+    box-shadow: none !important;
+  }
+
+  [data-bs-theme="dark"] .menu-item.active {
+    background: var(--secondary-container, #4a4458) !important;
+    border-color: var(--primary, #d0bcff) !important;
+  }
+
+  .menu-item .menu-icon-box {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+    background: var(--surface-container-low, #f3edf7) !important;
+    border: 1px solid var(--outline-variant, #cac4d0) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 5px !important;
+    box-shadow: none !important;
+    flex-shrink: 0 !important;
+    transition: background-color 0.15s ease !important;
+  }
+
+  [data-bs-theme="dark"] .menu-item .menu-icon-box {
+    background: var(--surface-container-high, #2b2930) !important;
+    border-color: var(--outline-variant, #49454f) !important;
+  }
+
+  .menu-item.active .menu-icon-box {
+    background: var(--surface-container-lowest, #ffffff) !important;
+    border: 1.5px solid var(--primary, #65558f) !important;
+    box-shadow: 0 1px 3px rgba(101, 85, 143, 0.2) !important;
+  }
+
+  [data-bs-theme="dark"] .menu-item.active .menu-icon-box {
+    background: var(--surface-container-lowest, #1d1b20) !important;
+    border-color: var(--primary, #d0bcff) !important;
+  }
+
+  .sidebar .menu-item.active .menu-icon-box i,
+  .menu-item.active .menu-icon-box i {
+    color: var(--primary, #65558f) !important;
+    opacity: 1 !important;
+    font-size: 1rem !important;
+  }
+
+  .sidebar .menu-item:not(.active) .menu-icon-box i {
+    color: var(--on-surface-variant, #49454f) !important;
+    opacity: 0.9 !important;
+  }
+
+  .menu-item .menu-label-text {
+    font-family: var(--font-poppins, sans-serif) !important;
+    font-size: 0.6875rem !important; /* 11px compact */
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    color: var(--on-surface, #1d1b20) !important;
+    text-align: center !important;
+    display: block !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 1px !important;
+  }
+
+  [data-bs-theme="dark"] .menu-item .menu-label-text {
+    color: var(--on-surface, #e6e1e5) !important;
+  }
+
+  .menu-item.active .menu-label-text {
+    color: var(--on-secondary-container, #1d192b) !important;
+    font-weight: 700 !important;
+  }
+
+  [data-bs-theme="dark"] .menu-item.active .menu-label-text {
+    color: var(--on-secondary-container, #e8def8) !important;
+  }
+
+  .m3-sidebar-footer {
+    margin-top: auto !important;
+    padding: 12px 10px 16px 10px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .m3-help-card {
+    padding: 12px 14px !important;
+    border-radius: 16px !important;
+    background: var(--surface-container-lowest, #ffffff) !important;
+    border: 1px solid var(--outline-variant, #cac4d0) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
+
+  [data-bs-theme="dark"] .m3-help-card {
+    background: var(--surface-container-lowest, #1d1b20) !important;
+    border-color: var(--outline-variant, #49454f) !important;
+  }
 }
 
 /* User Avatar Dropdown Button */
